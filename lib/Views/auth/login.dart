@@ -1,22 +1,26 @@
+import 'package:any_animated_button/any_animated_button.dart';
 import 'package:expence_manager/Views/mainscreen.dart';
-import 'package:expence_manager/widgets/Topbar.dart';
+import 'package:expence_manager/Views/auth/signup.dart';
+import 'package:expence_manager/widgets/buttons.dart';
 import 'package:expence_manager/widgets/input%20field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
+import 'package:get/state_manager.dart';
+import 'package:get/utils.dart';
 
-import '../widgets/buttons.dart';
+import '../../widgets/Topbar.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<Signup> createState() => _SignupState();
+  State<Login> createState() => _LoginState();
 }
 
-class _SignupState extends State<Signup> {
+class _LoginState extends State<Login> {
   TextEditingController _emailcontroller = TextEditingController();
   TextEditingController _passwordcontroller = TextEditingController();
-  TextEditingController _confirmPasswordcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,34 +42,45 @@ class _SignupState extends State<Signup> {
             ),
             Center(
               child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: Get.height / 6,
                   ),
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 50,
-                    child: const Icon(Icons.person),
+                    child: Icon(Icons.person),
                   ),
-                  const SizedBox(height: 50),
+                  SizedBox(height: 50),
                   inputfield(_emailcontroller, 'Email', Icons.email, false,
                       TextInputType.emailAddress),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 30),
                   inputfield(_passwordcontroller, 'Password', Icons.password,
                       true, TextInputType.text),
-                  const SizedBox(height: 30),
-                  inputfield(_confirmPasswordcontroller, 'Confirm Password',
-                      Icons.password, true, TextInputType.text),
                   SizedBox(
                     height: Get.height / 20,
                   ),
                   genButton(
                     onTap: () {
-                      Get.to(Mainscreen());
+                      Get.to(const Mainscreen(
+                        selectedIndex: 1,
+                      )); //TODO: need to uddate
                     },
-                    text: 'Signup',
+                    text: 'Login',
                     width: Get.width * 0.7,
-                    bloc: null, //complete animation on button here.
+                    bloc: null,
                   ),
+                  SizedBox(
+                    height: Get.height / 20,
+                  ),
+                  genButton(
+                      onTap: () {
+                        Get.to(Signup());
+                      },
+                      text: "Don't have an account?",
+                      width: Get.width * 0.7,
+                      bloc: null)
                 ],
               ),
             ),

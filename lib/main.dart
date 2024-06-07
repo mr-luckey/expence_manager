@@ -1,4 +1,4 @@
-import 'package:expence_manager/Views/login.dart';
+import 'package:expence_manager/Views/auth/login.dart';
 import 'package:expence_manager/Views/mainscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
