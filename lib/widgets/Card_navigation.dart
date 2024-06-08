@@ -1,4 +1,7 @@
+import 'package:expence_manager/Views/total_Expense.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:tab_container/tab_container.dart';
 
@@ -75,110 +78,103 @@ class _CardNavigationState extends State<CardNavigation>
                       fontWeight: FontWeight.bold),
                   unselectedTextStyle:
                       textTheme.bodyMedium?.copyWith(fontSize: 10.0),
-                  tabs: const [
+                  tabs:  [
                     Tab(
                       text: 'Total Salary',
                     ),
-                    Tab(text: 'Total Expanse'),
+                    GestureDetector(
+                      onTap:(){Get.to(TotalExpense());},
+
+                      child: Tab(
+                          text: 'Total Expanse'),
+                    ),
                     Tab(text: 'Monthly Expanse'),
                   ],
                   // _getTabs1(),
-                  children: [
-                    Column(children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 110,
-                          ),
-                          Icon(
-                            Icons.account_balance_wallet_outlined,
-                            size: 20,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            '  \$ 1000',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      )
-                    ]),
-                    Column(children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 110,
-                          ),
-                          Icon(
-                            Icons.account_balance_wallet_outlined,
-                            size: 20,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            '  \$ 1000',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.18,
-                          ),
-                          TextButton(
-                              onPressed: () {},
-                              child: Container(
-                                height: 30,
-                                width: 80,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black54),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'View More',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 12),
-                                  ),
-                                ),
-                              ))
-                        ],
-                      )
-                    ]),
-                    Column(children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 110,
-                          ),
-                          Icon(
-                            Icons.account_balance_wallet_outlined,
-                            size: 20,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            '  \$ 1000',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      )
-                    ]),
+
+                  children: const [
+                    SingleChildScrollView(
+                      child: Column(children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 110,
+                            ),
+                            Icon(
+                              Icons.account_balance_wallet_outlined,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              '  \$ 1000',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        )
+                      ]),
+                    ),
+                    SingleChildScrollView(
+                      child: Column(children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 110,
+                            ),
+                            Icon(
+                              Icons.account_balance_wallet_outlined,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              '  \$ 1000',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        )
+                      ]),
+                    ),
+                    SingleChildScrollView(
+                      child: Column(children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 110,
+                            ),
+                            Icon(
+                              Icons.account_balance_wallet_outlined,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              '  \$ 1000',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        )
+                      ]),
+                    ),
+
                   ]
                   //  _getChildren1(),
                   ),
