@@ -1,4 +1,6 @@
+import 'package:expence_manager/widgets/Card_navigation.dart';
 import 'package:expence_manager/widgets/Topbar.dart';
+import 'package:expence_manager/widgets/buttons.dart';
 import 'package:expence_manager/widgets/card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,47 +18,63 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Column(
         children: [
-          topbar(
-            title: 'Overview',
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Get.back();
-              },
-            ),
-            trailing: IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {},
-            ),
-          ),
           SizedBox(
-            height: Get.height / 70,
+            height: Get.height / 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              cardbtn(
-                  clicked: false,
-                  onTap: () {},
-                  text: 'Income',
-                  amount: 5000,
-                  iconData: Icons.wallet),
-              cardbtn(
-                  onTap: () {},
-                  clicked: true,
-                  text: 'Total Expenses',
-                  amount: 700,
-                  iconData: Icons.wallet),
-              cardbtn(
-                  onTap: () {},
-                  text: 'Total salary',
-                  amount: 60000,
-                  clicked: false,
-                  iconData: Icons.wallet),
-            ],
+          CardNavigation(),
+          SizedBox(
+            height: Get.height / 50,
+          ),
+          Container(
+            // color: Colors.white,
+            // color: Colors.black,
+            height: Get.height * 0.06,
+            width: Get.width,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Btn(
+                    onTap: () {},
+                    text: 'saving',
+                    iconData: Icons.add,
+                    index: 0,
+                  ),
+                  Btn(
+                    onTap: () {},
+                    text: 'Remind',
+                    iconData: Icons.notifications_active_outlined,
+                    index: 1,
+                  ),
+                  Btn(
+                    onTap: () {},
+                    text: 'Budget',
+                    iconData: Icons.savings_outlined,
+                    index: 2,
+                  ),
+                ],
+                // children: [Btn(onTap: () {}, text: 'jdnvjds', iconData: Icons.add);],
+              ),
+            ),
           ),
 
-          // ButtonBar()
+          // Expanded(
+          //   child: SingleChildScrollView(
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(20.0),
+          //       child: Card(
+          //         elevation: 10,
+          //         borderOnForeground: true,
+          //         child: Container(
+          //           color: Colors.blue,
+          //           height: Get.height,
+          //           width: Get.width,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

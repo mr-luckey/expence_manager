@@ -85,12 +85,10 @@ class _MainscreenState extends State<Mainscreen> {
     return WillPopScope(
       onWillPop: _willPopCallback,
       child: Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(child: widgetOptions.elementAt(selectedIndex)),
-            ],
-          ),
+        body: Column(
+          children: [
+            Expanded(child: widgetOptions.elementAt(selectedIndex)),
+          ],
         ),
         bottomNavigationBar: CurvedNavigationBar(
           // key: _bottomNavigationKey,

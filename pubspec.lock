@@ -33,6 +33,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  calendar_timeline_sbk:
+    dependency: "direct main"
+    description:
+      name: calendar_timeline_sbk
+      sha256: "0badaa4423b34cea6aec9808b742e1eef026fd2807c70fd74df51864edffbcdd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.7"
   characters:
     dependency: transitive
     description:
@@ -139,6 +147,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.3"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.18.1"
   leak_tracker:
     dependency: transitive
     description:
@@ -219,6 +235,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.2"
+  scrollable_positioned_list:
+    dependency: transitive
+    description:
+      name: scrollable_positioned_list
+      sha256: "1b54d5f1329a1e263269abc9e2543d90806131aa14fe7c6062a8054d57249287"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.8"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -256,6 +280,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  tab_container:
+    dependency: "direct main"
+    description:
+      name: tab_container
+      sha256: "15f87032f63fd7f0a59740aa31c5bc7056af3159a37311bca546d343240f3029"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.5.3"
   term_glyph:
     dependency: transitive
     description:
