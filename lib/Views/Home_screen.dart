@@ -128,23 +128,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: recordWidget(records),
             ),
           ),
-          // Expanded(child: RecordWidget())
-          // Expanded(
-          //   child: SingleChildScrollView(
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(20.0),
-          //       child: Card(
-          //         elevation: 10,
-          //         borderOnForeground: true,
-          //         child: Container(
-          //           color: Colors.blue,
-          //           height: Get.height,
-          //           width: Get.width,
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // )
         ],
       ),
     );
