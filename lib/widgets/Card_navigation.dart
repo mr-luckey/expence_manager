@@ -83,7 +83,7 @@ class _CardNavigationState extends State<CardNavigation>
                     Tab(text: 'Monthly Expanse'),
                   ],
                   // _getTabs1(),
-                  children: const [
+                  children: [
                     Column(children: [
                       SizedBox(
                         height: 30,
@@ -96,14 +96,14 @@ class _CardNavigationState extends State<CardNavigation>
                           ),
                           Icon(
                             Icons.account_balance_wallet_outlined,
-                            size: 40,
+                            size: 20,
                             color: Colors.white,
                           ),
                           Text(
                             '  \$ 1000',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold),
                           )
                         ],
@@ -121,16 +121,36 @@ class _CardNavigationState extends State<CardNavigation>
                           ),
                           Icon(
                             Icons.account_balance_wallet_outlined,
-                            size: 40,
+                            size: 20,
                             color: Colors.white,
                           ),
                           Text(
                             '  \$ 1000',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold),
-                          )
+                          ),
+                          SizedBox(
+                            width: Get.width * 0.18,
+                          ),
+                          TextButton(
+                              onPressed: () {},
+                              child: Container(
+                                height: 30,
+                                width: 80,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black54),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'View More',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  ),
+                                ),
+                              ))
                         ],
                       )
                     ]),
@@ -146,16 +166,16 @@ class _CardNavigationState extends State<CardNavigation>
                           ),
                           Icon(
                             Icons.account_balance_wallet_outlined,
-                            size: 40,
+                            size: 20,
                             color: Colors.white,
                           ),
                           Text(
                             '  \$ 1000',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold),
-                          )
+                          ),
                         ],
                       )
                     ]),
