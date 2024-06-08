@@ -91,6 +91,7 @@ class _CardNavigationState extends State<CardNavigation>
                     Tab(text: 'Monthly Expanse'),
                   ],
                   // _getTabs1(),
+
                   children: const [
                     SingleChildScrollView(
                       child: Column(children: [
@@ -173,6 +174,7 @@ class _CardNavigationState extends State<CardNavigation>
                         )
                       ]),
                     ),
+
                   ]
                   //  _getChildren1(),
                   ),
