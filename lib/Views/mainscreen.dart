@@ -59,6 +59,7 @@ class _MainscreenState extends State<Mainscreen> {
     ];
   }
 
+
   List<Widget> _buildScreen() {
     return [
       const HomeScreen(),
@@ -69,6 +70,7 @@ class _MainscreenState extends State<Mainscreen> {
 
       const SettingScreen(),
     ];
+
   }
 
   @override
