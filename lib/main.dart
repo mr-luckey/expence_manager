@@ -20,10 +20,11 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-       home:
-      Mainscreen(
-        selectedIndex: 0,
-      ),
+
+      home: Mainscreen(
+          // selectedIndex: 0,
+          ),
+
       // DefaultTabController(length: 3, child: CardNavigation())
     );
   }

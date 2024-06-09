@@ -16,7 +16,7 @@ class topbar extends Container {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      color: Colors.transparent,
+      color: Colors.white70,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

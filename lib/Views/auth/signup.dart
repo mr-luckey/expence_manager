@@ -61,8 +61,8 @@ class _SignupState extends State<Signup> {
                   genButton(
                     onTap: () {
                       Get.to(Mainscreen(
-                        selectedIndex: 1,
-                      )); //TODO: need to uddate
+                          // selectedIndex: 1,
+                          )); //TODO: need to uddate
                     },
                     text: 'Signup',
                     width: Get.width * 0.7,

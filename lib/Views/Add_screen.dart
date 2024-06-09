@@ -11,6 +11,7 @@ class AddPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Column(
         children: [
           topbar(
@@ -66,6 +67,7 @@ class AddPage extends StatelessWidget {
             ),
           ),
         ],
+
       ),
     );
   }
