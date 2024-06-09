@@ -8,7 +8,10 @@ class containersav extends StatelessWidget {
     return Container(
       height: 80,
       width: 80,
-      color: Colors.blue,
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.circular(10), // Adjust the value as needed
+      ),
     );
   }
 }

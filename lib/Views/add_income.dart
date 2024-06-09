@@ -1,4 +1,5 @@
 import 'package:expence_manager/widgets/app_bar.dart';
+import 'package:expence_manager/widgets/input%20field.dart';
 import 'package:expence_manager/widgets/timeline_calender.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,7 @@ class AddIncome extends StatefulWidget {
 }
 
 class _AddIncomeState extends State<AddIncome> {
+  // Controllers for the text fields
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
@@ -49,41 +51,46 @@ class _AddIncomeState extends State<AddIncome> {
         },
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TimelineCalender(),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: const Text(
-                'Amount',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        child: Container(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TimelineCalender(),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: const Text(
+                  'Amount',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            inputfield(
-              _amountController,
-              'Enter amount',
-              Icons.attach_money,
-              false,
-              TextInputType.number,
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: const Text(
-                'Description',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              inputfield(
+                _amountController,
+                'Enter amount',
+                Icons.attach_money,
+                false,
+                TextInputType.number,
               ),
-            ),
-            inputfield(
-              _descriptionController,
-              'Enter description',
-              Icons.description,
-              false,
-              TextInputType.text,
-            ),
-          ],
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: const Text(
+                  'Description',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              inputfield(
+                _descriptionController,
+                'Enter description',
+                Icons.description,
+                false,
+                TextInputType.text,
+              ),
+
+
+            ],
+          ),
         ),
       ),
     );
