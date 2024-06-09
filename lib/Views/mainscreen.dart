@@ -34,7 +34,7 @@ class _MainscreenState extends State<Mainscreen> {
   final widgetOptions = [
     const HomeScreen(),
     const TodoScreen(),
-    const AddScreen(),
+    const AddPage(),
     const AlertScreen(),
     const SettingScreen(),
 
