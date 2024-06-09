@@ -21,26 +21,31 @@ class _TimelineCalenderState extends State<TimelineCalender> {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(16.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       elevation: 5,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: CalendarTimeline(
-          showYears: true,
-          initialDate: selectedDate,
-          firstDate: DateTime.now(),
-          lastDate: DateTime.now().add(const Duration(days: 365 * 4)),
-          onDateSelected: (date) => setState(() => selectedDate = date),
-          leftMargin: 20,
-          monthColor: Colors.white70,
-          dayColor: Colors.teal[200],
-          dayNameColor: Color.fromARGB(255, 50, 59, 77),
-          activeDayColor: Colors.white, // Set the active day text color to white
-          inactiveDayNameColor: Colors.redAccent[100],
-          activeBackgroundDayColor: Colors.blue, // Set the active day background color to blue
-          dotsColor: const Color(0xFF333A47),
-          selectableDayPredicate: (date) => date.day != 23,
-          locale: 'en',
+        padding:  EdgeInsets.all(16.0),
+        child: SizedBox(
+          width: double.infinity, // Set the width of the calendar
+          height: 150, // Set the height of the calendar
+          child: CalendarTimeline(
+            showYears: true,
+            initialDate: selectedDate,
+            firstDate: DateTime.now(),
+            lastDate: DateTime.now().add( Duration(days: 365 * 4)),
+            onDateSelected: (date) => setState(() => selectedDate = date),
+            leftMargin: 20,
+            monthColor: Colors.black87, // Set the month text color to black
+            dayColor: Colors.black87, // Set the day text color to black
+            dayNameColor: Colors.white, // Set the day name text color to black
+            activeDayColor: Colors.white, // Set the active day text color to white
+            inactiveDayNameColor: Colors.black87, // Set the inactive day name text color to black
+            activeBackgroundDayColor: Colors.blue, // Set the active day background color to blue
+            dotsColor: const Color(0xFFffffff),
+            selectableDayPredicate: (date) => date.day != 23,
+            locale: 'en',
+
+          ),
         ),
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'custom_expense_card.dart';
+import 'custom_catagory_card.dart';
 import 'record_widget.dart';
 import '../constants/records.dart';
 
@@ -17,7 +17,7 @@ class CategoryTabContent extends StatelessWidget {
             margin: const EdgeInsets.all(10),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: CustomExpenseCard(),
+              child: CustomCategoryCard(expenses: [], labels: [], colors: [], records: [],),
             ),
           ), // Card for the expense chart
           SizedBox(height: 20), // Space between chart and records
