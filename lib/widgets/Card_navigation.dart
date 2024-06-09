@@ -1,4 +1,5 @@
 import 'package:expence_manager/Views/total_Expense.dart';
+import 'package:expence_manager/widgets/buttom_navfun.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -78,15 +79,16 @@ class _CardNavigationState extends State<CardNavigation>
                       fontWeight: FontWeight.bold),
                   unselectedTextStyle:
                       textTheme.bodyMedium?.copyWith(fontSize: 10.0),
-                  tabs:  [
+                  tabs: [
                     Tab(
                       text: 'Total Salary',
                     ),
                     GestureDetector(
-                      onTap:(){Get.to(TotalExpense());},
-
-                      child: Tab(
-                          text: 'Total Expanse'),
+                      onTap: () {
+                        NavigationService.instance
+                            .changeScreen(context, TotalExpense());
+                      },
+                      child: Tab(text: 'Total Expanse'),
                     ),
                     Tab(text: 'Monthly Expanse'),
                   ],
@@ -174,7 +176,6 @@ class _CardNavigationState extends State<CardNavigation>
                         )
                       ]),
                     ),
-
                   ]
                   //  _getChildren1(),
                   ),

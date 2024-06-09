@@ -64,8 +64,8 @@ class _LoginState extends State<Login> {
                   genButton(
                     onTap: () {
                       Get.to(const Mainscreen(
-                        selectedIndex: 1,
-                      )); //TODO: need to uddate
+                          // selectedIndex: 1,
+                          )); //TODO: need to uddate
                     },
                     text: 'Login',
                     width: Get.width * 0.7,
