@@ -5,6 +5,7 @@ import 'package:expence_manager/widgets/tab_bar.dart';
 import 'package:expence_manager/widgets/timeline_calender.dart';
 import 'package:flutter/material.dart';
 import 'package:expence_manager/widgets/Topbar.dart';
+import 'package:expence_manager/widgets/custom_expense_card.dart'; // Import the CustomExpenseCard
 
 class TotalExpense extends StatelessWidget {
   const TotalExpense({Key? key}) : super(key: key);
@@ -42,7 +43,8 @@ class TotalExpense extends StatelessWidget {
                 tabViews: [
                   // Use the recordWidget with dynamic data
                   recordWidget(records),
-                  Center(child: Text('Category')), // Placeholder for Category tab
+                  CustomExpenseCard(),
+                  // Display the expense card in the "Category" tab
                 ],
               ),
             ),
