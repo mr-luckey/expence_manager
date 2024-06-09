@@ -11,7 +11,9 @@ class _AddScreenState extends State<AddScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red,
+      body: const Center(
+        child: Text('Add Screen'),
+      ),
     );
   }
 }

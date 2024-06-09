@@ -11,7 +11,9 @@ class _AlertScreenState extends State<AlertScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow,
+      body: const Center(
+        child: Text('Alert Screen'),
+      ),
     );
   }
 }

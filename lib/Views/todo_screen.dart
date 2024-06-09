@@ -2,7 +2,7 @@ import 'package:expence_manager/widgets/Topbar.dart';
 import 'package:flutter/material.dart';
 
 class TodoScreen extends StatefulWidget {
-  const TodoScreen({super.key});
+  const TodoScreen({super.key, BuildContext? initialIndex});
 
   @override
   State<TodoScreen> createState() => _TodoScreenState();
@@ -23,6 +23,19 @@ class _TodoScreenState extends State<TodoScreen> {
               title: 'Savings',
               leading: Icon(Icons.arrow_back),
               trailing: Icon(Icons.menu),
+            ),
+          ),
+          Text("Current Savaing"),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            height: 150,
+            width: 150,
+            // color: Colors.blueAccent,
+            decoration: BoxDecoration(
+              color: Colors.blueAccent,
+              borderRadius: BorderRadius.circular(100),
             ),
           ),
         ],
