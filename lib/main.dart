@@ -1,3 +1,4 @@
+import 'package:expence_manager/Views/add_page.dart';
 import 'package:expence_manager/Views/auth/login.dart';
 import 'package:expence_manager/Views/home_screen.dart';
 import 'package:expence_manager/Views/mainscreen.dart';
@@ -19,9 +20,11 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
+
       home: Mainscreen(
           // selectedIndex: 0,
           ),
+
       // DefaultTabController(length: 3, child: CardNavigation())
     );
   }

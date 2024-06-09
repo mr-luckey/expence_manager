@@ -59,14 +59,25 @@ class _MainscreenState extends State<Mainscreen> {
     ];
   }
 
-  List<Widget> _buildScreen() {
-    return [
-      const HomeScreen(),
-      const TodoScreen(),
-      const AddScreen(),
-      const AlertScreen(),
-      const SettingScreen(),
-    ];
+  late int selectedIndex;
+  final widgetOptions = [
+    const HomeScreen(),
+    const TodoScreen(),
+    const AddPage(),
+    const AlertScreen(),
+    const SettingScreen(),
+
+    // const ClientMainScreen(),
+    // const ClientProjectFolderScreen(),
+    // const ClientChatScreen(),
+    // const ClientPendingOffersScreen(),
+    // const ClientSettingsScreen(),
+  ];
+  void onItemTapped(index) {
+    setState(() {
+      selectedIndex = index;
+    });
+
   }
 
   @override

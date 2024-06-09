@@ -18,6 +18,8 @@ dependencies:
     sdk: flutter
   get: ^4.6.6
   hive: ^2.2.3
+  fl_chart: ^0.68.0
+  gauge_indicator: ^0.4.3
   
   tab_container: ^3.5.3
 
