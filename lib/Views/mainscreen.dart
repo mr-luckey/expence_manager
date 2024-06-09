@@ -59,18 +59,16 @@ class _MainscreenState extends State<Mainscreen> {
     ];
   }
 
-
   List<Widget> _buildScreen() {
     return [
       const HomeScreen(),
       const TodoScreen(),
-      const AddScreen(),
+      const AddPage(),
       const AlertScreen(),
       //mainscree code
 
       const SettingScreen(),
     ];
-
   }
 
   @override
