@@ -3,27 +3,31 @@ import 'package:expence_manager/widgets/input%20field.dart';
 import 'package:expence_manager/widgets/timeline_calender.dart';
 import 'package:flutter/material.dart';
 
-// Custom input field function
+// Custom input field function with optional icon and right-side icon option
 Widget inputfield(
     TextEditingController controller,
     String hint,
-    IconData icon,
+    IconData? icon,
     bool obscure,
     TextInputType type,
-    ) {
+    {bool isIconOnRight = false}) { // Added a parameter for icon position
   return Container(
     width: double.infinity,
-    margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+    margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 5), // Reduced vertical margin
     child: TextField(
       controller: controller,
       keyboardType: type,
       obscureText: obscure,
+      style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.bold), // Set text color to grey
       decoration: InputDecoration(
-        prefixIcon: Icon(icon),
+        prefixIcon: isIconOnRight ? null : (icon != null ? Icon(icon, color: Colors.grey) : null), // Conditional icon on left
+        suffixIcon: isIconOnRight ? (icon != null ? Icon(icon, color: Colors.grey) : null) : null, // Conditional icon on right
         hintText: hint,
+        hintStyle: TextStyle(color: Colors.grey), // Set hint text color to grey
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15), // Reduced height
       ),
     ),
   );
@@ -61,34 +65,33 @@ class _AddIncomeState extends State<AddIncome> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
-                  'Amount',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  'Income Title', // Changed text
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
                 ),
               ),
               inputfield(
                 _amountController,
-                'Enter amount',
-                Icons.attach_money,
+                '',
+                null, // Removed icon
                 false,
-                TextInputType.number,
+                TextInputType.text, // English and number keyboard
               ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
-                  'Description',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  'Amount',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
                 ),
               ),
               inputfield(
                 _descriptionController,
-                'Enter description',
-                Icons.description,
+                '',
+                Icons.attach_money,
                 false,
-                TextInputType.text,
+                TextInputType.number, // Number keyboard
+                isIconOnRight: true, // Icon on right side
               ),
-
-
             ],
           ),
         ),
