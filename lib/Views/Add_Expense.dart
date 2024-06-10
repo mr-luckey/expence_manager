@@ -37,14 +37,14 @@ Widget inputfield(
   );
 }
 
-class AddIncome extends StatefulWidget {
-  const AddIncome({super.key});
+class AddExpense extends StatefulWidget { // Changed class name to AddExpense
+  const AddExpense({Key? key}) : super(key: key); // Changed class constructor name
 
   @override
-  State<AddIncome> createState() => _AddIncomeState();
+  State<AddExpense> createState() => _AddExpenseState(); // Changed state creation method
 }
 
-class _AddIncomeState extends State<AddIncome> {
+class _AddExpenseState extends State<AddExpense> { // Changed class name to AddExpenseState
   // Controllers for the text fields
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -53,9 +53,9 @@ class _AddIncomeState extends State<AddIncome> {
   int _selectedIndex = -1;
 
   // Method to handle button press
-  void _handleAddIncome() {
+  void _handleAddExpense() { // Changed method name to _handleAddExpense
     // Handle the button press logic here
-    print('Add Income button pressed');
+    print('Add Expense button pressed');
   }
 
   // Method to handle container tap
@@ -78,7 +78,7 @@ class _AddIncomeState extends State<AddIncome> {
       case 1:
         return Center(
           child: Text(
-            'Salary',
+            'Health',
             style: TextStyle(
               color: _selectedIndex == index ? Colors.white : Colors.black,
             ),
@@ -87,7 +87,7 @@ class _AddIncomeState extends State<AddIncome> {
       case 2:
         return Center(
           child: Text(
-            'Reward',
+            'Grocery',
             style: TextStyle(
               color: _selectedIndex == index ? Colors.white : Colors.black,
             ),
@@ -109,7 +109,7 @@ class _AddIncomeState extends State<AddIncome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Add Income',
+        title: 'Add Expense', // Changed app bar title
         onBackPressed: () {
           Navigator.of(context).pop();
         },
@@ -156,7 +156,7 @@ class _AddIncomeState extends State<AddIncome> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
-                  'Income Category',
+                  'Expense Category', // Changed text
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
                 ),
               ),
@@ -188,8 +188,8 @@ class _AddIncomeState extends State<AddIncome> {
                 child: Padding(
                   padding: const EdgeInsets.all(15),
                   child: genButton(
-                    onTap: _handleAddIncome,
-                    text: 'Add Income',
+                    onTap: _handleAddExpense, // Changed method name
+                    text: 'Add Expense', // Changed button text
                     enabled: true,
                     width: double.infinity,
                     bloc: null,

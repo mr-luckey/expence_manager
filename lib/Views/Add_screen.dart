@@ -1,9 +1,9 @@
 import 'package:expence_manager/Views/add_income.dart';
+import 'package:expence_manager/Views/add_expense.dart'; // Import the AddExpensePage
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import '../constants/records.dart';
 import '../widgets/record_widget.dart';
-  // Import the AddIncomePage
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -22,7 +22,13 @@ class _AddPageState extends State<AddPage> {
     if (index == 1) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => AddIncome(),
+          builder: (context) => AddIncome(), // Navigate to AddIncome for index 1
+        ),
+      );
+    } else if (index == 2) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => AddExpense(), // Navigate to AddExpense for index 2
         ),
       );
     }
