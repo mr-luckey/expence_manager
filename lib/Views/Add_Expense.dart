@@ -1,3 +1,4 @@
+import 'package:expence_manager/Views/Latest_Entries.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:expence_manager/widgets/buttons.dart';
 import 'package:expence_manager/widgets/input%20field.dart';
@@ -7,6 +8,7 @@ import 'package:expence_manager/Controllers/colorscontrollers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
 // Custom input field function with optional icon and right-side icon option
 Widget inputfield(
     TextEditingController controller,
@@ -14,37 +16,37 @@ Widget inputfield(
     IconData? icon,
     bool obscure,
     TextInputType type,
-    {bool isIconOnRight = false}) { // Added a parameter for icon position
+    {bool isIconOnRight = false}) {
   return Container(
     width: double.infinity,
-    margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 5), // Reduced vertical margin
+    margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
     child: TextField(
       controller: controller,
       keyboardType: type,
       obscureText: obscure,
-      style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.bold), // Set text color to grey
+      style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
-        prefixIcon: isIconOnRight ? null : (icon != null ? Icon(icon, color: Colors.grey) : null), // Conditional icon on left
-        suffixIcon: isIconOnRight ? (icon != null ? Icon(icon, color: Colors.grey) : null) : null, // Conditional icon on right
+        prefixIcon: isIconOnRight ? null : (icon != null ? Icon(icon, color: Colors.grey) : null),
+        suffixIcon: isIconOnRight ? (icon != null ? Icon(icon, color: Colors.grey) : null) : null,
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.grey), // Set hint text color to grey
+        hintStyle: TextStyle(color: Colors.grey),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15), // Reduced height
+        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       ),
     ),
   );
 }
 
-class AddExpense extends StatefulWidget { // Changed class name to AddExpense
-  const AddExpense({Key? key}) : super(key: key); // Changed class constructor name
+class AddExpense extends StatefulWidget {
+  const AddExpense({Key? key}) : super(key: key);
 
   @override
-  State<AddExpense> createState() => _AddExpenseState(); // Changed state creation method
+  State<AddExpense> createState() => _AddExpenseState();
 }
 
-class _AddExpenseState extends State<AddExpense> { // Changed class name to AddExpenseState
+class _AddExpenseState extends State<AddExpense> {
   // Controllers for the text fields
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -53,9 +55,13 @@ class _AddExpenseState extends State<AddExpense> { // Changed class name to AddE
   int _selectedIndex = -1;
 
   // Method to handle button press
-  void _handleAddExpense() { // Changed method name to _handleAddExpense
-    // Handle the button press logic here
-    print('Add Expense button pressed');
+  void _handleAddExpense() {
+    // Handle the button press logic here, e.g., saving the expense
+
+    // Navigate to the LatestEntries page
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => LatestEntries()),
+    );
   }
 
   // Method to handle container tap
@@ -109,7 +115,7 @@ class _AddExpenseState extends State<AddExpense> { // Changed class name to AddE
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Add Expense', // Changed app bar title
+        title: 'Add Expense',
         onBackPressed: () {
           Navigator.of(context).pop();
         },
@@ -125,16 +131,16 @@ class _AddExpenseState extends State<AddExpense> { // Changed class name to AddE
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
-                  'Income Title', // Changed text
+                  'Income Title',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
                 ),
               ),
               inputfield(
                 _amountController,
                 '',
-                null, // Removed icon
+                null,
                 false,
-                TextInputType.text, // English and number keyboard
+                TextInputType.text,
               ),
               const SizedBox(height: 20),
               Padding(
@@ -149,14 +155,14 @@ class _AddExpenseState extends State<AddExpense> { // Changed class name to AddE
                 '',
                 Icons.attach_money,
                 false,
-                TextInputType.number, // Number keyboard
-                isIconOnRight: true, // Icon on right side
+                TextInputType.number,
+                isIconOnRight: true,
               ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
-                  'Expense Category', // Changed text
+                  'Expense Category',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
                 ),
               ),
@@ -170,8 +176,8 @@ class _AddExpenseState extends State<AddExpense> { // Changed class name to AddE
                       onTap: () => _onContainerTap(index),
                       child: Container(
                         margin: const EdgeInsets.only(right: 10),
-                        height: 60,  // Reduced height
-                        width: 60,   // Reduced width
+                        height: 60,
+                        width: 60,
                         decoration: BoxDecoration(
                           color: _selectedIndex == index ? Colors.blue : Colors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -188,8 +194,8 @@ class _AddExpenseState extends State<AddExpense> { // Changed class name to AddE
                 child: Padding(
                   padding: const EdgeInsets.all(15),
                   child: genButton(
-                    onTap: _handleAddExpense, // Changed method name
-                    text: 'Add Expense', // Changed button text
+                    onTap: _handleAddExpense,
+                    text: 'Add Expense',
                     enabled: true,
                     width: double.infinity,
                     bloc: null,
@@ -203,3 +209,4 @@ class _AddExpenseState extends State<AddExpense> { // Changed class name to AddE
     );
   }
 }
+
