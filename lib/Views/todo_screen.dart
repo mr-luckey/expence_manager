@@ -29,7 +29,7 @@ class _SavingPageState extends State<SavingPage> {
             Center(
               child: Text(
                 "Current Savings",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20),
               ),
             ),
             SizedBox(height: 50), // Space between text and circular container
