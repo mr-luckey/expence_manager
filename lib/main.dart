@@ -1,3 +1,4 @@
+import 'package:expence_manager/Views/Add_Goals.dart';
 import 'package:expence_manager/Views/add_page.dart';
 import 'package:expence_manager/Views/auth/login.dart';
 import 'package:expence_manager/Views/home_screen.dart';
@@ -21,9 +22,10 @@ class MainApp extends StatelessWidget {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
 
-      home: Mainscreen(
-          // selectedIndex: 0,
-          ),
+       home: AddGoals()
+      // Mainscreen(
+      //     // selectedIndex: 0,
+      //     ),
 
       // DefaultTabController(length: 3, child: CardNavigation())
     );
