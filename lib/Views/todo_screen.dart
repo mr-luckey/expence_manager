@@ -1,3 +1,4 @@
+import 'package:expence_manager/Views/your_goal.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:expence_manager/widgets/container.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class SavingPage extends StatefulWidget {
 }
 
 class _SavingPageState extends State<SavingPage> {
-  double _progress = 0.6; // Example progress value
+  double progress = 0.6; // Example progress value
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class _SavingPageState extends State<SavingPage> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10), // Rounded edges for the task bar
                             child: LinearProgressIndicator(
-                              value: _progress, // Example progress value
+                              value: progress, // Example progress value
                               backgroundColor: Colors.grey[300],
                               color: Colors.blue,
                               minHeight: 40, // Increased height of the task bar
@@ -118,8 +119,13 @@ class _SavingPageState extends State<SavingPage> {
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.black45),
                         ),
-                        child: Center(
-                          child: Icon(Icons.more_vert_rounded),
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => YourGoal()));
+                          },
+                          child: Center(
+                            child: Icon(Icons.more_vert_rounded),
+                          ),
                         ),
                       ),
                     ],
@@ -151,7 +157,7 @@ class _SavingPageState extends State<SavingPage> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10), // Rounded edges for the task bar
                         child: LinearProgressIndicator(
-                          value: _progress, // Example progress value
+                          value: progress, // Example progress value
                           backgroundColor: Colors.grey[300],
                           color: Colors.blue,
                           minHeight: 6, // Increased height of the task bar
@@ -200,7 +206,7 @@ class _SavingPageState extends State<SavingPage> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10), // Rounded edges for the task bar
                         child: LinearProgressIndicator(
-                          value: _progress, // Example progress value
+                          value: progress, // Example progress value
                           backgroundColor: Colors.grey[300],
                           color: Colors.blue,
                           minHeight: 6, // Increased height of the task bar
