@@ -2,25 +2,28 @@ import 'package:expence_manager/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 
-class AddGoals extends StatefulWidget {
-  const AddGoals({Key? key}) : super(key: key);
+class SetReminder extends StatefulWidget {
+  const SetReminder({Key? key}) : super(key: key);
 
   @override
-  State<AddGoals> createState() => _AddGoalsState();
+  State<SetReminder> createState() => _SetReminderState();
 }
 
-class _AddGoalsState extends State<AddGoals> {
+class _SetReminderState extends State<SetReminder> {
+  final TextEditingController _billController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _contributionController = TextEditingController();
-  final TextEditingController _deadlineController = TextEditingController();
+  final TextEditingController _frequencyController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
   List<String> _contributions = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
   String _selectedContribution = ''; // Set an initial value
+  List<String> _incomeTitles = ['Car', 'iPhone', 'House', 'Shopping'];
+  String _selectedIncomeTitle = ''; // Set an initial value
 
   @override
   void initState() {
     super.initState();
-    _contributionController.text = _selectedContribution; // Initialize with the default value
+    _frequencyController.text = _selectedContribution; // Initialize with the default value
+    _billController.text = _selectedIncomeTitle; // Initialize with the default value
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -32,17 +35,49 @@ class _AddGoalsState extends State<AddGoals> {
     );
     if (picked != null) {
       setState(() {
-        _deadlineController.text = "${picked.toLocal()}".split(' ')[0];
+        _dateController.text = "${picked.toLocal()}".split(' ')[0];
       });
     }
+  }
 
+  void _showIncomeTitleDropdown() async {
+    String? selectedIncomeTitle = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Income Title'),
+          content: Container(
+            width: double.minPositive, // Make the dialog size just enough to fit its content
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: _incomeTitles.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text(_incomeTitles[index]),
+                  onTap: () {
+                    Navigator.of(context).pop(_incomeTitles[index]);
+                  },
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+
+    if (selectedIncomeTitle != null) {
+      setState(() {
+        _selectedIncomeTitle = selectedIncomeTitle;
+        _billController.text = selectedIncomeTitle;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Add Goal',
+        title: 'Set Reminder',
         onBackPressed: () {
           Navigator.of(context).pop();
         },
@@ -65,10 +100,15 @@ class _AddGoalsState extends State<AddGoals> {
                 child: Container(
                   height: 40, // Set the height of the input field
                   child: TextField(
-                    controller: _amountController,
+                    controller: _billController,
+                    readOnly: true,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       hintText: '',
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.arrow_drop_down),
+                        onPressed: _showIncomeTitleDropdown,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -89,7 +129,7 @@ class _AddGoalsState extends State<AddGoals> {
                 child: Container(
                   height: 40, // Set the height of the input field
                   child: TextField(
-                    controller: _descriptionController,
+                    controller: _amountController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: '',
@@ -114,7 +154,7 @@ class _AddGoalsState extends State<AddGoals> {
                 child: Container(
                   height: 40, // Set the height of the input field
                   child: TextField(
-                    controller: _contributionController,
+                    controller: _frequencyController,
                     readOnly: true,
                     decoration: InputDecoration(
                       hintText: '',
@@ -136,7 +176,7 @@ class _AddGoalsState extends State<AddGoals> {
                       if (selectedContribution != null) {
                         setState(() {
                           _selectedContribution = selectedContribution;
-                          _contributionController.text = selectedContribution;
+                          _frequencyController.text = selectedContribution;
                         });
                       }
                     },
@@ -156,7 +196,7 @@ class _AddGoalsState extends State<AddGoals> {
                 child: Container(
                   height: 40, // Set the height of the input field
                   child: TextField(
-                    controller: _deadlineController,
+                    controller: _dateController,
                     readOnly: true,
                     decoration: InputDecoration(
                       hintText: '',
@@ -178,11 +218,13 @@ class _AddGoalsState extends State<AddGoals> {
                 child: Padding(
                   padding: const EdgeInsets.all(15),
                   child: genButton(
-                    //onTap: _handleAddGoal,
-                    text: 'Add Goal',
+                    text: 'Set Reminder',
                     enabled: true,
                     width: double.infinity,
-                    bloc: null, onTap: () {  },
+                    bloc: null,
+                    onTap: () {
+                      // Handle Add Goal
+                    },
                   ),
                 ),
               ),

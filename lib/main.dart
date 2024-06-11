@@ -3,6 +3,7 @@ import 'package:expence_manager/Views/add_page.dart';
 import 'package:expence_manager/Views/auth/login.dart';
 import 'package:expence_manager/Views/home_screen.dart';
 import 'package:expence_manager/Views/mainscreen.dart';
+import 'package:expence_manager/Views/set_remainder.dart';
 import 'package:expence_manager/widgets/Card_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,7 +23,7 @@ class MainApp extends StatelessWidget {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
 
-       home: AddGoals()
+       home: SetReminder()
       // Mainscreen(
       //     // selectedIndex: 0,
       //     ),
