@@ -1,3 +1,4 @@
+import 'package:expence_manager/Views/Reminder.dart';
 import 'package:expence_manager/widgets/Card_navigation.dart';
 import 'package:expence_manager/widgets/Topbar.dart';
 import 'package:expence_manager/widgets/buttons.dart';
@@ -77,7 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     index: 0,
                   ),
                   Btn(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Reminder()));
+                    },
                     text: 'Remind',
                     iconData: Icons.notifications_active_outlined,
                     index: 1,

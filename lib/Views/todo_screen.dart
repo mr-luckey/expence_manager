@@ -1,5 +1,7 @@
+import 'package:expence_manager/Views/Add_Goals.dart';
 import 'package:expence_manager/Views/your_goal.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
+import 'package:expence_manager/widgets/buttons.dart';
 import 'package:expence_manager/widgets/container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -231,6 +233,12 @@ class _SavingPageState extends State<SavingPage> {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: genButton(onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AddGoals()));
+              }, text: 'Add Goal', width: double.infinity, bloc: null,),
+            )
           ],
         ),
       ),

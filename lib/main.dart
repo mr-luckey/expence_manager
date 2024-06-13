@@ -1,4 +1,5 @@
 import 'package:expence_manager/Views/Add_Goals.dart';
+import 'package:expence_manager/Views/Reminder.dart';
 import 'package:expence_manager/Views/add_page.dart';
 import 'package:expence_manager/Views/auth/login.dart';
 import 'package:expence_manager/Views/home_screen.dart';
@@ -23,10 +24,11 @@ class MainApp extends StatelessWidget {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
 
-       home: SetReminder()
-      // Mainscreen(
-      //     // selectedIndex: 0,
-      //     ),
+        home:
+      // Reminder()
+      Mainscreen(
+          // selectedIndex: 0,
+          ),
 
       // DefaultTabController(length: 3, child: CardNavigation())
     );
