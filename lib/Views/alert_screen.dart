@@ -17,6 +17,14 @@ class _AlertScreenState extends State<AlertScreen> {
     'Package delivered'
   ];
 
+  List<String> items = [
+    'Message',
+    'Payment',
+    'Electricity Bill',
+    'Meeting',
+    'Package'
+  ];
+
   List<IconData> icons = [
     Icons.message,
     Icons.payment,
@@ -47,7 +55,7 @@ class _AlertScreenState extends State<AlertScreen> {
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
@@ -61,7 +69,9 @@ class _AlertScreenState extends State<AlertScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(alertTexts[index], style: TextStyle(fontSize: 16)),
+                          Text(items[index % items.length], style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                          SizedBox(height: 4),
+                          Text(alertTexts[index], style: TextStyle(fontSize: 14)),
                         ],
                       ),
                     ),

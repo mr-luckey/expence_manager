@@ -1,4 +1,5 @@
 import 'package:expence_manager/Views/Reminder.dart';
+import 'package:expence_manager/Views/todo_screen.dart';
 import 'package:expence_manager/widgets/Card_navigation.dart';
 import 'package:expence_manager/widgets/Topbar.dart';
 import 'package:expence_manager/widgets/buttons.dart';
@@ -72,7 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Btn(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SavingPage()));
+                    },
                     text: 'saving',
                     iconData: Icons.add,
                     index: 0,
