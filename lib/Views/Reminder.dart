@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:expence_manager/Models/reminder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:expence_manager/views/edit_reminder.dart';
 import 'package:expence_manager/views/set_remainder.dart';
@@ -15,50 +16,55 @@ class ReminderPage extends StatefulWidget {
 }
 
 class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver {
-  List<ReminderModel> reminders = [];
+  late Box<ReminderModel> _reminderBox;
+  List<ReminderModel> reminders = []; // Declare reminders list
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    openBox();
+  }
+
+  Future<void> openBox() async {
+    final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
+    Hive.init(appDocumentDir.path);
+    _reminderBox = await Hive.openBox<ReminderModel>('reminders');
     loadReminders();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _reminderBox.close();
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused || state == AppLifecycleState.inactive) {
-      saveReminders();
+      // No need to explicitly save as Hive auto-saves on state changes.
     }
   }
 
   Future<void> loadReminders() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String>? remindersJson = prefs.getStringList('reminders');
-
-    if (remindersJson != null) {
-      setState(() {
-        reminders = remindersJson.map((json) => ReminderModel.fromJson(jsonDecode(json))).toList();
-      });
-    }
-  }
-
-  Future<void> saveReminders() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> remindersJson = reminders.map((reminder) => jsonEncode(reminder.toJson())).toList();
-    await prefs.setStringList('reminders', remindersJson);
-  }
-
-  void deleteReminder(int index) {
     setState(() {
-      reminders.removeAt(index);
+      // Clear the existing list
+      reminders.clear();
+      // Load reminders from Hive into the local list
+      reminders.addAll(_reminderBox.values.toList());
     });
-    saveReminders();
+  }
+
+  void saveReminder(ReminderModel reminder) async {
+    // Insert or update reminder in Hive
+    await _reminderBox.put(reminder.key, reminder);
+    loadReminders(); // Reload reminders after saving
+  }
+
+  void deleteReminder(int key) async {
+    await _reminderBox.delete(key);
+    loadReminders(); // Reload reminders after deleting
   }
 
   @override
@@ -91,10 +97,10 @@ class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver
 
     return GestureDetector(
       onLongPress: () {
-        showDeleteConfirmationDialog(index);
+        showDeleteConfirmationDialog(reminder.key);
       },
       onTap: () {
-        navigateToEditReminder(index);
+        navigateToEditReminder(reminder);
       },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -106,9 +112,9 @@ class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver
               children: [
                 Text('Reminder Date: ${reminder.reminderDate}', style: TextStyle(fontSize: 16)),
                 SizedBox(height: 8),
-                Text(reminder.description, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(reminder.description!, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 SizedBox(height: 8),
-                Text(reminder.amount, style: TextStyle(fontSize: 16)),
+                Text(reminder.amount!, style: TextStyle(fontSize: 16)),
               ],
             ),
             Column(
@@ -118,7 +124,7 @@ class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver
                 SizedBox(height: 8),
                 Text('Due on', style: TextStyle(fontSize: 16)),
                 SizedBox(height: 8),
-                Text(reminder.dueDate, style: TextStyle(fontSize: 16)),
+                Text(reminder.dueDate!, style: TextStyle(fontSize: 16)),
               ],
             ),
           ],
@@ -127,7 +133,7 @@ class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver
     );
   }
 
-  void showDeleteConfirmationDialog(int index) {
+  void showDeleteConfirmationDialog(int key) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -144,7 +150,7 @@ class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver
             TextButton(
               child: Text("Delete"),
               onPressed: () {
-                deleteReminder(index);
+                deleteReminder(key);
                 Navigator.of(context).pop();
               },
             ),
@@ -154,9 +160,8 @@ class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver
     );
   }
 
-  void navigateToEditReminder(int index) async {
-    ReminderModel reminder = reminders[index];
-    final ReminderModel? updatedReminder = await Navigator.push(
+  void navigateToEditReminder(ReminderModel reminder) async {
+    final updatedReminder = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => EditReminder(reminderDate: '', description: '', amount: '', dueDate: '',
@@ -164,27 +169,21 @@ class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver
       ),
     );
 
-    if (updatedReminder != null) {
-      setState(() {
-        reminders[index] = updatedReminder;
-      });
-      saveReminders();
+    if (updatedReminder != null && updatedReminder is ReminderModel) {
+      saveReminder(updatedReminder);
     }
   }
 
   void navigateToAddReminder() async {
-    final ReminderModel? newReminder = await Navigator.push(
+    final newReminder = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => SetReminder(),
       ),
     );
 
-    if (newReminder != null) {
-      setState(() {
-        reminders.add(newReminder);
-      });
-      saveReminders();
+    if (newReminder != null && newReminder is ReminderModel) {
+      saveReminder(newReminder);
     }
   }
 }

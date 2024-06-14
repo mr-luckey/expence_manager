@@ -1,18 +1,13 @@
 import 'package:expence_manager/Models/reminder.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 class EditReminder extends StatefulWidget {
-  final String reminderDate;
-  final String description;
-  final String amount;
-  final String dueDate;
+  final ReminderModel reminder;
 
   EditReminder({
-    required this.reminderDate,
-    required this.description,
-    required this.amount,
-    required this.dueDate,
+    required this.reminder,
   });
 
   @override
@@ -24,22 +19,29 @@ class _EditReminderState extends State<EditReminder> {
   late TextEditingController _amountController;
   late TextEditingController _dueDateController;
 
+  late Box<ReminderModel> _reminderBox;
+
   @override
   void initState() {
     super.initState();
-    _descriptionController = TextEditingController();
-    _amountController = TextEditingController();
-    _dueDateController = TextEditingController();
-    _loadReminderData();
+    _descriptionController = TextEditingController(text: widget.reminder.description);
+    _amountController = TextEditingController(text: widget.reminder.amount);
+    _dueDateController = TextEditingController(text: widget.reminder.dueDate);
+    openBox();
   }
 
-  void _loadReminderData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _descriptionController.text = prefs.getString('reminder_description') ?? widget.description;
-      _amountController.text = prefs.getString('reminder_amount') ?? widget.amount;
-      _dueDateController.text = prefs.getString('reminder_dueDate') ?? widget.dueDate;
-    });
+  Future<void> openBox() async {
+    _reminderBox = await Hive.openBox<ReminderModel>('reminders');
+  }
+
+  void _updateReminder() async {
+    widget.reminder.description = _descriptionController.text;
+    widget.reminder.amount = _amountController.text;
+    widget.reminder.dueDate = _dueDateController.text;
+
+    await widget.reminder.save(); // Save updated reminder to Hive box
+
+    Navigator.pop(context, widget.reminder);
   }
 
   @override
@@ -48,23 +50,6 @@ class _EditReminderState extends State<EditReminder> {
     _amountController.dispose();
     _dueDateController.dispose();
     super.dispose();
-  }
-
-  void _updateReminder() async {
-    ReminderModel reminderModel = ReminderModel(
-      reminderDate: widget.reminderDate,
-      description: _descriptionController.text,
-      amount: _amountController.text,
-      dueDate: _dueDateController.text,
-    );
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('reminder_description', reminderModel.description);
-    prefs.setString('reminder_amount', reminderModel.amount);
-    prefs.setString('reminder_dueDate', reminderModel.dueDate);
-    prefs.setString('reminder_reminderDate', reminderModel.reminderDate);
-
-    Navigator.pop(context, reminderModel);
   }
 
   @override
@@ -78,7 +63,7 @@ class _EditReminderState extends State<EditReminder> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Reminder Date: ${widget.reminderDate}', style: TextStyle(fontSize: 16)),
+            Text('Reminder Date: ${widget.reminder.reminderDate}', style: TextStyle(fontSize: 16)),
             SizedBox(height: 16),
             TextFormField(
               controller: _descriptionController,

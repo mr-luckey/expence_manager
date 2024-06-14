@@ -9,10 +9,12 @@ import 'package:expence_manager/widgets/Card_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main() {
+void main() async{
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
       overlays: [SystemUiOverlay.bottom]);
+  await Hive.initFlutter();
   runApp(const MainApp());
 }
 

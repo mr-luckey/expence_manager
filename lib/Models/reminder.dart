@@ -1,10 +1,19 @@
-import 'dart:convert';
+import 'package:hive/hive.dart';
+ // Generated file
 
-class ReminderModel {
-  String reminderDate;
-  String description;
-  String amount;
-  String dueDate;
+@HiveType(typeId: 0)
+class ReminderModel extends HiveObject {
+  @HiveField(0)
+  late String reminderDate;
+
+  @HiveField(1)
+  late String description;
+
+  @HiveField(2)
+  late String amount;
+
+  @HiveField(3)
+  late String dueDate;
 
   ReminderModel({
     required this.reminderDate,
@@ -12,22 +21,4 @@ class ReminderModel {
     required this.amount,
     required this.dueDate,
   });
-
-  factory ReminderModel.fromJson(Map<String, dynamic> json) {
-    return ReminderModel(
-      reminderDate: json['reminderDate'],
-      description: json['description'],
-      amount: json['amount'],
-      dueDate: json['dueDate'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'reminderDate': reminderDate,
-      'description': description,
-      'amount': amount,
-      'dueDate': dueDate,
-    };
-  }
 }

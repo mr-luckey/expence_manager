@@ -1,12 +1,9 @@
 import 'package:expence_manager/Models/reminder.dart';
-
+import 'package:expence_manager/Views/reminder_model_adapter.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-
-import 'Reminder.dart';
 
 class SetReminder extends StatefulWidget {
   const SetReminder({Key? key}) : super(key: key);
@@ -20,33 +17,44 @@ class _SetReminderState extends State<SetReminder> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _dueDateController = TextEditingController();
 
+  late Box<ReminderModel> _reminderBox;
+
+  @override
+  void initState() {
+    super.initState();
+    openBox();
+  }
+
+  Future<void> openBox() async {
+    final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
+    Hive.init(appDocumentDir.path);
+    Hive.registerAdapter(ReminderModelAdapter()); // Register the adapter
+    _reminderBox = await Hive.openBox<ReminderModel>('reminders');
+  }
+
   void _saveReminder() async {
     String description = _descriptionController.text;
     String amount = _amountController.text;
     String dueDate = _dueDateController.text;
 
     ReminderModel newReminder = ReminderModel(
-      reminderDate: DateFormat('MM/dd/yyyy').format(DateTime.now()), // Assuming reminderDate is today
+      reminderDate: DateFormat('MM/dd/yyyy').format(DateTime.now()),
       description: description,
       amount: amount,
       dueDate: dueDate,
     );
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String>? remindersJson = prefs.getStringList('reminders');
-    List<ReminderModel> reminders = remindersJson != null
-        ? remindersJson.map((json) => ReminderModel.fromJson(jsonDecode(json))).toList()
-        : [];
+    await _reminderBox.add(newReminder);
 
-    reminders.add(newReminder);
+    Navigator.pop(context);
+  }
 
-    List<String> updatedRemindersJson = reminders.map((reminder) => jsonEncode(reminder.toJson())).toList();
-    await prefs.setStringList('reminders', updatedRemindersJson);
-    print("I am running");
-    print(newReminder.description);
-    Get.to(()=>ReminderPage(reminder: newReminder,));
-
-    Navigator.pop(context, newReminder);
+  @override
+  void dispose() {
+    _descriptionController.dispose();
+    _amountController.dispose();
+    _dueDateController.dispose();
+    super.dispose();
   }
 
   @override
