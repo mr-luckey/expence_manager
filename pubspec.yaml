@@ -23,6 +23,7 @@ dependencies:
   
   tab_container: ^3.5.3
   intl: ^0.17.0
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:
