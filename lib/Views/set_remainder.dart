@@ -46,7 +46,7 @@ class _SetReminderState extends State<SetReminder> {
 
     await _reminderBox.add(newReminder);
 
-    Navigator.pop(context);
+    Navigator.pop(context, newReminder); // Pass the new reminder back to the previous screen
   }
 
   @override

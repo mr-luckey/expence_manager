@@ -67,7 +67,7 @@ class _MainscreenState extends State<Mainscreen> {
       const AlertScreen(),
       //mainscree code
 
-      const SettingScreen(),
+      SettingsScreen(),
     ];
   }
 

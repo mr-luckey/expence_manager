@@ -1,7 +1,6 @@
 import 'package:expence_manager/Models/reminder.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 
 class EditReminder extends StatefulWidget {
   final ReminderModel reminder;
@@ -39,9 +38,9 @@ class _EditReminderState extends State<EditReminder> {
     widget.reminder.amount = _amountController.text;
     widget.reminder.dueDate = _dueDateController.text;
 
-    await widget.reminder.save(); // Save updated reminder to Hive box
+    await _reminderBox.put(widget.reminder.key, widget.reminder); // Save updated reminder to Hive box
 
-    Navigator.pop(context, widget.reminder);
+    Navigator.pop(context, widget.reminder); // Pass updated reminder back to the previous screen
   }
 
   @override
