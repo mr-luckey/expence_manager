@@ -1,3 +1,4 @@
+import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,16 +34,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Settings'),
+      appBar: CustomAppBar(title: 'Setting', onBackPressed: () {
+        Navigator.of(context).pop();
+      },
+
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            buildSectionHeader(context, 'Preferences'),
+            buildSectionHeader('Preferences', context),
             buildSwitchTile(
-              context,
               title: 'Enable Notifications',
               value: _notificationsEnabled,
               icon: Icons.notifications_active_outlined,
@@ -52,9 +54,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 });
                 _saveSettings();
               },
+              context: context,
             ),
             buildSwitchTile(
-              context,
               title: 'Enable Dark Mode',
               value: _darkModeEnabled,
               icon: Icons.dark_mode_outlined,
@@ -64,46 +66,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 });
                 _saveSettings();
               },
+              context: context,
             ),
             SizedBox(height: 20),
-            buildSectionHeader(context, 'Account'),
+            buildSectionHeader('Account', context),
             buildListTile(
-              context,
               title: 'Account Settings',
               subtitle: 'Manage your account settings',
               icon: Icons.account_circle_outlined,
               onTap: () {
                 // Navigate to account settings screen
               },
+              context: context,
             ),
             buildListTile(
-              context,
               title: 'Privacy',
               subtitle: 'Manage your privacy settings',
               icon: Icons.privacy_tip_outlined,
               onTap: () {
                 // Navigate to privacy settings screen
               },
+              context: context,
             ),
             SizedBox(height: 20),
-            buildSectionHeader(context, 'Support'),
+            buildSectionHeader('Support', context),
             buildListTile(
-              context,
               title: 'Help & Support',
               subtitle: 'Get help and support',
               icon: Icons.help_outline,
               onTap: () {
                 // Navigate to help and support screen
               },
+              context: context,
             ),
             buildListTile(
-              context,
               title: 'About',
               subtitle: 'Learn more about the app',
               icon: Icons.info_outline,
               onTap: () {
                 // Navigate to about screen
               },
+              context: context,
             ),
           ],
         ),
@@ -111,38 +114,60 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget buildSectionHeader(BuildContext context, String title) {
+  Widget buildSectionHeader(String title, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Text(
         title,
-        style: Theme.of(context).textTheme.headline6?.copyWith(
-          color: Theme.of(context).primaryColor,
+        style: TextStyle(
+          color: Colors.blue, // Set the text color to blue
           fontWeight: FontWeight.bold,
         ),
       ),
     );
   }
 
-  Widget buildSwitchTile(BuildContext context,
-      {required String title, required bool value, required IconData icon, required Function(bool) onChanged}) {
+  Widget buildSwitchTile(
+      {required String title,
+        required bool value,
+        required IconData icon,
+        required Function(bool) onChanged,
+        required BuildContext context}) {
     return SwitchListTile(
-      title: Text(title, style: Theme.of(context).textTheme.bodyText1),
+      title: Text(title),
       value: value,
       onChanged: onChanged,
-      secondary: Icon(icon, color: Theme.of(context).colorScheme.secondary),
-      activeColor: Theme.of(context).primaryColor,
+      secondary: Container(
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey), // Grey outline
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(icon, color: Colors.grey), // Set icon color to grey
+      ),
+      activeColor: Colors.blue, // Set active color to blue
       contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 8),
     );
   }
 
-  Widget buildListTile(BuildContext context,
-      {required String title, required String subtitle, required IconData icon, required VoidCallback onTap}) {
+  Widget buildListTile(
+      {required String title,
+        required String subtitle,
+        required IconData icon,
+        required VoidCallback onTap,
+        required BuildContext context}) {
     return ListTile(
-      title: Text(title, style: Theme.of(context).textTheme.bodyText1),
-      subtitle: Text(subtitle, style: Theme.of(context).textTheme.bodyText2),
-      leading: Icon(icon, color: Theme.of(context).colorScheme.secondary),
-      trailing: Icon(Icons.arrow_forward_ios, size: 16),
+      title: Text(title),
+      subtitle: Text(subtitle),
+      leading: Container(
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey), // Grey outline
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Icon(icon, color: Colors.grey), // Set icon color to grey
+      ),
+      trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
       onTap: onTap,
       contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 8),
     );
