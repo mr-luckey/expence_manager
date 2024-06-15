@@ -1,3 +1,5 @@
+import 'package:expence_manager/Views/Reminder.dart';
+import 'package:expence_manager/Views/todo_screen.dart';
 import 'package:expence_manager/widgets/Card_navigation.dart';
 import 'package:expence_manager/widgets/Topbar.dart';
 import 'package:expence_manager/widgets/buttons.dart';
@@ -48,87 +50,97 @@ class _HomeScreenState extends State<HomeScreen> {
       'paymentMethod': 'Cash',
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: Get.height / 10,
-          ),
-          CardNavigation(),
-          SizedBox(
-            height: Get.height / 50,
-          ),
-          Container(
-            // color: Colors.white,
-            // color: Colors.black,
-            height: Get.height * 0.06,
-            width: Get.width,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Btn(
-                    onTap: () {},
-                    text: 'saving',
-                    iconData: Icons.add,
-                    index: 0,
-                  ),
-                  Btn(
-                    onTap: () {},
-                    text: 'Remind',
-                    iconData: Icons.notifications_active_outlined,
-                    index: 1,
-                  ),
-                  Btn(
-                    onTap: () {},
-                    text: 'Budget',
-                    iconData: Icons.savings_outlined,
-                    index: 2,
-                  ),
-                ],
-                // children: [Btn(onTap: () {}, text: 'jdnvjds', iconData: Icons.add);],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: Get.height / 10,
+            ),
+            CardNavigation(),
+            SizedBox(
+              height: Get.height / 50,
+            ),
+            Container(
+              height: Get.height * 0.06,
+              width: Get.width,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Btn(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SavingPage()),
+                        );
+                      },
+                      text: 'Saving',
+                      iconData: Icons.add,
+                      index: 0,
+                    ),
+                    Btn(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ReminderPage()),
+                        );
+                      },
+                      text: 'Remind',
+                      iconData: Icons.notifications_active_outlined,
+                      index: 1,
+                    ),
+                    Btn(
+                      onTap: () {},
+                      text: 'Budget',
+                      iconData: Icons.savings_outlined,
+                      index: 2,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: Get.height / 60,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 30, right: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Latest Entries",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Container(
+            SizedBox(
+              height: Get.height / 60,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Latest Entries",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  Container(
                     height: 30,
                     width: 30,
                     decoration: BoxDecoration(
-                        // color: Colors.blue,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.black45)),
-                    child: Center(child: Icon(Icons.more_vert_rounded))),
-              ],
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.black45),
+                    ),
+                    child: Center(child: Icon(Icons.more_vert_rounded)),
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Container(
-              height: 400,
-              // color: Colors.blue,
-              width: double.infinity,
-              child: recordWidget(records),
+            SizedBox(
+              height: 10,
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Container(
+                height: 400,
+                width: double.infinity,
+                child: recordWidget(records),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

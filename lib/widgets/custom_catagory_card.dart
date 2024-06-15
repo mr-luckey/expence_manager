@@ -126,8 +126,6 @@ class CustomCategoryCard extends StatelessWidget {
                         ],
                       ),
                       trailing: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             '${record['symbols']} ${record['amount']}',

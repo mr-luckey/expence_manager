@@ -62,12 +62,12 @@ class _MainscreenState extends State<Mainscreen> {
   List<Widget> _buildScreen() {
     return [
       const HomeScreen(),
-      const TodoScreen(),
+      const SavingPage(),
       const AddPage(),
       const AlertScreen(),
       //mainscree code
 
-      const SettingScreen(),
+      SettingsScreen(),
     ];
   }
 
@@ -83,112 +83,4 @@ class _MainscreenState extends State<Mainscreen> {
       navBarStyle: NavBarStyle.style9,
     );
   }
-  // @override
-  // void initState() {
-  //   selectedIndex = widget.selectedIndex;
-
-  //   super.initState();
-  // }
-
-  // late int selectedIndex;
-  // final widgetOptions = [
-  //   const HomeScreen(),
-  //   const TodoScreen(),
-  //   const AddScreen(),
-  //   const AlertScreen(),
-  //   const SettingScreen(),
-
-  // const ClientMainScreen(),
-  // const ClientProjectFolderScreen(),
-  // const ClientChatScreen(),
-  // const ClientPendingOffersScreen(),
-  // const ClientSettingsScreen(),
-  // // ];
-  // void onItemTapped(index) {
-  //   setState(() {
-  //     selectedIndex = index;
-  //   });
-  // }
-
-  // Future<bool> _willPopCallback() async {
-  //   if (selectedIndex == 0) {
-  //     // exit(0);
-  //     SystemNavigator.pop();
-  //     return true;
-  //   } else if (selectedIndex == 1) {
-  //     setState(() {
-  //       selectedIndex = 0;
-  //     });
-  //   } else if (selectedIndex == 2) {
-  //     setState(() {
-  //       selectedIndex = 0;
-  //     });
-  //   } else if (selectedIndex == 3) {
-  //     setState(() {
-  //       selectedIndex = 0;
-  //     });
-  //   } else if (selectedIndex == 4) {
-  //     setState(() {
-  //       selectedIndex = 0;
-  //     });
-  //   }
-  //   // await showDialog or Show add banners or whatever
-  //   // then
-  //   return false;
-  //   // return true if the route to be popped
-  // }
-
-  // // GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return WillPopScope(
-  //     onWillPop: _willPopCallback,
-  //     child: Scaffold(
-  //       body: Column(
-  //         children: [
-  //           Expanded(child: widgetOptions.elementAt(selectedIndex)),
-  //         ],
-  //       ),
-  //       bottomNavigationBar: CurvedNavigationBar(
-  //         // key: _bottomNavigationKey,
-  //         index: 0,
-  //         items: const [
-  //           CurvedNavigationBarItem(
-  //             child: Icon(Icons.home_outlined),
-  //             label: 'Home',
-  //           ),
-  //           CurvedNavigationBarItem(
-  //             child: Icon(Icons.bookmark_remove_outlined),
-  //             label: 'ToDo',
-  //           ),
-  //           CurvedNavigationBarItem(
-  //             child: Icon(
-  //               Icons.add,
-  //               size: 50,
-  //               color: Colors.blue,
-  //             ),
-  //             // label: 'Chat',
-  //           ),
-  //           CurvedNavigationBarItem(
-  //             child: Icon(Icons.notifications_none_rounded),
-  //             label: 'Alert',
-  //           ),
-  //           CurvedNavigationBarItem(
-  //             child: Icon(Icons.settings_suggest_outlined),
-  //             label: 'Settings',
-  //           ),
-  //         ],
-  //         color: Colors.white,
-  //         buttonBackgroundColor: Colors.white,
-  //         backgroundColor: Colors.blueAccent,
-
-  //         animationCurve: Curves.easeInOut,
-  //         animationDuration: const Duration(milliseconds: 600),
-  //         onTap: onItemTapped,
-  //         // letIndexChange: (index) => true,
-  //       ),
-  //     ),
-  //   );
-  // }
 }
