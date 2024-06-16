@@ -20,7 +20,8 @@ class _AddGoalsState extends State<AddGoals> {
   @override
   void initState() {
     super.initState();
-    _contributionController.text = _selectedContribution; // Initialize with the default value
+    _contributionController.text =
+        _selectedContribution; // Initialize with the default value
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -35,7 +36,6 @@ class _AddGoalsState extends State<AddGoals> {
         _deadlineController.text = "${picked.toLocal()}".split(' ')[0];
       });
     }
-
   }
 
   @override
@@ -57,11 +57,15 @@ class _AddGoalsState extends State<AddGoals> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   'Income Title',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold,
+                    // color: Colors.grey
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
                   height: 40, // Set the height of the input field
                   child: TextField(
@@ -81,11 +85,15 @@ class _AddGoalsState extends State<AddGoals> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   'Amount',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold,
+                    // color: Colors.grey
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
                   height: 40, // Set the height of the input field
                   child: TextField(
@@ -106,11 +114,15 @@ class _AddGoalsState extends State<AddGoals> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   'Contribution Type',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold,
+                    // color: Colors.grey
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
                   height: 40, // Set the height of the input field
                   child: TextField(
@@ -148,11 +160,15 @@ class _AddGoalsState extends State<AddGoals> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   'Deadline',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold,
+                    // color: Colors.grey
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
                   height: 40, // Set the height of the input field
                   child: TextField(
@@ -182,7 +198,7 @@ class _AddGoalsState extends State<AddGoals> {
                     text: 'Add Goal',
                     enabled: true,
                     width: double.infinity,
-                    bloc: null, onTap: () {  },
+                    bloc: null, onTap: () {},
                   ),
                 ),
               ),
@@ -205,7 +221,8 @@ class ContributionDialog extends StatelessWidget {
     return AlertDialog(
       title: Text('Select Contribution Type'),
       content: Container(
-        width: double.minPositive, // Make the dialog size just enough to fit its content
+        width: double
+            .minPositive, // Make the dialog size just enough to fit its content
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: contributions.length,

@@ -55,13 +55,14 @@ class _AlertScreenState extends State<AlertScreen> {
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        // color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
-                        icons[index % icons.length], // Use different icons dynamically
+                        icons[index %
+                            icons.length], // Use different icons dynamically
                         size: 30,
-                        color: Colors.grey[600],
+                        //color: Colors.grey[600],
                       ),
                     ),
                     SizedBox(width: 12),
@@ -69,9 +70,12 @@ class _AlertScreenState extends State<AlertScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(items[index % items.length], style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                          Text(items[index % items.length],
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
                           SizedBox(height: 4),
-                          Text(alertTexts[index], style: TextStyle(fontSize: 14)),
+                          Text(alertTexts[index],
+                              style: TextStyle(fontSize: 14)),
                         ],
                       ),
                     ),

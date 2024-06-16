@@ -22,13 +22,15 @@ class _AddPageState extends State<AddPage> {
     if (index == 1) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => AddIncome(), // Navigate to AddIncome for index 1
+          builder: (context) =>
+              AddIncome(), // Navigate to AddIncome for index 1
         ),
       );
     } else if (index == 2) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => AddExpense(), // Navigate to AddExpense for index 2
+          builder: (context) =>
+              AddExpense(), // Navigate to AddExpense for index 2
         ),
       );
     }
@@ -57,10 +59,10 @@ class _AddPageState extends State<AddPage> {
                     return GestureDetector(
                       onTap: () => _onContainerTap(index),
                       child: Container(
-                        height: 70,  // Increased height
-                        width: 70,   // Increased width
+                        height: 70, // Increased height
+                        width: 70, // Increased width
                         decoration: BoxDecoration(
-                          color: _selectedIndex == index ? Colors.blue : Colors.white,
+                          //color: _selectedIndex == index ? Colors.blue : Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.black45),
                         ),
@@ -113,7 +115,7 @@ class _AddPageState extends State<AddPage> {
     if (index == 0) {
       return Icon(
         Icons.add,
-        color: _selectedIndex == index ? Colors.white : Colors.black,
+        //color: _selectedIndex == index ? Colors.white : Colors.black,
       );
     } else if (index == 1) {
       return Column(
@@ -121,12 +123,12 @@ class _AddPageState extends State<AddPage> {
         children: [
           Icon(
             Icons.account_balance_wallet,
-            color: _selectedIndex == index ? Colors.white : Colors.black,
+            //color: _selectedIndex == index ? Colors.white : Colors.black,
           ),
           Text(
             'Add Income',
             style: TextStyle(
-              color: _selectedIndex == index ? Colors.white : Colors.black,
+              // color: _selectedIndex == index ? Colors.white : Colors.black,
               fontSize: 10,
             ),
           ),
@@ -138,12 +140,12 @@ class _AddPageState extends State<AddPage> {
         children: [
           Icon(
             Icons.account_balance_wallet,
-            color: _selectedIndex == index ? Colors.white : Colors.black,
+            // color: _selectedIndex == index ? Colors.white : Colors.black,
           ),
           Text(
             'Add Expense',
             style: TextStyle(
-              color: _selectedIndex == index ? Colors.white : Colors.black,
+//color: _selectedIndex == index ? Colors.white : Colors.black,
               fontSize: 10,
             ),
           ),

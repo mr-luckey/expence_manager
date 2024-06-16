@@ -22,16 +22,31 @@ Widget inputfield(TextEditingController controller, String hint, IconData? icon,
       keyboardType: type,
       obscureText: obscure,
       style: TextStyle(
-          color: Colors.grey, fontSize: 16, fontWeight: FontWeight.bold),
+          // color: Colors.grey,
+          fontSize: 16,
+          fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         prefixIcon: isIconOnRight
             ? null
-            : (icon != null ? Icon(icon, color: Colors.grey) : null),
+            : (icon != null
+                ? Icon(
+                    icon,
+                    //  color: Colors.grey
+                  )
+                : null),
         suffixIcon: isIconOnRight
-            ? (icon != null ? Icon(icon, color: Colors.grey) : null)
+            ? (icon != null
+                ? Icon(
+                    icon,
+                    // color: Colors.grey
+                  )
+                : null)
             : null,
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.grey),
+        hintStyle: TextStyle(
+            // color:
+            // Colors.grey
+            ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -81,7 +96,7 @@ class _AddExpenseState extends State<AddExpense> {
         return Center(
           child: Icon(
             Icons.add,
-            color: _selectedIndex == index ? Colors.white : Colors.black,
+            // color: _selectedIndex == index ? Colors.white : Colors.black,
           ),
         );
       case 1:
@@ -89,8 +104,8 @@ class _AddExpenseState extends State<AddExpense> {
           child: Text(
             'Health',
             style: TextStyle(
-              color: _selectedIndex == index ? Colors.white : Colors.black,
-            ),
+                // color: _selectedIndex == index ? Colors.white : Colors.black,
+                ),
           ),
         );
       case 2:
@@ -98,8 +113,8 @@ class _AddExpenseState extends State<AddExpense> {
           child: Text(
             'Grocery',
             style: TextStyle(
-              color: _selectedIndex == index ? Colors.white : Colors.black,
-            ),
+                // color: _selectedIndex == index ? Colors.white : Colors.black,
+                ),
           ),
         );
       default:
@@ -107,8 +122,8 @@ class _AddExpenseState extends State<AddExpense> {
           child: Text(
             'Item $index',
             style: TextStyle(
-              color: _selectedIndex == index ? Colors.white : Colors.black,
-            ),
+                // color: _selectedIndex == index ? Colors.white : Colors.black,
+                ),
           ),
         );
     }
@@ -136,9 +151,10 @@ class _AddExpenseState extends State<AddExpense> {
                 child: const Text(
                   'Income Title',
                   style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    // color: Colors.grey
+                  ),
                 ),
               ),
               inputfield(
@@ -154,9 +170,10 @@ class _AddExpenseState extends State<AddExpense> {
                 child: const Text(
                   'Amount',
                   style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    // color: Colors.grey
+                  ),
                 ),
               ),
               inputfield(
@@ -173,9 +190,10 @@ class _AddExpenseState extends State<AddExpense> {
                 child: const Text(
                   'Expense Category',
                   style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    // color: Colors.grey
+                  ),
                 ),
               ),
               SizedBox(
@@ -193,9 +211,9 @@ class _AddExpenseState extends State<AddExpense> {
                         height: 60,
                         width: 60,
                         decoration: BoxDecoration(
-                          color: _selectedIndex == index
-                              ? Colors.blue
-                              : Colors.white,
+                          // color: _selectedIndex == index
+                          //     ? Colors.blue
+                          //     : Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.black45),
                         ),

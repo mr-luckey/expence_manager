@@ -8,30 +8,40 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // Custom input field function with optional icon and right-side icon option
-Widget inputfield(
-    TextEditingController controller,
-    String hint,
-    IconData? icon,
-    bool obscure,
-    TextInputType type,
-    {bool isIconOnRight = false}) { // Added a parameter for icon position
+Widget inputfield(TextEditingController controller, String hint, IconData? icon,
+    bool obscure, TextInputType type,
+    {bool isIconOnRight = false}) {
+  // Added a parameter for icon position
   return Container(
     width: double.infinity,
-    margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 5), // Reduced vertical margin
+    margin: const EdgeInsets.symmetric(
+        horizontal: 50, vertical: 5), // Reduced vertical margin
     child: TextField(
       controller: controller,
       keyboardType: type,
       obscureText: obscure,
-      style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.bold), // Set text color to grey
+      style: TextStyle(
+          //color: Colors.grey,
+          fontSize: 16,
+          fontWeight: FontWeight.bold), // Set text color to grey
       decoration: InputDecoration(
-        prefixIcon: isIconOnRight ? null : (icon != null ? Icon(icon, color: Colors.grey) : null), // Conditional icon on left
-        suffixIcon: isIconOnRight ? (icon != null ? Icon(icon, color: Colors.grey) : null) : null, // Conditional icon on right
+        prefixIcon: isIconOnRight
+            ? null
+            : (icon != null
+                ? Icon(icon, color: Colors.grey)
+                : null), // Conditional icon on left
+        suffixIcon: isIconOnRight
+            ? (icon != null ? Icon(icon, color: Colors.grey) : null)
+            : null, // Conditional icon on right
         hintText: hint,
-        hintStyle: TextStyle(color: Colors.grey), // Set hint text color to grey
+        hintStyle: TextStyle(
+            //color: Colors.grey
+            ), // Set hint text color to grey
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15), // Reduced height
+        contentPadding: const EdgeInsets.symmetric(
+            vertical: 10, horizontal: 15), // Reduced height
       ),
     ),
   );
@@ -72,7 +82,7 @@ class _AddIncomeState extends State<AddIncome> {
         return Center(
           child: Icon(
             Icons.add,
-            color: _selectedIndex == index ? Colors.white : Colors.black,
+            //color: _selectedIndex == index ? Colors.white : Colors.black,
           ),
         );
       case 1:
@@ -80,8 +90,8 @@ class _AddIncomeState extends State<AddIncome> {
           child: Text(
             'Salary',
             style: TextStyle(
-              color: _selectedIndex == index ? Colors.white : Colors.black,
-            ),
+                //color: _selectedIndex == index ? Colors.white : Colors.black,
+                ),
           ),
         );
       case 2:
@@ -89,8 +99,8 @@ class _AddIncomeState extends State<AddIncome> {
           child: Text(
             'Reward',
             style: TextStyle(
-              color: _selectedIndex == index ? Colors.white : Colors.black,
-            ),
+                //color: _selectedIndex == index ? Colors.white : Colors.black,
+                ),
           ),
         );
       default:
@@ -98,8 +108,8 @@ class _AddIncomeState extends State<AddIncome> {
           child: Text(
             'Item $index',
             style: TextStyle(
-              color: _selectedIndex == index ? Colors.white : Colors.black,
-            ),
+                //color: _selectedIndex == index ? Colors.white : Colors.black,
+                ),
           ),
         );
     }
@@ -126,7 +136,10 @@ class _AddIncomeState extends State<AddIncome> {
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
                   'Income Title', // Changed text
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold,
+                    //color: Colors.grey
+                  ),
                 ),
               ),
               inputfield(
@@ -141,7 +154,10 @@ class _AddIncomeState extends State<AddIncome> {
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
                   'Amount',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold,
+                    //color: Colors.grey
+                  ),
                 ),
               ),
               inputfield(
@@ -157,10 +173,15 @@ class _AddIncomeState extends State<AddIncome> {
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
                   'Income Category',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold,
+                    //color: Colors.grey
+                  ),
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: Row(
@@ -170,10 +191,10 @@ class _AddIncomeState extends State<AddIncome> {
                       onTap: () => _onContainerTap(index),
                       child: Container(
                         margin: const EdgeInsets.only(right: 10),
-                        height: 60,  // Reduced height
-                        width: 60,   // Reduced width
+                        height: 60, // Reduced height
+                        width: 60, // Reduced width
                         decoration: BoxDecoration(
-                          color: _selectedIndex == index ? Colors.blue : Colors.white,
+                          //color: _selectedIndex == index ? Colors.blue : Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.black45),
                         ),
