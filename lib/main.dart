@@ -11,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 
-void main() async{
+void main() async {
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
       overlays: [SystemUiOverlay.bottom]);
   await Hive.initFlutter();
@@ -26,11 +26,11 @@ class MainApp extends StatelessWidget {
     return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
 
-        home:
-      // Reminder()
-      Mainscreen(
-          // selectedIndex: 0,
-          ),
+      home:
+          // Reminder()
+          Mainscreen(
+              // selectedIndex: 0,
+              ),
 
       // DefaultTabController(length: 3, child: CardNavigation())
     );

@@ -40,9 +40,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            buildSectionHeader(context, 'Preferences'),
+            buildSectionHeader('Preferences'),
             buildSwitchTile(
-              context,
               title: 'Enable Notifications',
               value: _notificationsEnabled,
               icon: Icons.notifications_active_outlined,
@@ -54,7 +53,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             buildSwitchTile(
-              context,
               title: 'Enable Dark Mode',
               value: _darkModeEnabled,
               icon: Icons.dark_mode_outlined,
@@ -66,9 +64,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             SizedBox(height: 20),
-            buildSectionHeader(context, 'Account'),
+            buildSectionHeader('Account'),
             buildListTile(
-              context,
               title: 'Account Settings',
               subtitle: 'Manage your account settings',
               icon: Icons.account_circle_outlined,
@@ -77,7 +74,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             buildListTile(
-              context,
               title: 'Privacy',
               subtitle: 'Manage your privacy settings',
               icon: Icons.privacy_tip_outlined,
@@ -86,9 +82,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             SizedBox(height: 20),
-            buildSectionHeader(context, 'Support'),
+            buildSectionHeader('Support'),
             buildListTile(
-              context,
               title: 'Help & Support',
               subtitle: 'Get help and support',
               icon: Icons.help_outline,
@@ -97,7 +92,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             buildListTile(
-              context,
               title: 'About',
               subtitle: 'Learn more about the app',
               icon: Icons.info_outline,
@@ -111,12 +105,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget buildSectionHeader(BuildContext context, String title) {
+  Widget buildSectionHeader(String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Text(
         title,
-        style: Theme.of(context).textTheme.headline6?.copyWith(
+        style: TextStyle(
           color: Theme.of(context).primaryColor,
           fontWeight: FontWeight.bold,
         ),
@@ -124,10 +118,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget buildSwitchTile(BuildContext context,
-      {required String title, required bool value, required IconData icon, required Function(bool) onChanged}) {
+  Widget buildSwitchTile(
+      {required String title,
+      required bool value,
+      required IconData icon,
+      required Function(bool) onChanged}) {
     return SwitchListTile(
-      title: Text(title, style: Theme.of(context).textTheme.bodyText1),
+      title: Text(title),
       value: value,
       onChanged: onChanged,
       secondary: Icon(icon, color: Theme.of(context).colorScheme.secondary),
@@ -136,11 +133,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget buildListTile(BuildContext context,
-      {required String title, required String subtitle, required IconData icon, required VoidCallback onTap}) {
+  Widget buildListTile(
+      {required String title,
+      required String subtitle,
+      required IconData icon,
+      required VoidCallback onTap}) {
     return ListTile(
-      title: Text(title, style: Theme.of(context).textTheme.bodyText1),
-      subtitle: Text(subtitle, style: Theme.of(context).textTheme.bodyText2),
+      title: Text(title),
+      subtitle: Text(subtitle),
       leading: Icon(icon, color: Theme.of(context).colorScheme.secondary),
       trailing: Icon(Icons.arrow_forward_ios, size: 16),
       onTap: onTap,

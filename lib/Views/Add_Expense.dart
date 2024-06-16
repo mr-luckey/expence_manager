@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:expence_manager/Views/Latest_Entries.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:expence_manager/widgets/buttons.dart';
@@ -8,14 +10,9 @@ import 'package:expence_manager/Controllers/colorscontrollers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 // Custom input field function with optional icon and right-side icon option
-Widget inputfield(
-    TextEditingController controller,
-    String hint,
-    IconData? icon,
-    bool obscure,
-    TextInputType type,
+Widget inputfield(TextEditingController controller, String hint, IconData? icon,
+    bool obscure, TextInputType type,
     {bool isIconOnRight = false}) {
   return Container(
     width: double.infinity,
@@ -24,16 +21,22 @@ Widget inputfield(
       controller: controller,
       keyboardType: type,
       obscureText: obscure,
-      style: TextStyle(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.bold),
+      style: TextStyle(
+          color: Colors.grey, fontSize: 16, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
-        prefixIcon: isIconOnRight ? null : (icon != null ? Icon(icon, color: Colors.grey) : null),
-        suffixIcon: isIconOnRight ? (icon != null ? Icon(icon, color: Colors.grey) : null) : null,
+        prefixIcon: isIconOnRight
+            ? null
+            : (icon != null ? Icon(icon, color: Colors.grey) : null),
+        suffixIcon: isIconOnRight
+            ? (icon != null ? Icon(icon, color: Colors.grey) : null)
+            : null,
         hintText: hint,
         hintStyle: TextStyle(color: Colors.grey),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       ),
     ),
   );
@@ -132,7 +135,10 @@ class _AddExpenseState extends State<AddExpense> {
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
                   'Income Title',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey),
                 ),
               ),
               inputfield(
@@ -147,7 +153,10 @@ class _AddExpenseState extends State<AddExpense> {
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
                   'Amount',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey),
                 ),
               ),
               inputfield(
@@ -163,10 +172,15 @@ class _AddExpenseState extends State<AddExpense> {
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
                   'Expense Category',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey),
                 ),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: Row(
@@ -179,7 +193,9 @@ class _AddExpenseState extends State<AddExpense> {
                         height: 60,
                         width: 60,
                         decoration: BoxDecoration(
-                          color: _selectedIndex == index ? Colors.blue : Colors.white,
+                          color: _selectedIndex == index
+                              ? Colors.blue
+                              : Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.black45),
                         ),
@@ -209,4 +225,3 @@ class _AddExpenseState extends State<AddExpense> {
     );
   }
 }
-
