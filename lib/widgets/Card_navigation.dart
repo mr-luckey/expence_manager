@@ -75,7 +75,7 @@ class _CardNavigationState extends State<CardNavigation>
                   ],
                   selectedTextStyle: textTheme.bodyMedium?.copyWith(
                       fontSize: 13.0,
-                      color: Colors.white,
+                      //  color: Colors.white,
                       fontWeight: FontWeight.bold),
                   unselectedTextStyle:
                       textTheme.bodyMedium?.copyWith(fontSize: 10.0),
@@ -109,12 +109,12 @@ class _CardNavigationState extends State<CardNavigation>
                             Icon(
                               Icons.account_balance_wallet_outlined,
                               size: 40,
-                              color: Colors.white,
+                              // color: Colors.white,
                             ),
                             Text(
                               '  \$ 1000',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  //  color: Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold),
                             )
@@ -136,12 +136,12 @@ class _CardNavigationState extends State<CardNavigation>
                             Icon(
                               Icons.account_balance_wallet_outlined,
                               size: 40,
-                              color: Colors.white,
+                              // color: Colors.white,
                             ),
                             Text(
                               '  \$ 1000',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  //color: Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold),
                             )
@@ -163,12 +163,12 @@ class _CardNavigationState extends State<CardNavigation>
                             Icon(
                               Icons.account_balance_wallet_outlined,
                               size: 40,
-                              color: Colors.white,
+                              // color: Colors.white,
                             ),
                             Text(
                               '  \$ 1000',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  // color: Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold),
                             )

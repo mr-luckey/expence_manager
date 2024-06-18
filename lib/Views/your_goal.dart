@@ -40,11 +40,14 @@ class _YourGoalState extends State<YourGoal> {
                     height: 40,
                     width: 40,
                     decoration: BoxDecoration(
-                      color: Colors.grey,
+                      //  color: Colors.grey,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
-                      child: Icon(Icons.directions_bike, color: Colors.white),
+                      child: Icon(
+                        Icons.directions_bike,
+                        //color: Colors.white
+                      ),
                     ),
                   ),
                   SizedBox(width: 10),
@@ -63,8 +66,8 @@ class _YourGoalState extends State<YourGoal> {
                     borderRadius: BorderRadius.circular(10),
                     child: LinearProgressIndicator(
                       value: progress,
-                      backgroundColor: Colors.grey[300],
-                      color: Colors.blue,
+                      // backgroundColor: Colors.grey[300],
+                      //color: Colors.blue,
                       minHeight: 6,
                     ),
                   ),
@@ -74,11 +77,17 @@ class _YourGoalState extends State<YourGoal> {
                     children: [
                       Text(
                         '\$300',
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style: TextStyle(
+                          fontSize: 16,
+                          //color: Colors.black
+                        ),
                       ),
                       Text(
                         '\$500',
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style: TextStyle(
+                          fontSize: 16,
+                          //color: Colors.black
+                        ),
                       ),
                     ],
                   ),
@@ -93,11 +102,14 @@ class _YourGoalState extends State<YourGoal> {
                     height: 40,
                     width: 40,
                     decoration: BoxDecoration(
-                      color: Colors.grey,
+                      // color: Colors.grey,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
-                      child: Icon(Icons.phone_iphone, color: Colors.white),
+                      child: Icon(
+                        Icons.phone_iphone,
+                        //color: Colors.white
+                      ),
                     ),
                   ),
                   SizedBox(width: 10),
@@ -116,8 +128,8 @@ class _YourGoalState extends State<YourGoal> {
                     borderRadius: BorderRadius.circular(10),
                     child: LinearProgressIndicator(
                       value: progress,
-                      backgroundColor: Colors.grey[300],
-                      color: Colors.blue,
+                      //backgroundColor: Colors.grey[300],
+                      // color: Colors.blue,
                       minHeight: 6,
                     ),
                   ),
@@ -127,11 +139,17 @@ class _YourGoalState extends State<YourGoal> {
                     children: [
                       Text(
                         '\$300',
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style: TextStyle(
+                          fontSize: 16,
+                          //color: Colors.black
+                        ),
                       ),
                       Text(
                         '\$500',
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style: TextStyle(
+                          fontSize: 16,
+                          //color: Colors.black
+                        ),
                       ),
                     ],
                   ),

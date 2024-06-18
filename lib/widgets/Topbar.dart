@@ -23,7 +23,9 @@ class topbar extends Container {
           leading,
           Text(
             title,
-            style: const TextStyle(color: Colors.black),
+            style: const TextStyle(
+                // color: Colors.black
+                ),
           ),
           trailing,
         ],

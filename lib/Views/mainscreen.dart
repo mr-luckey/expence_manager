@@ -118,32 +118,37 @@ class _MainscreenState extends State<Mainscreen> {
   List<PersistentBottomNavBarItem> _navbarItems() {
     return [
       PersistentBottomNavBarItem(
-          title: 'Home',
-          icon: Icon(
-            Icons.home_outlined,
-          ),
-          inactiveColorPrimary: Colors.blue,
-          activeColorPrimary: Colors.white),
+        title: 'Home',
+        icon: Icon(
+          Icons.home_outlined,
+        ),
+        // inactiveColorPrimary: Colors.blue,
+        // activeColorPrimary: Colors.white
+      ),
       PersistentBottomNavBarItem(
-          title: 'ToDo',
-          icon: Icon(Icons.savings_outlined),
-          inactiveColorPrimary: Colors.blueAccent,
-          activeColorPrimary: Colors.white),
+        title: 'ToDo',
+        icon: Icon(Icons.savings_outlined),
+        //inactiveColorPrimary: Colors.blueAccent,
+        // activeColorPrimary: Colors.white
+      ),
       PersistentBottomNavBarItem(
-          title: 'Add',
-          icon: Icon(Icons.add_circle_outline_sharp),
-          inactiveColorPrimary: Colors.blueAccent,
-          activeColorPrimary: Colors.white),
+        title: 'Add',
+        icon: Icon(Icons.add_circle_outline_sharp),
+        //inactiveColorPrimary: Colors.blueAccent,
+        //activeColorPrimary: Colors.white
+      ),
       PersistentBottomNavBarItem(
-          title: 'Alert',
-          icon: Icon(Icons.notifications_none),
-          inactiveColorPrimary: Colors.blueAccent,
-          activeColorPrimary: Colors.white),
+        title: 'Alert',
+        icon: Icon(Icons.notifications_none),
+        //inactiveColorPrimary: Colors.blueAccent,
+        //activeColorPrimary: Colors.white
+      ),
       PersistentBottomNavBarItem(
-          title: 'Setting',
-          icon: Icon(Icons.settings_suggest_outlined),
-          inactiveColorPrimary: Colors.blueAccent,
-          activeColorPrimary: Colors.white)
+        title: 'Setting',
+        icon: Icon(Icons.settings_suggest_outlined),
+        //inactiveColorPrimary: Colors.blueAccent,
+        //activeColorPrimary: Colors.white
+      )
     ];
   }
 
@@ -159,19 +164,14 @@ class _MainscreenState extends State<Mainscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData(
-        colorScheme: randomColorSchemeLight(seed: 5),
-      ),
-      child: PersistentTabView(
-        context,
-        screens: _buildScreen(),
-        items: _navbarItems(),
-        controller: controller,
-        decoration: NavBarDecoration(borderRadius: BorderRadius.circular(10)),
-        // backgroundColor: Colors.blue.shade300,
-        navBarStyle: NavBarStyle.style9,
-      ),
+    return PersistentTabView(
+      context,
+      screens: _buildScreen(),
+      items: _navbarItems(),
+      controller: controller,
+      decoration: NavBarDecoration(borderRadius: BorderRadius.circular(10)),
+      // backgroundColor: Colors.blue.shade300,
+      navBarStyle: NavBarStyle.style9,
     );
   }
 }

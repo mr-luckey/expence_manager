@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-class ColorController extends GetxController {
-  var containerColors = <Color>[Colors.red, Colors.green, Colors.blue].obs;
+// class ColorController extends GetxController {
+//   var containerColors = <Color>[Colors.red, Colors.green, Colors.blue].obs;
 
-  void changeColor(int index, Color color) {
-    containerColors[index] = color;
-  }
-}
+//   void changeColor(int index, Color color) {
+//     containerColors[index] = color;
+//   }
+// }
 // import 'package:get/get.dart';
 
 class ButtonController extends GetxController {

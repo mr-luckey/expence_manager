@@ -13,8 +13,17 @@ class TotalExpense extends StatelessWidget {
   Widget build(BuildContext context) {
     // Sample data for the CustomCategoryCard
     final List<double> expenses = [300, 150, 100, 50];
-    final List<String> labels = ['Rent', 'Groceries', 'Utilities',];
-    final List<Color> colors = [Colors.red, Colors.blue, Colors.green, Colors.orange];
+    final List<String> labels = [
+      'Rent',
+      'Groceries',
+      'Utilities',
+    ];
+    final List<Color> colors = [
+      Colors.red,
+      Colors.blue,
+      Colors.green,
+      Colors.orange
+    ];
     final List<Map<String, dynamic>> records = [
       {
         'iconData': Icons.home,
@@ -74,14 +83,16 @@ class TotalExpense extends StatelessWidget {
             TimelineCalender(), // Timeline calendar
             CustomContainer(), // Circular container
             Container(
-              height: 400.0, // Set an appropriate height for the tab bar section
+              height:
+                  400.0, // Set an appropriate height for the tab bar section
               child: CustomTabBar(
                 tabs: [
                   Tab(text: 'Spends'),
                   Tab(text: 'Category'),
                 ],
                 tabViews: [
-                  recordWidget(records), // Use the recordWidget with dynamic data
+                  recordWidget(
+                      records), // Use the recordWidget with dynamic data
                   CustomCategoryCard(
                     expenses: expenses,
                     labels: labels,

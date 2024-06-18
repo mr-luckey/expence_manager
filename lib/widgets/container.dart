@@ -9,14 +9,17 @@ class CustomContainer extends StatelessWidget {
       width: 200,
       height: 200,
       decoration: BoxDecoration(
-        color: Colors.blue,
+        // color: Colors.blue,
         shape: BoxShape.circle,
       ),
       child: Center(
         child: Text(
           'Circular Container',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 16, color: Colors.white),
+          style: TextStyle(
+            fontSize: 16,
+            //color: Colors.white
+          ),
         ),
       ),
     );

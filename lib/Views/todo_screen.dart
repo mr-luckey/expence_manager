@@ -58,24 +58,29 @@ class _SavingPageState extends State<SavingPage> {
                           SizedBox(width: 10),
                           Text(
                             'June 10, 2024',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
                       SizedBox(height: 20),
                       Text(
                         'Goal for this month',
-                        style: TextStyle(fontSize: 14, color: Colors.black54),
+                        style: TextStyle(
+                          fontSize: 14,
+                          //  color: Colors.black54
+                        ),
                       ),
                       SizedBox(height: 10),
                       Stack(
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(10), // Rounded edges for the task bar
+                            borderRadius: BorderRadius.circular(
+                                10), // Rounded edges for the task bar
                             child: LinearProgressIndicator(
                               value: progress, // Example progress value
-                              backgroundColor: Colors.grey[300],
-                              color: Colors.blue,
+                              //backgroundColor: Colors.grey[300],
+                              //  color: Colors.blue,
                               minHeight: 40, // Increased height of the task bar
                             ),
                           ),
@@ -84,7 +89,10 @@ class _SavingPageState extends State<SavingPage> {
                             top: 12,
                             child: Text(
                               '\$300',
-                              style: TextStyle(fontSize: 16, color: Colors.white),
+                              style: TextStyle(
+                                fontSize: 16,
+                                //color: Colors.white
+                              ),
                             ),
                           ),
                           Positioned(
@@ -92,7 +100,10 @@ class _SavingPageState extends State<SavingPage> {
                             top: 12,
                             child: Text(
                               '\$500',
-                              style: TextStyle(fontSize: 16, color: Colors.black),
+                              style: TextStyle(
+                                fontSize: 16,
+                                //color: Colors.black
+                              ),
                             ),
                           ),
                         ],
@@ -112,7 +123,8 @@ class _SavingPageState extends State<SavingPage> {
                     children: [
                       Text(
                         "Your Goal",
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                       Container(
                         height: 30,
@@ -122,8 +134,11 @@ class _SavingPageState extends State<SavingPage> {
                           border: Border.all(color: Colors.black45),
                         ),
                         child: InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => YourGoal()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => YourGoal()));
                           },
                           child: Center(
                             child: Icon(Icons.more_vert_rounded),
@@ -132,99 +147,133 @@ class _SavingPageState extends State<SavingPage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10), // Space between the text and the new row
+                  SizedBox(
+                      height: 10), // Space between the text and the new row
                   Row(
                     children: [
                       Container(
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                          color: Colors.grey, // Grey background for the container
+                          //color: Colors.grey, // Grey background for the container
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Center(
-                          child: Icon(Icons.directions_bike, color: Colors.white),
+                          child: Icon(
+                            Icons.directions_bike,
+                            //  color: Colors.white
+                          ),
                         ),
                       ),
-                      SizedBox(width: 10), // Space between the icon and any other content
+                      SizedBox(
+                          width:
+                              10), // Space between the icon and any other content
                       Text(
                         "Bike",
                         style: TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20), // Space between the bike text and the task bar
+                  SizedBox(
+                      height:
+                          20), // Space between the bike text and the task bar
                   Column(
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(10), // Rounded edges for the task bar
+                        borderRadius: BorderRadius.circular(
+                            10), // Rounded edges for the task bar
                         child: LinearProgressIndicator(
                           value: progress, // Example progress value
-                          backgroundColor: Colors.grey[300],
-                          color: Colors.blue,
+                          // backgroundColor: Colors.grey[300],
+                          // color: Colors.blue,
                           minHeight: 6, // Increased height of the task bar
                         ),
                       ),
-                      SizedBox(height: 10), // Space between the task bar and the text
+                      SizedBox(
+                          height:
+                              10), // Space between the task bar and the text
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             '\$300',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            style: TextStyle(
+                              fontSize: 16,
+                              // color: Colors.black
+                            ),
                           ),
                           Text(
                             '\$500',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            style: TextStyle(
+                              fontSize: 16,
+                              //  color: Colors.black
+                            ),
                           ),
                         ],
                       ),
                     ],
                   ),
-                  SizedBox(height: 10), // Space between the text and the new row
+                  SizedBox(
+                      height: 10), // Space between the text and the new row
                   Row(
                     children: [
                       Container(
                         height: 40,
                         width: 40,
                         decoration: BoxDecoration(
-                          color: Colors.grey, // Grey background for the container
+                          // color: Colors.grey, // Grey background for the container
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Center(
-                          child: Icon(Icons.phone_iphone, color: Colors.white),
+                          child: Icon(
+                            Icons.phone_iphone,
+                            //  color: Colors.white
+                          ),
                         ),
                       ),
-                      SizedBox(width: 10), // Space between the icon and any other content
+                      SizedBox(
+                          width:
+                              10), // Space between the icon and any other content
                       Text(
                         "I Phone",
                         style: TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20), // Space between the bike text and the task bar
+                  SizedBox(
+                      height:
+                          20), // Space between the bike text and the task bar
                   Column(
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(10), // Rounded edges for the task bar
+                        borderRadius: BorderRadius.circular(
+                            10), // Rounded edges for the task bar
                         child: LinearProgressIndicator(
                           value: progress, // Example progress value
-                          backgroundColor: Colors.grey[300],
-                          color: Colors.blue,
+                          // backgroundColor: Colors.grey[300],
+                          // color: Colors.blue,
                           minHeight: 6, // Increased height of the task bar
                         ),
                       ),
-                      SizedBox(height: 10), // Space between the task bar and the text
+                      SizedBox(
+                          height:
+                              10), // Space between the task bar and the text
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             '\$300',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            style: TextStyle(
+                              fontSize: 16,
+                              //  color: Colors.black
+                            ),
                           ),
                           Text(
                             '\$500',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
+                            style: TextStyle(
+                              fontSize: 16,
+                              // color: Colors.black
+                            ),
                           ),
                         ],
                       ),
@@ -235,9 +284,15 @@ class _SavingPageState extends State<SavingPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(15),
-              child: genButton(onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AddGoals()));
-              }, text: 'Add Goal', width: double.infinity, bloc: null,),
+              child: genButton(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddGoals()));
+                },
+                text: 'Add Goal',
+                width: double.infinity,
+                bloc: null,
+              ),
             )
           ],
         ),

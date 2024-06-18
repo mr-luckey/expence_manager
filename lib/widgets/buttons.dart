@@ -26,11 +26,11 @@ class genButton extends CustomAnyAnimatedButton {
         width: width,
         height: 56.0,
         decoration: BoxDecoration(
-          color: enabled ? Colors.blue : Colors.grey,
+          //   color: enabled ? Colors.blue : Colors.grey,
           borderRadius: _borderRadius,
         ),
         child: Material(
-          color: Colors.transparent,
+          //color: Colors.transparent,
           child: InkWell(
             onTap: enabled ? onTap : null,
             borderRadius: _borderRadius,
@@ -41,7 +41,7 @@ class genButton extends CustomAnyAnimatedButton {
                 children: [
                   Text(
                     text,
-                    style: const TextStyle(color: Colors.white),
+                    // style: const TextStyle(color: Colors.white),
                     maxLines: 1,
                     softWrap: false,
                   ),
@@ -191,7 +191,7 @@ class Btn extends StatelessWidget {
               height: Get.height * 0.05,
               width: Get.width * 0.25,
               decoration: BoxDecoration(
-                color: isSelected ? Colors.blue : Colors.white,
+                //color: isSelected ? Colors.blue : Colors.white,
                 borderRadius: BorderRadius.circular(22),
                 border: Border.all(color: Colors.white),
               ),
@@ -201,18 +201,18 @@ class Btn extends StatelessWidget {
                   children: [
                     Icon(
                       iconData,
-                      color: isSelected
-                          ? Colors.white
-                          : Color.fromARGB(255, 39, 38, 38),
+                      // color: isSelected
+                      //     ? Colors.white
+                      //     : Color.fromARGB(255, 39, 38, 38),
                     ),
                     SizedBox(width: 8),
                     Text(
                       text,
                       style: TextStyle(
-                        color: isSelected
-                            ? Colors.white
-                            : Color.fromARGB(255, 39, 38, 38),
-                      ),
+                          // color: isSelected
+                          //     ? Colors.white
+                          //     : Color.fromARGB(255, 39, 38, 38),
+                          ),
                     ),
                   ],
                 ),

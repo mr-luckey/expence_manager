@@ -18,13 +18,15 @@ Widget recordWidget(List<Map<String, dynamic>> records) {
                   height: 40,
                   width: 40,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black45),
+                    border: Border.all(
+                        //color: Colors.black45
+                        ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
                     child: Icon(
                       record['iconData'],
-                      color: Colors.black45,
+                      // color: Colors.black45,
                     ),
                   ),
                 ),
@@ -37,9 +39,10 @@ Widget recordWidget(List<Map<String, dynamic>> records) {
                     Text(
                       record['title'],
                       style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        // color: Colors.black87
+                      ),
                     ),
                     Text(
                       record['dateTime'],
@@ -57,14 +60,14 @@ Widget recordWidget(List<Map<String, dynamic>> records) {
                     Text(
                       record['symbols'],
                       style: const TextStyle(
-                          color: Colors.black,
+                          //color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 14),
                     ),
                     Text(
                       record['amount'].toString(),
                       style: const TextStyle(
-                          color: Colors.black,
+                          // color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 14),
                     ),
@@ -73,7 +76,7 @@ Widget recordWidget(List<Map<String, dynamic>> records) {
                 Text(
                   record['paymentMethod'],
                   style: const TextStyle(
-                      color: Colors.black87,
+                      // color: Colors.black87,
                       fontWeight: FontWeight.normal,
                       fontSize: 10),
                 ),
