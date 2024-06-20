@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-TextTheme lightTextTheme = TextTheme(
+TextTheme darkTextTheme = TextTheme(
   headlineLarge: const TextStyle().copyWith(
       fontFamily: GoogleFonts.poppins().fontFamily,
       fontSize: 32.0,
@@ -29,7 +29,7 @@ TextTheme lightTextTheme = TextTheme(
       color: Colors.black.withOpacity(0.5)),
 );
 
-TextTheme darkTextTheme = TextTheme(
+TextTheme lightTextTheme = TextTheme(
   headlineLarge: const TextStyle().copyWith(
     fontFamily: GoogleFonts.poppins().fontFamily,
 

@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/widgets/custom_catagory_card.dart';
 import 'package:flutter/material.dart';
 import 'package:expence_manager/widgets/container.dart';
@@ -11,6 +12,8 @@ class TotalExpense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
+
     // Sample data for the CustomCategoryCard
     final List<double> expenses = [300, 150, 100, 50];
     final List<String> labels = [
@@ -19,10 +22,10 @@ class TotalExpense extends StatelessWidget {
       'Utilities',
     ];
     final List<Color> colors = [
-      Colors.red,
-      Colors.blue,
-      Colors.green,
-      Colors.orange
+      Colors.blue.shade300,
+      Colors.blue.shade400,
+      Colors.blue.shade700,
+      Colors.blue.shade900
     ];
     final List<Map<String, dynamic>> records = [
       {

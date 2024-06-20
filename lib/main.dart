@@ -2,7 +2,7 @@ import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Components/theme/theme.dart';
 import 'package:expence_manager/Views/Add_Goals.dart';
 import 'package:expence_manager/Views/Reminder.dart';
-import 'package:expence_manager/Views/add_page.dart';
+// import 'package:expence_manager/Views/add_page.dart';
 import 'package:expence_manager/Views/auth/login.dart';
 import 'package:expence_manager/Views/home_screen.dart';
 import 'package:expence_manager/Views/mainscreen.dart';

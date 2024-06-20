@@ -1,4 +1,5 @@
 // custom_slider.dart
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:flutter/material.dart';
 
 class CustomSlider extends StatelessWidget {
@@ -21,6 +22,8 @@ class CustomSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
+
     return SizedBox(
       height: 56,
       child: Slider(

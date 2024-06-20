@@ -23,7 +23,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         onPressed: onBackPressed,
       ),
-      title: Text(title),
+      title: Text(title,
+          style: isDark
+              ? themeAppbar.darkAppbarTheme.titleTextStyle
+              : themeAppbar.lightAppBarTheme.titleTextStyle),
       centerTitle: true,
       //  backgroundColor: Colors.white, // You can customize the background color
     );

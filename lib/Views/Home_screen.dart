@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Views/Reminder.dart';
 import 'package:expence_manager/Views/todo_screen.dart';
 import 'package:expence_manager/widgets/Card_navigation.dart';
@@ -53,6 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -87,7 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const ReminderPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const ReminderPage()),
                         );
                       },
                       text: 'Remind',
