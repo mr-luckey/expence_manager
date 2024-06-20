@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import
 
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Views/Latest_Entries.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:expence_manager/widgets/buttons.dart';
@@ -131,8 +132,10 @@ class _AddExpenseState extends State<AddExpense> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
     return Scaffold(
       appBar: CustomAppBar(
+        isDark: dark,
         title: 'Add Expense',
         onBackPressed: () {
           Navigator.of(context).pop();
@@ -227,12 +230,10 @@ class _AddExpenseState extends State<AddExpense> {
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(15),
-                  child: genButton(
-                    onTap: _handleAddExpense,
-                    text: 'Add Expense',
-                    enabled: true,
-                    width: double.infinity,
-                    bloc: null,
+                  child: CustomElevatedButton(
+                    isdark: dark,
+                    onPressed: _handleAddExpense,
+                    label: 'Add Expense',
                   ),
                 ),
               ),
@@ -243,3 +244,4 @@ class _AddExpenseState extends State<AddExpense> {
     );
   }
 }
+// _handleAddExpense,'Add Expense'

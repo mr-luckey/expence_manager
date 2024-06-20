@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +14,10 @@ class _YourGoalState extends State<YourGoal> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
     return Scaffold(
       appBar: CustomAppBar(
+        isDark: dark,
         title: 'Your Goals',
         onBackPressed: () {
           Navigator.of(context).pop();

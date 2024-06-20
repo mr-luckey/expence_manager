@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
@@ -40,8 +41,10 @@ class _AddGoalsState extends State<AddGoals> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
     return Scaffold(
       appBar: CustomAppBar(
+        isDark: dark,
         title: 'Add Goal',
         onBackPressed: () {
           Navigator.of(context).pop();
@@ -193,12 +196,13 @@ class _AddGoalsState extends State<AddGoals> {
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(15),
-                  child: genButton(
+                  child: CustomElevatedButton(
+                    isdark: dark,
+                    label: 'Add Goal',
+                    onPressed: () {
+                      //onTap: _handleAddGoal,
+                    },
                     //onTap: _handleAddGoal,
-                    text: 'Add Goal',
-                    enabled: true,
-                    width: double.infinity,
-                    bloc: null, onTap: () {},
                   ),
                 ),
               ),
@@ -209,6 +213,7 @@ class _AddGoalsState extends State<AddGoals> {
     );
   }
 }
+// 'Add Goal',
 
 class ContributionDialog extends StatelessWidget {
   final List<String> contributions;

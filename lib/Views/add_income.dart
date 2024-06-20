@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:expence_manager/widgets/buttons.dart';
 import 'package:expence_manager/widgets/input%20field.dart';
@@ -117,8 +118,10 @@ class _AddIncomeState extends State<AddIncome> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
     return Scaffold(
       appBar: CustomAppBar(
+        isDark: dark,
         title: 'Add Income',
         onBackPressed: () {
           Navigator.of(context).pop();
@@ -208,12 +211,12 @@ class _AddIncomeState extends State<AddIncome> {
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(15),
-                  child: genButton(
-                    onTap: _handleAddIncome,
-                    text: 'Add Income',
-                    enabled: true,
-                    width: double.infinity,
-                    bloc: null,
+                  child: CustomElevatedButton(
+                    isdark: dark,
+                    label: 'Add Income',
+                    onPressed: () {
+                      _handleAddIncome;
+                    },
                   ),
                 ),
               ),

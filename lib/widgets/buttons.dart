@@ -1,57 +1,63 @@
 import 'package:any_animated_button/any_animated_button.dart';
+import 'package:expence_manager/Components/theme/btnTheme.dart';
 import 'package:expence_manager/Controllers/colorscontrollers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class genButton extends CustomAnyAnimatedButton {
-  genButton({
-    required this.onTap,
-    required this.text,
-    this.enabled = true,
-    required this.width,
-    required this.bloc,
-  });
+// class genButton extends CustomAnyAnimatedButton {
+//   genButton({
+//     required this.onTap,
+//     required this.text,
+//     this.enabled = true,
+//     required this.width,
+//     required this.bloc,
+//     this.isdark,
+//   });
 
-  @override
-  final AnyAnimatedButtonBloc? bloc;
-  final VoidCallback onTap;
-  final String text;
-  final bool enabled;
-  final double? width;
+//   @override
+//   final AnyAnimatedButtonBloc? bloc;
+//   final VoidCallback onTap;
+//   final String text;
+//   final bool enabled;
+//   final isdark;
+//   final double? width;
 
-  final BorderRadius _borderRadius = BorderRadius.circular(22.0);
+//   final BorderRadius _borderRadius = BorderRadius.circular(22.0);
 
-  @override
-  AnyAnimatedButtonParams get defaultParams => AnyAnimatedButtonParams(
-        width: width,
-        height: 56.0,
-        decoration: BoxDecoration(
-          //   color: enabled ? Colors.blue : Colors.grey,
-          borderRadius: _borderRadius,
-        ),
-        child: Material(
-          //color: Colors.transparent,
-          child: InkWell(
-            onTap: enabled ? onTap : null,
-            borderRadius: _borderRadius,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    text,
-                    // style: const TextStyle(color: Colors.white),
-                    maxLines: 1,
-                    softWrap: false,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
-}
+//   @override
+//   AnyAnimatedButtonParams get defaultParams => AnyAnimatedButtonParams(
+
+//         width: width,
+//         height: 56.0,
+//         decoration: BoxDecoration(
+
+//           //   color: enabled ? Colors.blue : Colors.grey,
+//           borderRadius: _borderRadius,
+//         ),
+//         child: Material(
+//           //color: Colors.transparent,
+//           child: InkWell(
+//             onTap: enabled ? onTap : null,
+//             borderRadius: _borderRadius,
+//             child: Padding(
+//               padding: const EdgeInsets.all(8.0),
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Text(
+//                     text,
+//                     // style: const TextStyle(color: Colors.white),
+//                     maxLines: 1,
+//                     softWrap: false,
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
+//       );
+// }
 
 // class btns {
 //   btns({
@@ -222,5 +228,40 @@ class Btn extends StatelessWidget {
         ),
       );
     });
+  }
+}
+// import 'package:expence_manager/Components/theme/btnTheme.dart';
+// import 'package:flutter/material.dart';
+
+class CustomElevatedButton extends StatelessWidget {
+  final String label;
+  final isdark;
+  final VoidCallback onPressed;
+
+  const CustomElevatedButton({
+    Key? key,
+    required this.label,
+    this.isdark,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: isdark ? darkElevatedButton.style : lightElevatedButton.style,
+      onPressed: onPressed,
+      //FIXME:
+      child: SizedBox(
+        height: 25,
+        width: Get.width / 2,
+        child: Center(
+          child: Text(label,
+              style: TextStyle(
+                color: isdark ? Colors.black : Colors.white,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+              )),
+        ),
+      ),
+    );
   }
 }

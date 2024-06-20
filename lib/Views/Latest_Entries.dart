@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/constants/records.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:expence_manager/widgets/record_widget.dart';
@@ -13,8 +14,10 @@ class LatestEntries extends StatefulWidget {
 class _LatestEntriesState extends State<LatestEntries> {
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
     return Scaffold(
       appBar: CustomAppBar(
+        isDark: dark,
         title: 'Entries',
         onBackPressed: () {
           Navigator.of(context).pop();

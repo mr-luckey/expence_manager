@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Views/add_income.dart';
 import 'package:expence_manager/Views/add_expense.dart'; // Import the AddExpensePage
 import 'package:expence_manager/widgets/app_bar.dart';
@@ -38,8 +39,10 @@ class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
     return Scaffold(
       appBar: CustomAppBar(
+        isDark: dark,
         title: "Add Page", // Set your title here
         onBackPressed: () {
           Navigator.of(context).pop();

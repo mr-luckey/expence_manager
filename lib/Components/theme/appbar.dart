@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class themeAppbar {
   themeAppbar._();
@@ -12,6 +13,7 @@ class themeAppbar {
     actionsIconTheme: IconThemeData(color: Colors.black, size: 24),
     titleTextStyle: TextStyle(
       color: Colors.black,
+      fontFamily: GoogleFonts.poppins().fontFamily,
       fontSize: 18,
       fontWeight: FontWeight.w600,
     ),
@@ -22,11 +24,12 @@ class themeAppbar {
     scrolledUnderElevation: 0,
     backgroundColor: Colors.transparent,
     surfaceTintColor: Colors.transparent,
-    iconTheme: IconThemeData(color: Colors.black, size: 24),
+    iconTheme: IconThemeData(color: Colors.white, size: 24),
     actionsIconTheme: IconThemeData(color: Colors.white, size: 24),
     titleTextStyle: TextStyle(
       color: Colors.white,
       fontSize: 18,
+      fontFamily: GoogleFonts.poppins().fontFamily,
       fontWeight: FontWeight.w600,
     ),
   );

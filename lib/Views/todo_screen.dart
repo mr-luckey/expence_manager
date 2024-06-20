@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Views/Add_Goals.dart';
 import 'package:expence_manager/Views/your_goal.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
@@ -18,8 +19,10 @@ class _SavingPageState extends State<SavingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
     return Scaffold(
       appBar: CustomAppBar(
+        isDark: dark,
         title: 'Saving',
         onBackPressed: () {
           Navigator.of(context).pop();
@@ -284,14 +287,13 @@ class _SavingPageState extends State<SavingPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(15),
-              child: genButton(
-                onTap: () {
+              child: CustomElevatedButton(
+                isdark: dark,
+                label: '',
+                onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AddGoals()));
                 },
-                text: 'Add Goal',
-                width: double.infinity,
-                bloc: null,
               ),
             )
           ],
