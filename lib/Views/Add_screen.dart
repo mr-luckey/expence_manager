@@ -84,18 +84,23 @@ class _AddPageState extends State<AddPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     "Latest Entries",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: dark ? Colors.white : Colors.blue.shade900),
                   ),
                   Container(
                     height: 30,
                     width: 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.black45),
+                      border: Border.all(color: Colors.blue.shade900),
                     ),
-                    child: Center(child: Icon(Icons.more_vert_rounded)),
+                    child: Center(
+                        child: Icon(Icons.more_vert_rounded,
+                            color: dark ? Colors.white : Colors.blue.shade900)),
                   ),
                 ],
               ),

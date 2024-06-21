@@ -6,6 +6,7 @@ import 'package:expence_manager/widgets/buttons.dart';
 import 'package:expence_manager/widgets/container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SavingPage extends StatefulWidget {
   const SavingPage({super.key});
@@ -15,7 +16,7 @@ class SavingPage extends StatefulWidget {
 }
 
 class _SavingPageState extends State<SavingPage> {
-  double progress = 0.6; // Example progress value
+  double progress = 0.1; // Example progress value
 
   @override
   Widget build(BuildContext context) {
@@ -31,20 +32,23 @@ class _SavingPageState extends State<SavingPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 20), // Space between app bar and text
-            Center(
-              child: Text(
-                "Current Savings",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            SizedBox(height: 50), // Space between text and circular container
+            // SizedBox(height: 20), // Space between app bar and text
+            // Center(
+            //   child: Text(
+            //     "Current Savings",
+            //     style: TextStyle(
+            //         fontSize: 20,
+            //         color: dark ? Colors.white : Colors.blue.shade900),
+            //   ),
+            // ),
+            // SizedBox(height: 50), // Space between text and circular container
             Center(
               child: CustomContainer(),
             ),
             SizedBox(height: 20), // Space between circular container and card
             Center(
               child: Card(
+                color: dark ? Colors.white : Colors.blue.shade900,
                 elevation: 10,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -57,12 +61,17 @@ class _SavingPageState extends State<SavingPage> {
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.calendar_today, color: Colors.blue),
+                          Icon(Icons.calendar_today,
+                              color:
+                                  dark ? Colors.blue.shade900 : Colors.white),
                           SizedBox(width: 10),
                           Text(
                             'June 10, 2024',
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color:
+                                    dark ? Colors.blue.shade900 : Colors.white),
                           ),
                         ],
                       ),
@@ -70,9 +79,10 @@ class _SavingPageState extends State<SavingPage> {
                       Text(
                         'Goal for this month',
                         style: TextStyle(
-                          fontSize: 14,
-                          //  color: Colors.black54
-                        ),
+                            fontSize: 14,
+                            color: dark ? Colors.blue.shade900 : Colors.white
+                            //  color: Colors.black54
+                            ),
                       ),
                       SizedBox(height: 10),
                       Stack(
@@ -81,6 +91,10 @@ class _SavingPageState extends State<SavingPage> {
                             borderRadius: BorderRadius.circular(
                                 10), // Rounded edges for the task bar
                             child: LinearProgressIndicator(
+                              // backgroundColor: dark
+                              //     ? Colors.blue.shade900
+                              //     : Colors.blue.shade900.withOpacity(0.01),
+                              semanticsLabel: '\$800',
                               value: progress, // Example progress value
                               //backgroundColor: Colors.grey[300],
                               //  color: Colors.blue,
@@ -124,27 +138,39 @@ class _SavingPageState extends State<SavingPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Your Goal",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      Container(
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.black45),
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => YourGoal()));
-                          },
-                          child: Center(
-                            child: Icon(Icons.more_vert_rounded),
+                      Text("Your Goal",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                            color: dark ? Colors.white : Colors.blue.shade900,
+                          )),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => YourGoal()));
+                        },
+                        child: Center(
+                          child: Row(
+                            children: [
+                              Text(
+                                'view More',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily:
+                                        GoogleFonts.poppins().fontFamily,
+                                    color: dark
+                                        ? Colors.white
+                                        : Colors.blue.shade900),
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 12,
+                                color:
+                                    dark ? Colors.white : Colors.blue.shade900,
+                              )
+                            ],
                           ),
                         ),
                       ),
@@ -285,16 +311,13 @@ class _SavingPageState extends State<SavingPage> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: CustomElevatedButton(
-                isdark: dark,
-                label: '',
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddGoals()));
-                },
-              ),
+            CustomElevatedButton(
+              isdark: dark,
+              label: 'All Goals',
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddGoals()));
+              },
             )
           ],
         ),

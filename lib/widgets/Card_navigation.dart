@@ -9,7 +9,8 @@ import 'package:get/get.dart';
 import 'package:tab_container/tab_container.dart';
 
 class CardNavigation extends StatefulWidget {
-  CardNavigation({super.key});
+  final dark;
+  CardNavigation({super.key, required this.dark});
 
   @override
   _CardNavigationState createState() => _CardNavigationState();
@@ -18,7 +19,7 @@ class CardNavigation extends StatefulWidget {
 class _CardNavigationState extends State<CardNavigation>
     with SingleTickerProviderStateMixin {
   late final TabController _controller;
-  late TextTheme textTheme;
+  // late TextTheme textTheme;
 
   @override
   void initState() {
@@ -26,11 +27,11 @@ class _CardNavigationState extends State<CardNavigation>
     _controller = TabController(vsync: this, length: 3);
   }
 
-  @override
-  void didChangeDependencies() {
-    textTheme = Theme.of(context).textTheme;
-    super.didChangeDependencies();
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   textTheme = Theme.of(context).textTheme;
+  //   super.didChangeDependencies();
+  // }
 
   @override
   void dispose() {
@@ -40,8 +41,6 @@ class _CardNavigationState extends State<CardNavigation>
 
   @override
   Widget build(BuildContext context) {
-    final dark = ThemeProvider().isDarkMode(context);
-
     return Padding(
       padding: const EdgeInsets.only(
         right: 20.0,
@@ -52,7 +51,7 @@ class _CardNavigationState extends State<CardNavigation>
           AspectRatio(
             aspectRatio: 8 / 3,
             child: Card(
-              color: dark ? Colors.blue.shade900 : Colors.white,
+              color: widget.dark ? Colors.blue.shade900 : Colors.white,
               child: TabContainer(
                   borderRadius: BorderRadius.circular(20),
                   tabEdge: TabEdge.bottom,
@@ -71,17 +70,17 @@ class _CardNavigationState extends State<CardNavigation>
                       ),
                     );
                   },
-                  color: dark
+                  color: widget.dark
                       ? Color.fromARGB(255, 255, 255, 255)
                       : Colors.blue.shade900,
                   selectedTextStyle: TextStyle(
-                      color: dark ? Colors.blue.shade900 : Colors.white,
+                      color: widget.dark ? Colors.blue.shade900 : Colors.white,
 
                       ///TODO: dark mode fixes required
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
                   unselectedTextStyle: TextStyle(
-                      color: dark ? Colors.white : Colors.blue.shade900,
+                      color: widget.dark ? Colors.white : Colors.blue.shade900,
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
                   tabs: [
@@ -109,7 +108,7 @@ class _CardNavigationState extends State<CardNavigation>
                             Text(
                               '  \$ 1000',
                               style: TextStyle(
-                                  color: dark
+                                  color: widget.dark
                                       ? Colors.blue.shade900
                                       : Colors.white,
                                   fontSize: 20,
@@ -133,7 +132,7 @@ class _CardNavigationState extends State<CardNavigation>
                             Text(
                               '  \$ 1000',
                               style: TextStyle(
-                                  color: dark
+                                  color: widget.dark
                                       ? Colors.blue.shade900
                                       : Colors.white,
                                   fontSize: 20,
@@ -157,7 +156,7 @@ class _CardNavigationState extends State<CardNavigation>
                             Text(
                               '  \$ 1000',
                               style: TextStyle(
-                                  color: dark
+                                  color: widget.dark
                                       ? Colors.blue.shade900
                                       : Colors.white,
                                   fontSize: 20,

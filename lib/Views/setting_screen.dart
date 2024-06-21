@@ -43,8 +43,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            buildSectionHeader('Preferences'),
+            buildSectionHeader('Preferences', dark),
             buildSwitchTile(
+              dark: dark,
               title: 'Enable Notifications',
               value: _notificationsEnabled,
               icon: Icons.notifications_active_outlined,
@@ -56,6 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             buildSwitchTile(
+              dark: dark,
               title: 'Enable Dark Mode',
               value: _darkModeEnabled,
               icon: Icons.dark_mode_outlined,
@@ -67,8 +69,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             SizedBox(height: 20),
-            buildSectionHeader('Account'),
+            buildSectionHeader('Account', dark),
             buildListTile(
+              dark: dark,
               title: 'Account Settings',
               subtitle: 'Manage your account settings',
               icon: Icons.account_circle_outlined,
@@ -77,6 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             buildListTile(
+              dark: dark,
               title: 'Privacy',
               subtitle: 'Manage your privacy settings',
               icon: Icons.privacy_tip_outlined,
@@ -85,8 +89,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             SizedBox(height: 20),
-            buildSectionHeader('Support'),
+            buildSectionHeader('Support', dark),
             buildListTile(
+              dark: dark,
               title: 'Help & Support',
               subtitle: 'Get help and support',
               icon: Icons.help_outline,
@@ -95,6 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               },
             ),
             buildListTile(
+              dark: dark,
               title: 'About',
               subtitle: 'Learn more about the app',
               icon: Icons.info_outline,
@@ -108,13 +114,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget buildSectionHeader(String title) {
+  Widget buildSectionHeader(String title, dark) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Text(
         title,
         style: TextStyle(
-          color: Theme.of(context).primaryColor,
+          color: dark ? Colors.white : Colors.blue.shade900,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -124,13 +130,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget buildSwitchTile(
       {required String title,
       required bool value,
+      dark,
       required IconData icon,
       required Function(bool) onChanged}) {
     return SwitchListTile(
-      title: Text(title),
+      title: Text(
+        title,
+        style: TextStyle(color: dark ? Colors.white : Colors.blue.shade900),
+      ),
       value: value,
       onChanged: onChanged,
-      secondary: Icon(icon, color: Theme.of(context).colorScheme.secondary),
+      secondary: Icon(icon, color: dark ? Colors.white : Colors.blue.shade900),
       activeColor: Theme.of(context).primaryColor,
       contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 8),
     );
@@ -140,12 +150,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       {required String title,
       required String subtitle,
       required IconData icon,
+      required dark,
       required VoidCallback onTap}) {
     return ListTile(
-      title: Text(title),
-      subtitle: Text(subtitle),
-      leading: Icon(icon, color: Theme.of(context).colorScheme.secondary),
-      trailing: Icon(Icons.arrow_forward_ios, size: 16),
+      title: Text(
+        title,
+        style: TextStyle(color: dark ? Colors.white : Colors.blue.shade900),
+      ),
+      subtitle: Text(subtitle,
+          style: TextStyle(color: dark ? Colors.white : Colors.blue.shade900)),
+      leading: Icon(icon, color: dark ? Colors.white : Colors.blue.shade900),
+      trailing: Icon(Icons.arrow_forward_ios,
+          size: 16, color: dark ? Colors.white : Colors.blue.shade900),
       onTap: onTap,
       contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 8),
     );
