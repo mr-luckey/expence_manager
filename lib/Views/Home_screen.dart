@@ -1,5 +1,6 @@
 import 'package:expence_manager/Views/Reminder.dart';
 import 'package:expence_manager/Views/todo_screen.dart';
+import 'package:expence_manager/Views/total_Expense.dart';
 import 'package:expence_manager/widgets/Card_navigation.dart';
 import 'package:expence_manager/widgets/Topbar.dart';
 import 'package:expence_manager/widgets/buttons.dart';
@@ -123,7 +124,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.black45),
                     ),
-                    child: Center(child: Icon(Icons.more_vert_rounded)),
+                    child: InkWell
+                      (onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => TotalExpense()));
+                    },
+                        child: Center(child: Icon(Icons.more_vert_rounded))),
                   ),
                 ],
               ),

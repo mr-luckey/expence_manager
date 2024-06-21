@@ -83,13 +83,7 @@ class _CardNavigationState extends State<CardNavigation>
                     Tab(
                       text: 'Total Salary',
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        NavigationService.instance
-                            .changeScreen(context, TotalExpense());
-                      },
-                      child: Tab(text: 'Total Expanse'),
-                    ),
+                    Tab(text: 'Total Expanse'),
                     Tab(text: 'Monthly Expanse'),
                   ],
                   // _getTabs1(),
