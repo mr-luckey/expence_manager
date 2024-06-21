@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Widget recordWidget(List<Map<String, dynamic>> records) {
+Widget recordWidget(List<Map<String, dynamic>> records, dark) {
   return ListView.builder(
     padding: EdgeInsets.all(0.0),
     itemCount: records.length,
@@ -18,14 +18,19 @@ Widget recordWidget(List<Map<String, dynamic>> records) {
                   height: 40,
                   width: 40,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black45),
+                    color: dark
+                        ? Colors.white.withOpacity(0.1)
+                        : Colors.blue.shade900.withOpacity(0.1),
+                    // border: Border.all(
+                    //     //color: Colors.black45
+                    //     ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
-                    child: Icon(
-                      record['iconData'],
-                      color: Colors.black45,
-                    ),
+                    child: Icon(record['iconData'],
+                        color: dark ? Colors.white : Colors.blue.shade900
+                        // color: Colors.black45,
+                        ),
                   ),
                 ),
                 SizedBox(
@@ -37,13 +42,17 @@ Widget recordWidget(List<Map<String, dynamic>> records) {
                     Text(
                       record['title'],
                       style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87),
+                        color: dark ? Colors.white : Colors.blue.shade900,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        // color: Colors.black87
+                      ),
                     ),
                     Text(
                       record['dateTime'],
-                      style: TextStyle(fontSize: 10),
+                      style: TextStyle(
+                          fontSize: 10,
+                          color: dark ? Colors.white : Colors.blue.shade900),
                     ),
                   ],
                 ),
@@ -56,15 +65,17 @@ Widget recordWidget(List<Map<String, dynamic>> records) {
                   children: [
                     Text(
                       record['symbols'],
-                      style: const TextStyle(
-                          color: Colors.black,
+                      style: TextStyle(
+                          //color: Colors.black,
                           fontWeight: FontWeight.bold,
+                          color: dark ? Colors.white : Colors.blue.shade900,
                           fontSize: 14),
                     ),
                     Text(
                       record['amount'].toString(),
-                      style: const TextStyle(
-                          color: Colors.black,
+                      style: TextStyle(
+                          color: dark ? Colors.white : Colors.blue.shade900,
+                          // color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 14),
                     ),
@@ -72,8 +83,9 @@ Widget recordWidget(List<Map<String, dynamic>> records) {
                 ),
                 Text(
                   record['paymentMethod'],
-                  style: const TextStyle(
-                      color: Colors.black87,
+                  style: TextStyle(
+                      color: dark ? Colors.white : Colors.blue.shade900,
+                      // color: Colors.black87,
                       fontWeight: FontWeight.normal,
                       fontSize: 10),
                 ),

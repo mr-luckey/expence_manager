@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -35,8 +36,10 @@ class _AlertScreenState extends State<AlertScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
     return Scaffold(
       appBar: CustomAppBar(
+        isDark: dark,
         title: 'Notification',
         onBackPressed: () {
           Navigator.of(context).pop();
@@ -55,13 +58,14 @@ class _AlertScreenState extends State<AlertScreen> {
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        // color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
-                        icons[index % icons.length], // Use different icons dynamically
+                        icons[index %
+                            icons.length], // Use different icons dynamically
                         size: 30,
-                        color: Colors.grey[600],
+                        //color: Colors.grey[600],
                       ),
                     ),
                     SizedBox(width: 12),
@@ -69,9 +73,12 @@ class _AlertScreenState extends State<AlertScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(items[index % items.length], style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                          Text(items[index % items.length],
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
                           SizedBox(height: 4),
-                          Text(alertTexts[index], style: TextStyle(fontSize: 14)),
+                          Text(alertTexts[index],
+                              style: TextStyle(fontSize: 14)),
                         ],
                       ),
                     ),

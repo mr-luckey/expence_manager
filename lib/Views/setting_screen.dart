@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,6 +33,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),

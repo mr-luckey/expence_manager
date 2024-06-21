@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/widgets/custom_catagory_card.dart';
 import 'package:flutter/material.dart';
 import 'package:expence_manager/widgets/container.dart';
@@ -11,10 +12,21 @@ class TotalExpense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
+
     // Sample data for the CustomCategoryCard
     final List<double> expenses = [300, 150, 100, 50];
-    final List<String> labels = ['Rent', 'Groceries', 'Utilities',];
-    final List<Color> colors = [Colors.red, Colors.blue, Colors.green, Colors.orange];
+    final List<String> labels = [
+      'Rent',
+      'Groceries',
+      'Utilities',
+    ];
+    final List<Color> colors = [
+      Colors.blue.shade300,
+      Colors.blue.shade400,
+      Colors.blue.shade700,
+      Colors.blue.shade900
+    ];
     final List<Map<String, dynamic>> records = [
       {
         'iconData': Icons.home,
@@ -56,32 +68,34 @@ class TotalExpense extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            topbar(
-              title: 'Total Expense',
-              leading: IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () {
-                  // Add your leading button functionality here
-                },
-              ),
-              trailing: IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  // Add your trailing button functionality here
-                },
-              ),
-            ),
+            // topbar(
+            //   title: 'Total Expense',
+            //   leading: IconButton(
+            //     icon: Icon(Icons.menu),
+            //     onPressed: () {
+            //       // Add your leading button functionality here
+            //     },
+            //   ),
+            //   trailing: IconButton(
+            //     icon: Icon(Icons.add),
+            //     onPressed: () {
+            //       // Add your trailing button functionality here
+            //     },
+            //   ),
+            // ),
             TimelineCalender(), // Timeline calendar
             CustomContainer(), // Circular container
             Container(
-              height: 400.0, // Set an appropriate height for the tab bar section
+              height:
+                  400.0, // Set an appropriate height for the tab bar section
               child: CustomTabBar(
                 tabs: [
                   Tab(text: 'Spends'),
                   Tab(text: 'Category'),
                 ],
                 tabViews: [
-                  recordWidget(records), // Use the recordWidget with dynamic data
+                  recordWidget(
+                      records, dark), // Use the recordWidget with dynamic data
                   CustomCategoryCard(
                     expenses: expenses,
                     labels: labels,

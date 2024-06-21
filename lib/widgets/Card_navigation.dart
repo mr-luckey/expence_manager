@@ -1,3 +1,5 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
+import 'package:expence_manager/Components/theme/custom_theme.dart';
 import 'package:expence_manager/Views/total_Expense.dart';
 import 'package:expence_manager/widgets/buttom_navfun.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,6 +40,8 @@ class _CardNavigationState extends State<CardNavigation>
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
+
     return Padding(
       padding: const EdgeInsets.only(
         right: 20.0,
@@ -45,11 +49,10 @@ class _CardNavigationState extends State<CardNavigation>
       ),
       child: Column(
         children: [
-          // const Spacer(),
           AspectRatio(
             aspectRatio: 8 / 3,
             child: Card(
-              // elevation: 10,
+              color: dark ? Colors.blue.shade900 : Colors.white,
               child: TabContainer(
                   borderRadius: BorderRadius.circular(20),
                   tabEdge: TabEdge.bottom,
@@ -68,33 +71,27 @@ class _CardNavigationState extends State<CardNavigation>
                       ),
                     );
                   },
-                  colors: const <Color>[
-                    Colors.blue,
-                    Colors.blue,
-                    Colors.blue,
-                  ],
-                  selectedTextStyle: textTheme.bodyMedium?.copyWith(
-                      fontSize: 13.0,
-                      color: Colors.white,
+                  color: dark
+                      ? Color.fromARGB(255, 255, 255, 255)
+                      : Colors.blue.shade900,
+                  selectedTextStyle: TextStyle(
+                      color: dark ? Colors.blue.shade900 : Colors.white,
+
+                      ///TODO: dark mode fixes required
+                      fontSize: 12,
                       fontWeight: FontWeight.bold),
-                  unselectedTextStyle:
-                      textTheme.bodyMedium?.copyWith(fontSize: 10.0),
+                  unselectedTextStyle: TextStyle(
+                      color: dark ? Colors.white : Colors.blue.shade900,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
                   tabs: [
                     Tab(
                       text: 'Total Salary',
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        NavigationService.instance
-                            .changeScreen(context, TotalExpense());
-                      },
-                      child: Tab(text: 'Total Expanse'),
-                    ),
+                    Tab(text: 'Total Expanse'),
                     Tab(text: 'Monthly Expanse'),
                   ],
-                  // _getTabs1(),
-
-                  children: const [
+                  children: [
                     SingleChildScrollView(
                       child: Column(children: [
                         SizedBox(
@@ -106,15 +103,12 @@ class _CardNavigationState extends State<CardNavigation>
                             SizedBox(
                               width: 110,
                             ),
-                            Icon(
-                              Icons.account_balance_wallet_outlined,
-                              size: 40,
-                              color: Colors.white,
-                            ),
                             Text(
                               '  \$ 1000',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: dark
+                                      ? Colors.blue.shade900
+                                      : Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold),
                             )
@@ -133,15 +127,12 @@ class _CardNavigationState extends State<CardNavigation>
                             SizedBox(
                               width: 110,
                             ),
-                            Icon(
-                              Icons.account_balance_wallet_outlined,
-                              size: 40,
-                              color: Colors.white,
-                            ),
                             Text(
                               '  \$ 1000',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: dark
+                                      ? Colors.blue.shade900
+                                      : Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold),
                             )
@@ -160,15 +151,12 @@ class _CardNavigationState extends State<CardNavigation>
                             SizedBox(
                               width: 110,
                             ),
-                            Icon(
-                              Icons.account_balance_wallet_outlined,
-                              size: 40,
-                              color: Colors.white,
-                            ),
                             Text(
                               '  \$ 1000',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: dark
+                                      ? Colors.blue.shade900
+                                      : Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold),
                             )
@@ -176,9 +164,7 @@ class _CardNavigationState extends State<CardNavigation>
                         )
                       ]),
                     ),
-                  ]
-                  //  _getChildren1(),
-                  ),
+                  ]),
             ),
           ),
         ],

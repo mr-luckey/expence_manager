@@ -1,8 +1,11 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Views/Add_Goals.dart';
 import 'package:expence_manager/Views/your_goal.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:expence_manager/widgets/buttons.dart';
 import 'package:expence_manager/widgets/container.dart';
+import 'package:expence_manager/widgets/custom_card_1.dart';
+import 'package:expence_manager/widgets/item_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,8 +21,10 @@ class _SavingPageState extends State<SavingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
     return Scaffold(
       appBar: CustomAppBar(
+        isDark: dark,
         title: 'Saving',
         onBackPressed: () {
           Navigator.of(context).pop();
@@ -40,68 +45,7 @@ class _SavingPageState extends State<SavingPage> {
               child: CustomContainer(),
             ),
             SizedBox(height: 20), // Space between circular container and card
-            Center(
-              child: Card(
-                elevation: 10,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Container(
-                  width: Get.width * 0.8,
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.calendar_today, color: Colors.blue),
-                          SizedBox(width: 10),
-                          Text(
-                            'June 10, 2024',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'Goal for this month',
-                        style: TextStyle(fontSize: 14, color: Colors.black54),
-                      ),
-                      SizedBox(height: 10),
-                      Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10), // Rounded edges for the task bar
-                            child: LinearProgressIndicator(
-                              value: progress, // Example progress value
-                              backgroundColor: Colors.grey[300],
-                              color: Colors.blue,
-                              minHeight: 40, // Increased height of the task bar
-                            ),
-                          ),
-                          Positioned(
-                            left: 8,
-                            top: 12,
-                            child: Text(
-                              '\$300',
-                              style: TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          ),
-                          Positioned(
-                            right: 8,
-                            top: 12,
-                            child: Text(
-                              '\$500',
-                              style: TextStyle(fontSize: 16, color: Colors.black),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            CustomCard1(),
             SizedBox(height: 20), // Space between card and new text
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30),
@@ -112,7 +56,8 @@ class _SavingPageState extends State<SavingPage> {
                     children: [
                       Text(
                         "Your Goal",
-                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                       Container(
                         height: 30,
@@ -122,8 +67,11 @@ class _SavingPageState extends State<SavingPage> {
                           border: Border.all(color: Colors.black45),
                         ),
                         child: InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => YourGoal()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => YourGoal()));
                           },
                           child: Center(
                             child: Icon(Icons.more_vert_rounded),
@@ -132,112 +80,20 @@ class _SavingPageState extends State<SavingPage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10), // Space between the text and the new row
-                  Row(
-                    children: [
-                      Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.grey, // Grey background for the container
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Icon(Icons.directions_bike, color: Colors.white),
-                        ),
-                      ),
-                      SizedBox(width: 10), // Space between the icon and any other content
-                      Text(
-                        "Bike",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20), // Space between the bike text and the task bar
-                  Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10), // Rounded edges for the task bar
-                        child: LinearProgressIndicator(
-                          value: progress, // Example progress value
-                          backgroundColor: Colors.grey[300],
-                          color: Colors.blue,
-                          minHeight: 6, // Increased height of the task bar
-                        ),
-                      ),
-                      SizedBox(height: 10), // Space between the task bar and the text
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '\$300',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                          Text(
-                            '\$500',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10), // Space between the text and the new row
-                  Row(
-                    children: [
-                      Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.grey, // Grey background for the container
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Icon(Icons.phone_iphone, color: Colors.white),
-                        ),
-                      ),
-                      SizedBox(width: 10), // Space between the icon and any other content
-                      Text(
-                        "I Phone",
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20), // Space between the bike text and the task bar
-                  Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10), // Rounded edges for the task bar
-                        child: LinearProgressIndicator(
-                          value: progress, // Example progress value
-                          backgroundColor: Colors.grey[300],
-                          color: Colors.blue,
-                          minHeight: 6, // Increased height of the task bar
-                        ),
-                      ),
-                      SizedBox(height: 10), // Space between the task bar and the text
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '\$300',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                          Text(
-                            '\$500',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  ItemList(),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(15),
-              child: genButton(onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AddGoals()));
-              }, text: 'Add Goal', width: double.infinity, bloc: null,),
+              child: CustomElevatedButton(
+                isdark: dark,
+                label: '',
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddGoals()));
+                },
+              ),
             )
           ],
         ),

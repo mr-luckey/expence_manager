@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Models/reminder.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -23,7 +24,8 @@ class _EditReminderState extends State<EditReminder> {
   @override
   void initState() {
     super.initState();
-    _descriptionController = TextEditingController(text: widget.reminder.description);
+    _descriptionController =
+        TextEditingController(text: widget.reminder.description);
     _amountController = TextEditingController(text: widget.reminder.amount);
     _dueDateController = TextEditingController(text: widget.reminder.dueDate);
     openBox();
@@ -38,9 +40,11 @@ class _EditReminderState extends State<EditReminder> {
     widget.reminder.amount = _amountController.text;
     widget.reminder.dueDate = _dueDateController.text;
 
-    await _reminderBox.put(widget.reminder.key, widget.reminder); // Save updated reminder to Hive box
+    await _reminderBox.put(widget.reminder.key,
+        widget.reminder); // Save updated reminder to Hive box
 
-    Navigator.pop(context, widget.reminder); // Pass updated reminder back to the previous screen
+    Navigator.pop(context,
+        widget.reminder); // Pass updated reminder back to the previous screen
   }
 
   @override
@@ -53,6 +57,8 @@ class _EditReminderState extends State<EditReminder> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Reminder'),
@@ -62,7 +68,8 @@ class _EditReminderState extends State<EditReminder> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Reminder Date: ${widget.reminder.reminderDate}', style: TextStyle(fontSize: 16)),
+            Text('Reminder Date: ${widget.reminder.reminderDate}',
+                style: TextStyle(fontSize: 16)),
             SizedBox(height: 16),
             TextFormField(
               controller: _descriptionController,

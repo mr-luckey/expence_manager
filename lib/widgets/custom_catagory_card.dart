@@ -23,7 +23,8 @@ class CustomCategoryCard extends StatelessWidget {
     double halfTotalExpenses = totalExpenses / 2;
 
     // Calculate the ratio of each expense to the half total
-    List<double> sections = expenses.map((expense) => expense / halfTotalExpenses).toList();
+    List<double> sections =
+        expenses.map((expense) => expense / halfTotalExpenses).toList();
 
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -76,11 +77,13 @@ class CustomCategoryCard extends StatelessWidget {
                               height: 20,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(color: colors[i], width: 2), // Add border outline
+                                border: Border.all(
+                                    color: colors[i],
+                                    width: 2), // Add border outline
                               ),
                               child: Icon(
                                 Icons.circle,
-                                color: Colors.grey[600], // Change icon color to grey
+                                //color: Colors.grey[600], // Change icon color to grey
                                 size: 12,
                               ),
                             ),
@@ -110,11 +113,11 @@ class CustomCategoryCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           shape: BoxShape.rectangle,
-                          border: Border.all(color: Colors.grey), // Add border outline
+                          // border: Border.all(color: Colors.grey), // Add border outline
                         ),
                         child: Icon(
                           record['iconData'],
-                          color: Colors.grey[600], // Change icon color to grey
+                          // color: Colors.grey[600], // Change icon color to grey
                         ),
                       ),
                       title: Text(record['title']),
@@ -138,7 +141,7 @@ class CustomCategoryCard extends StatelessWidget {
                             ' ${record['paymentMethod']}',
                             style: TextStyle(
                               fontSize: 12,
-                              color: Colors.grey[600],
+                              //color: Colors.grey[600],
                             ),
                           ),
                         ],
