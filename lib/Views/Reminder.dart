@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -14,7 +15,8 @@ class ReminderPage extends StatefulWidget {
   _ReminderPageState createState() => _ReminderPageState();
 }
 
-class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver {
+class _ReminderPageState extends State<ReminderPage>
+    with WidgetsBindingObserver {
   late Box<ReminderModel> _reminderBox;
   List<ReminderModel> reminders = [];
 
@@ -34,7 +36,8 @@ class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver
 
   Future<void> openBox() async {
     // Get the application documents directory where Hive data will be stored
-    final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
+    final appDocumentDir =
+        await path_provider.getApplicationDocumentsDirectory();
     // Initialize Hive and open the box for reminders
     Hive.init(appDocumentDir.path);
     _reminderBox = await Hive.openBox<ReminderModel>('reminders');
@@ -54,7 +57,8 @@ class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // Handle lifecycle state changes if needed
-    if (state == AppLifecycleState.paused || state == AppLifecycleState.inactive) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
       // No explicit saving needed as Hive auto-saves on state changes
     }
   }
@@ -81,8 +85,10 @@ class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
     return Scaffold(
       appBar: CustomAppBar(
+        isDark: dark,
         title: 'Reminders',
         onBackPressed: () {
           Navigator.of(context).pop();
@@ -122,9 +128,12 @@ class _ReminderPageState extends State<ReminderPage> with WidgetsBindingObserver
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Reminder Date: ${reminder.reminderDate}', style: TextStyle(fontSize: 16)),
+                Text('Reminder Date: ${reminder.reminderDate}',
+                    style: TextStyle(fontSize: 16)),
                 SizedBox(height: 8),
-                Text(reminder.description!, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(reminder.description!,
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 SizedBox(height: 8),
                 Text(reminder.amount!, style: TextStyle(fontSize: 16)),
               ],

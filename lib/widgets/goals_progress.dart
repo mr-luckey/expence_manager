@@ -12,12 +12,14 @@ Widget progress(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           backgroundBlendMode: BlendMode.clear,
-          border: Border.all(color: Colors.black45),
+          border: Border.all(
+              //color: Colors.black45
+              ),
         ),
         child: Center(
           child: Icon(
             iconData,
-            color: Colors.black54,
+            //color: Colors.black54,
             size: 30,
           ),
         ),
@@ -27,9 +29,10 @@ Widget progress(
           Text(
             title,
             style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87),
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              //color: Colors.black87
+            ),
           ),
         ],
       )

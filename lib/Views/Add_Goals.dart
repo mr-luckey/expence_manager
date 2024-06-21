@@ -1,3 +1,4 @@
+import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
@@ -20,7 +21,8 @@ class _AddGoalsState extends State<AddGoals> {
   @override
   void initState() {
     super.initState();
-    _contributionController.text = _selectedContribution; // Initialize with the default value
+    _contributionController.text =
+        _selectedContribution; // Initialize with the default value
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -35,13 +37,14 @@ class _AddGoalsState extends State<AddGoals> {
         _deadlineController.text = "${picked.toLocal()}".split(' ')[0];
       });
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
+    final dark = ThemeProvider().isDarkMode(context);
     return Scaffold(
       appBar: CustomAppBar(
+        isDark: dark,
         title: 'Add Goal',
         onBackPressed: () {
           Navigator.of(context).pop();
@@ -57,11 +60,15 @@ class _AddGoalsState extends State<AddGoals> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   'Income Title',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold,
+                    // color: Colors.grey
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
                   height: 40, // Set the height of the input field
                   child: TextField(
@@ -81,11 +88,15 @@ class _AddGoalsState extends State<AddGoals> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   'Amount',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold,
+                    // color: Colors.grey
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
                   height: 40, // Set the height of the input field
                   child: TextField(
@@ -106,11 +117,15 @@ class _AddGoalsState extends State<AddGoals> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   'Contribution Type',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold,
+                    // color: Colors.grey
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
                   height: 40, // Set the height of the input field
                   child: TextField(
@@ -148,11 +163,15 @@ class _AddGoalsState extends State<AddGoals> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   'Deadline',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold,
+                    // color: Colors.grey
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
                   height: 40, // Set the height of the input field
                   child: TextField(
@@ -177,12 +196,13 @@ class _AddGoalsState extends State<AddGoals> {
               Center(
                 child: Padding(
                   padding: const EdgeInsets.all(15),
-                  child: genButton(
+                  child: CustomElevatedButton(
+                    isdark: dark,
+                    label: 'Add Goal',
+                    onPressed: () {
+                      //onTap: _handleAddGoal,
+                    },
                     //onTap: _handleAddGoal,
-                    text: 'Add Goal',
-                    enabled: true,
-                    width: double.infinity,
-                    bloc: null, onTap: () {  },
                   ),
                 ),
               ),
@@ -193,6 +213,7 @@ class _AddGoalsState extends State<AddGoals> {
     );
   }
 }
+// 'Add Goal',
 
 class ContributionDialog extends StatelessWidget {
   final List<String> contributions;
@@ -205,7 +226,8 @@ class ContributionDialog extends StatelessWidget {
     return AlertDialog(
       title: Text('Select Contribution Type'),
       content: Container(
-        width: double.minPositive, // Make the dialog size just enough to fit its content
+        width: double
+            .minPositive, // Make the dialog size just enough to fit its content
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: contributions.length,
