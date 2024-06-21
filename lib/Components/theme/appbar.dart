@@ -9,10 +9,10 @@ class themeAppbar {
     scrolledUnderElevation: 0,
     backgroundColor: Colors.transparent,
     surfaceTintColor: Colors.transparent,
-    iconTheme: IconThemeData(color: Colors.black, size: 24),
-    actionsIconTheme: IconThemeData(color: Colors.black, size: 24),
+    iconTheme: IconThemeData(color: Colors.blue.shade900, size: 24),
+    actionsIconTheme: IconThemeData(color: Colors.blue.shade900, size: 24),
     titleTextStyle: TextStyle(
-      color: Colors.black,
+      color: Colors.blue.shade900,
       fontFamily: GoogleFonts.poppins().fontFamily,
       fontSize: 18,
       fontWeight: FontWeight.w600,

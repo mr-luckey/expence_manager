@@ -106,7 +106,7 @@ class _AddPageState extends State<AddPage> {
             child: Container(
               height: 400,
               width: double.infinity,
-              child: recordWidget(records),
+              child: recordWidget(records, dark),
             ),
           ),
         ],

@@ -3,6 +3,7 @@ import 'package:expence_manager/Views/Reminder.dart';
 import 'package:expence_manager/Views/todo_screen.dart';
 import 'package:expence_manager/widgets/Card_navigation.dart';
 import 'package:expence_manager/widgets/Topbar.dart';
+import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:expence_manager/widgets/buttons.dart';
 import 'package:expence_manager/widgets/card.dart';
 import 'package:expence_manager/widgets/record_widget.dart';
@@ -60,8 +61,15 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            CustomAppBar(
+              title: 'Overview',
+              isDark: dark,
+              onBackPressed: () {
+                Get.back();
+              },
+            ),
             SizedBox(
-              height: Get.height / 10,
+              height: Get.height / 300,
             ),
             CardNavigation(),
             SizedBox(
@@ -76,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Btn(
+                      isdark: dark,
                       onTap: () {
                         Navigator.push(
                           context,
@@ -87,6 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       index: 0,
                     ),
                     Btn(
+                      isdark: dark,
                       onTap: () {
                         Navigator.push(
                           context,
@@ -99,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       index: 1,
                     ),
                     Btn(
+                      isdark: dark,
                       onTap: () {},
                       text: 'Budget',
                       iconData: Icons.savings_outlined,
@@ -116,18 +127,24 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     "Latest Entries",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: dark ? Colors.white : Colors.blue.shade900),
                   ),
                   Container(
                     height: 30,
                     width: 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.black45),
+                      border: Border.all(
+                          color: dark ? Colors.white : Colors.blue.shade900),
                     ),
-                    child: Center(child: Icon(Icons.more_vert_rounded)),
+                    child: Center(
+                        child: Icon(Icons.more_vert_rounded,
+                            color: dark ? Colors.white : Colors.blue.shade900)),
                   ),
                 ],
               ),
@@ -140,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 height: 400,
                 width: double.infinity,
-                child: recordWidget(records),
+                child: recordWidget(records, dark),
               ),
             ),
           ],

@@ -116,43 +116,6 @@ class Mainscreen extends StatefulWidget {
 class _MainscreenState extends State<Mainscreen> {
   final controller = PersistentTabController(initialIndex: 0);
 
-  List<PersistentBottomNavBarItem> _navbarItems() {
-    return [
-      PersistentBottomNavBarItem(
-        title: 'Home',
-        icon: Icon(
-          Icons.home_outlined,
-        ),
-        // inactiveColorPrimary: Colors.blue,
-        // activeColorPrimary: Colors.white
-      ),
-      PersistentBottomNavBarItem(
-        title: 'ToDo',
-        icon: Icon(Icons.savings_outlined),
-        //inactiveColorPrimary: Colors.blueAccent,
-        // activeColorPrimary: Colors.white
-      ),
-      PersistentBottomNavBarItem(
-        title: 'Add',
-        icon: Icon(Icons.add_circle_outline_sharp),
-        //inactiveColorPrimary: Colors.blueAccent,
-        //activeColorPrimary: Colors.white
-      ),
-      PersistentBottomNavBarItem(
-        title: 'Alert',
-        icon: Icon(Icons.notifications_none),
-        //inactiveColorPrimary: Colors.blueAccent,
-        //activeColorPrimary: Colors.white
-      ),
-      PersistentBottomNavBarItem(
-        title: 'Setting',
-        icon: Icon(Icons.settings_suggest_outlined),
-        //inactiveColorPrimary: Colors.blueAccent,
-        //activeColorPrimary: Colors.white
-      )
-    ];
-  }
-
   List<Widget> _buildScreen() {
     return [
       const HomeScreen(),
@@ -168,13 +131,69 @@ class _MainscreenState extends State<Mainscreen> {
     final dark = ThemeProvider().isDarkMode(context);
 
     return PersistentTabView(
+      backgroundColor: dark ? Colors.white : Colors.blue.shade900,
       context,
       screens: _buildScreen(),
-      items: _navbarItems(),
+      items: _navbarItems(dark),
       controller: controller,
-      decoration: NavBarDecoration(borderRadius: BorderRadius.circular(10)),
+      decoration: NavBarDecoration(
+        borderRadius: BorderRadius.circular(10),
+        colorBehindNavBar: dark ? Colors.white : Colors.blue.shade900,
+      ),
       // backgroundColor: Colors.blue.shade300,
       navBarStyle: NavBarStyle.style9,
     );
+  }
+
+  List<PersistentBottomNavBarItem> _navbarItems(dark) {
+    return [
+      PersistentBottomNavBarItem(
+        activeColorPrimary: dark ? Colors.blue.shade900 : Colors.white,
+
+        inactiveColorPrimary: dark ? Colors.blue.shade900 : Colors.white,
+        title: 'Home',
+        icon: Icon(
+          Icons.home_outlined,
+        ),
+        // inactiveColorPrimary: Colors.blue,
+        // activeColorPrimary: Colors.white
+      ),
+      PersistentBottomNavBarItem(
+        activeColorPrimary: dark ? Colors.blue.shade900 : Colors.white,
+
+        inactiveColorPrimary: dark ? Colors.blue.shade900 : Colors.white,
+        title: 'ToDo',
+        icon: Icon(Icons.savings_outlined),
+        //inactiveColorPrimary: Colors.blueAccent,
+        // activeColorPrimary: Colors.white
+      ),
+      PersistentBottomNavBarItem(
+        activeColorPrimary: dark ? Colors.blue.shade900 : Colors.white,
+
+        inactiveColorPrimary: dark ? Colors.blue.shade900 : Colors.white,
+        title: 'Add',
+        icon: Icon(Icons.add_circle_outline_sharp),
+        //inactiveColorPrimary: Colors.blueAccent,
+        //activeColorPrimary: Colors.white
+      ),
+      PersistentBottomNavBarItem(
+        activeColorPrimary: dark ? Colors.blue.shade900 : Colors.white,
+
+        inactiveColorPrimary: dark ? Colors.blue.shade900 : Colors.white,
+        title: 'Alert',
+        icon: Icon(Icons.notifications_none),
+        //inactiveColorPrimary: Colors.blueAccent,
+        //activeColorPrimary: Colors.white
+      ),
+      PersistentBottomNavBarItem(
+        activeColorPrimary: dark ? Colors.blue.shade900 : Colors.white,
+
+        inactiveColorPrimary: dark ? Colors.blue.shade900 : Colors.white,
+        title: 'Setting',
+        icon: Icon(Icons.settings_suggest_outlined),
+        //inactiveColorPrimary: Colors.blueAccent,
+        //activeColorPrimary: Colors.white
+      )
+    ];
   }
 }

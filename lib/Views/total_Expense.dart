@@ -95,7 +95,7 @@ class TotalExpense extends StatelessWidget {
                 ],
                 tabViews: [
                   recordWidget(
-                      records), // Use the recordWidget with dynamic data
+                      records, dark), // Use the recordWidget with dynamic data
                   CustomCategoryCard(
                     expenses: expenses,
                     labels: labels,

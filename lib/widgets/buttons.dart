@@ -169,9 +169,11 @@ class Btn extends StatelessWidget {
   final String text;
   final IconData iconData;
   final int index;
+  final isdark;
 
   Btn({
     required this.onTap,
+    this.isdark,
     required this.text,
     required this.iconData,
     required this.index,
@@ -197,9 +199,11 @@ class Btn extends StatelessWidget {
               height: Get.height * 0.05,
               width: Get.width * 0.25,
               decoration: BoxDecoration(
+                color:
+                    isdark ? Colors.white : Colors.blue.shade900.withOpacity(1),
                 //color: isSelected ? Colors.blue : Colors.white,
-                borderRadius: BorderRadius.circular(22),
-                border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(10),
+                // border: Border.all(color: Colors.white),
               ),
               child: Center(
                 child: Row(
@@ -207,6 +211,7 @@ class Btn extends StatelessWidget {
                   children: [
                     Icon(
                       iconData,
+                      color: isdark ? Colors.blue.shade900 : Colors.white,
                       // color: isSelected
                       //     ? Colors.white
                       //     : Color.fromARGB(255, 39, 38, 38),
@@ -215,10 +220,12 @@ class Btn extends StatelessWidget {
                     Text(
                       text,
                       style: TextStyle(
-                          // color: isSelected
-                          //     ? Colors.white
-                          //     : Color.fromARGB(255, 39, 38, 38),
-                          ),
+                        color: isdark ? Colors.blue.shade900 : Colors.white,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        // color: isSelected
+                        //     ? Colors.white
+                        //     : Color.fromARGB(255, 39, 38, 38),
+                      ),
                     ),
                   ],
                 ),

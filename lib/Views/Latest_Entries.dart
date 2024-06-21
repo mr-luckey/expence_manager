@@ -46,7 +46,7 @@ class _LatestEntriesState extends State<LatestEntries> {
             child: Container(
               height: 400,
               width: double.infinity,
-              child: recordWidget(records),
+              child: recordWidget(records, dark),
             ),
           ),
         ],

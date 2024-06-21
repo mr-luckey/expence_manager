@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final VoidCallback onBackPressed;
+  // final iconns;
   final isDark;
 
-  CustomAppBar({required this.title, required this.onBackPressed, this.isDark});
+  CustomAppBar({
+    required this.title,
+    required this.onBackPressed,
+    this.isDark,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +22,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       titleTextStyle: isDark
           ? themeAppbar.darkAppbarTheme.titleTextStyle
           : themeAppbar.lightAppBarTheme.titleTextStyle,
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back,
-        ),
-        onPressed: onBackPressed,
-      ),
+      // leading: IconButton(
+      //   icon:
+      //   onPressed: onBackPressed,
+      // ),
       title: Text(title,
           style: isDark
               ? themeAppbar.darkAppbarTheme.titleTextStyle
