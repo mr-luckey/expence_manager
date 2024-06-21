@@ -73,16 +73,16 @@ class _CardNavigationState extends State<CardNavigation>
                   color: widget.dark
                       ? Color.fromARGB(255, 255, 255, 255)
                       : Colors.blue.shade900,
-                  // selectedTextStyle: TextStyle(
-                  //     color: widget.dark ? Colors.blue.shade900 : Colors.white,
+                  selectedTextStyle: TextStyle(
+                      color: widget.dark ? Colors.blue.shade900 : Colors.white,
 
-                  //     ///TODO: dark mode fixes required
-                  //     fontSize: 12,
-                  //     fontWeight: FontWeight.bold),
-                  // unselectedTextStyle: TextStyle(
-                  //     color: widget.dark ? Colors.white : Colors.blue.shade900,
-                  //     fontSize: 12,
-                  //     fontWeight: FontWeight.bold),
+                      ///TODO: dark mode fixes required
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
+                  unselectedTextStyle: TextStyle(
+                      color: widget.dark ? Colors.white : Colors.blue.shade900,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
                   tabs: [
                     Tab(
                       text: 'Total Salary',
