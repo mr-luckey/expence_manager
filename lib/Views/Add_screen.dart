@@ -49,6 +49,7 @@ class _AddPageState extends State<AddPage> {
         },
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(20),
@@ -65,7 +66,7 @@ class _AddPageState extends State<AddPage> {
                         height: 70, // Increased height
                         width: 70, // Increased width
                         decoration: BoxDecoration(
-                          //color: _selectedIndex == index ? Colors.blue : Colors.white,
+                          // color: _selectedIndex == index ? Colors.blue : Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.black45),
                         ),
@@ -79,34 +80,35 @@ class _AddPageState extends State<AddPage> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: const Text(
                     "Latest Entries",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.black45),
-                    ),
-                    child: Center(child: Icon(Icons.more_vert_rounded)),
+                ),
+                Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.black45),
                   ),
-                ],
-              ),
+                  child: Center(child: Icon(Icons.more_vert_rounded)),
+                ),
+              ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Container(
-              height: 400,
-              width: double.infinity,
-              child: recordWidget(records, dark),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Container(
+                width: double.infinity,
+                child: recordWidget(records, dark),
+              ),
             ),
           ),
         ],
@@ -116,9 +118,11 @@ class _AddPageState extends State<AddPage> {
 
   Widget _buildContainerContent(int index) {
     if (index == 0) {
-      return Icon(
-        Icons.add,
-        //color: _selectedIndex == index ? Colors.white : Colors.black,
+      return Center(
+        child: Icon(
+          Icons.add,
+          // color: _selectedIndex == index ? Colors.white : Colors.black,
+        ),
       );
     } else if (index == 1) {
       return Column(
@@ -126,7 +130,7 @@ class _AddPageState extends State<AddPage> {
         children: [
           Icon(
             Icons.account_balance_wallet,
-            //color: _selectedIndex == index ? Colors.white : Colors.black,
+            // color: _selectedIndex == index ? Colors.white : Colors.black,
           ),
           Text(
             'Add Income',
@@ -148,7 +152,7 @@ class _AddPageState extends State<AddPage> {
           Text(
             'Add Expense',
             style: TextStyle(
-//color: _selectedIndex == index ? Colors.white : Colors.black,
+              // color: _selectedIndex == index ? Colors.white : Colors.black,
               fontSize: 10,
             ),
           ),

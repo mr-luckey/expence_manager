@@ -57,24 +57,27 @@ class _ItemListState extends State<ItemList> {
           SizedBox(
               height:
               10), // Space between the task bar and the text
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '\$300',
-                style: TextStyle(
-                  fontSize: 16,
-                  // color: Colors.black
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '\$300',
+                  style: TextStyle(
+                    fontSize: 16,
+                    // color: Colors.black
+                  ),
                 ),
-              ),
-              Text(
-                '\$500',
-                style: TextStyle(
-                  fontSize: 16,
-                  //  color: Colors.black
+                Text(
+                  '\$500',
+                  style: TextStyle(
+                    fontSize: 16,
+                    //  color: Colors.black
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
@@ -123,24 +126,27 @@ class _ItemListState extends State<ItemList> {
           SizedBox(
               height:
               10), // Space between the task bar and the text
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '\$300',
-                style: TextStyle(
-                  fontSize: 16,
-                  //  color: Colors.black
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '\$300',
+                  style: TextStyle(
+                    fontSize: 16,
+                    //  color: Colors.black
+                  ),
                 ),
-              ),
-              Text(
-                '\$500',
-                style: TextStyle(
-                  fontSize: 16,
-                  // color: Colors.black
+                Text(
+                  '\$500',
+                  style: TextStyle(
+                    fontSize: 16,
+                    // color: Colors.black
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

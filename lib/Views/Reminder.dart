@@ -131,11 +131,11 @@ class _ReminderPageState extends State<ReminderPage>
                 Text('Reminder Date: ${reminder.reminderDate}',
                     style: TextStyle(fontSize: 16)),
                 SizedBox(height: 8),
-                Text(reminder.description!,
+                Text(reminder.description,
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 SizedBox(height: 8),
-                Text(reminder.amount!, style: TextStyle(fontSize: 16)),
+                Text(reminder.amount, style: TextStyle(fontSize: 16)),
               ],
             ),
             Column(

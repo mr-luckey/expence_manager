@@ -1,7 +1,6 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Models/reminder.dart';
 import 'package:expence_manager/Models/reminder_model_adapter.dart';
-// import 'package:expence_manager/Views/reminder_model_adapter.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -19,7 +18,8 @@ class _SetReminderState extends State<SetReminder> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _dueDateController = TextEditingController();
 
-  late Box<ReminderModel> _reminderBox;
+  Box<ReminderModel>? _reminderBox; // Made nullable
+  bool _isBoxOpened = false;
 
   @override
   void initState() {
@@ -29,13 +29,18 @@ class _SetReminderState extends State<SetReminder> {
 
   Future<void> openBox() async {
     final appDocumentDir =
-        await path_provider.getApplicationDocumentsDirectory();
+    await path_provider.getApplicationDocumentsDirectory();
     Hive.init(appDocumentDir.path);
     Hive.registerAdapter(ReminderModelAdapter()); // Register the adapter
     _reminderBox = await Hive.openBox<ReminderModel>('reminders');
+    setState(() {
+      _isBoxOpened = true; // Set the flag to true when the box is opened
+    });
   }
 
   void _saveReminder() async {
+    if (_reminderBox == null) return; // Check if the box is initialized
+
     String description = _descriptionController.text;
     String amount = _amountController.text;
     String dueDate = _dueDateController.text;
@@ -47,10 +52,9 @@ class _SetReminderState extends State<SetReminder> {
       dueDate: dueDate,
     );
 
-    await _reminderBox.add(newReminder);
+    await _reminderBox!.add(newReminder); // Added null check
 
-    Navigator.pop(context,
-        newReminder); // Pass the new reminder back to the previous screen
+    Navigator.pop(context, newReminder); // Pass the new reminder back to the previous screen
   }
 
   @override
@@ -69,7 +73,8 @@ class _SetReminderState extends State<SetReminder> {
       appBar: AppBar(
         title: Text('Set Reminder'),
       ),
-      body: Padding(
+      body: _isBoxOpened
+          ? Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +98,8 @@ class _SetReminderState extends State<SetReminder> {
             ),
           ],
         ),
-      ),
+      )
+          : Center(child: CircularProgressIndicator()), // Show loading indicator while opening the box
     );
   }
 }

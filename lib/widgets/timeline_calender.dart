@@ -37,7 +37,8 @@ class _TimelineCalenderState extends State<TimelineCalender> {
               setState(() => selectedDate = date);
                         },
             leftMargin: 20,
-            selectableDayPredicate: (date) => date.day != 23,
+            //selectableDayPredicate: (date) => date.day != 23,
+            selectableDayPredicate: (date) => date.day != 32,
             locale: 'en',
           ),
         ),

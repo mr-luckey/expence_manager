@@ -32,6 +32,7 @@ class _SavingPageState extends State<SavingPage> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 20), // Space between app bar and text
             Center(
@@ -45,40 +46,47 @@ class _SavingPageState extends State<SavingPage> {
               child: CustomContainer(),
             ),
             SizedBox(height: 20), // Space between circular container and card
-            CustomCard1(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: CustomCard1(),
+            ),
             SizedBox(height: 20), // Space between card and new text
             Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Your Goal",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      Container(
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.black45),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Your Goal",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
                         ),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => YourGoal()));
-                          },
-                          child: Center(
-                            child: Icon(Icons.more_vert_rounded),
+                        Container(
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.black45),
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => YourGoal()));
+                            },
+                            child: Center(
+                              child: Icon(Icons.more_vert_rounded),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   ItemList(),
                 ],
@@ -86,13 +94,15 @@ class _SavingPageState extends State<SavingPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(15),
-              child: CustomElevatedButton(
-                isdark: dark,
-                label: '',
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddGoals()));
-                },
+              child: Center(
+                child: CustomElevatedButton(
+                  isdark: dark,
+                  label: '',
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => AddGoals()));
+                  },
+                ),
               ),
             )
           ],
