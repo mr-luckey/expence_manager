@@ -2,7 +2,7 @@
  // Generated file
 
 @HiveType(typeId: 0)
-class ReminderModel extends HiveObject {
+class ReminderModel  {
   @HiveField(0)
   late String reminderDate;
 

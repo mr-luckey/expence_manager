@@ -1,11 +1,14 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
+import 'package:expence_manager/Models/reminder_model_adapter.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:expence_manager/Models/reminder.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:expence_manager/views/edit_reminder.dart';
 import 'package:expence_manager/views/set_remainder.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ReminderPage extends StatefulWidget {
   const ReminderPage({Key? key, this.reminder}) : super(key: key);
@@ -25,7 +28,9 @@ class _ReminderPageState extends State<ReminderPage>
     super.initState();
     // Initialize Hive when the widget is first inserted into the tree
     openBox();
+    print("hello");
   }
+
 
   @override
   void didChangeDependencies() {
@@ -34,12 +39,14 @@ class _ReminderPageState extends State<ReminderPage>
     WidgetsBinding.instance.addObserver(this);
   }
 
-  Future<void> openBox() async {
+   openBox() async {
     // Get the application documents directory where Hive data will be stored
-    final appDocumentDir =
-        await path_provider.getApplicationDocumentsDirectory();
+    // final appDocumentDir =
+    // await getApplicationDocumentsDirectory();
     // Initialize Hive and open the box for reminders
-    Hive.init(appDocumentDir.path);
+   await Hive.initFlutter();
+   if (!Hive.isAdapterRegistered(0)) {
+    Hive.registerAdapter(ReminderModelAdapter());}
     _reminderBox = await Hive.openBox<ReminderModel>('reminders');
     // Load reminders from the box
     loadReminders();
@@ -67,13 +74,13 @@ class _ReminderPageState extends State<ReminderPage>
     // Load reminders from the box into the local list and update the UI
     setState(() {
       reminders.clear();
-      reminders.addAll(_reminderBox.values.toList());
+      reminders.addAll(_reminderBox.values.toList().reversed);
     });
   }
 
   void saveReminder(ReminderModel reminder) async {
     // Save a reminder to the box and reload the reminders
-    await _reminderBox.put(reminder.key, reminder);
+    // await _reminderBox.put(reminder.key, reminder);
     loadReminders();
   }
 
@@ -115,7 +122,7 @@ class _ReminderPageState extends State<ReminderPage>
 
     return GestureDetector(
       onLongPress: () {
-        showDeleteConfirmationDialog(reminder.key);
+        // showDeleteConfirmationDialog(reminder.key);
       },
       onTap: () {
         navigateToEditReminder(reminder);
@@ -133,7 +140,7 @@ class _ReminderPageState extends State<ReminderPage>
                 SizedBox(height: 8),
                 Text(reminder.description,
                     style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 SizedBox(height: 8),
                 Text(reminder.amount, style: TextStyle(fontSize: 16)),
               ],
