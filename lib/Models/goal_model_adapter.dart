@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 
 class GoalAdapter extends TypeAdapter<Goal> {
   @override
-  final typeId = 0; // Choose an unique ID for this adapter.
+  final typeId = 1; // Choose an unique ID for this adapter.
 
   @override
   Goal read(BinaryReader reader) {

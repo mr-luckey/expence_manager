@@ -24,7 +24,6 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(GoalAdapter());
   await Hive.openBox<Goal>('goals');
- // Hive.registerAdapter(GoalAdapter());
   runApp(MainApp());
 }
 // await Hive.initFlutter();

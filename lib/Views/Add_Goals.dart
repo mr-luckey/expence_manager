@@ -25,6 +25,7 @@ class _AddGoalsState extends State<AddGoals> {
   void initState() {
     super.initState();
     _contributionController.text = _selectedContribution;
+
   }
 
   Future<void> _selectDate(BuildContext context) async {
