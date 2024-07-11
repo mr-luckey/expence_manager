@@ -3,6 +3,7 @@ import 'package:expence_manager/Models/income_model.dart';
 import 'package:expence_manager/Models/income_model_adapter.dart';
 import 'package:expence_manager/Views/Reminder.dart';
 import 'package:expence_manager/Views/add_income.dart';
+import 'package:expence_manager/Views/mainscreen.dart';
 import 'package:expence_manager/Views/todo_screen.dart';
 import 'package:expence_manager/Views/total_Expense.dart';
 import 'package:expence_manager/widgets/Card_navigation.dart';
@@ -89,6 +90,13 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
+                // Future.delayed(Duration(seconds: 05));
+                print("TESTING BACK");
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Mainscreen(initialIndex: 0),
+                  ),
+                );
                 _calculateTotalAmount();
               },
               child: Text('Delete'),

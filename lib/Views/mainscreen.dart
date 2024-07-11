@@ -19,9 +19,9 @@ import '../widgets/Topbar.dart';
 
 class Mainscreen extends StatefulWidget {
   const Mainscreen({
-    Key? key,
+    Key? key, this.initialIndex,
   }) : super(key: key);
-
+  final initialIndex ;
   @override
   State<Mainscreen> createState() => _MainscreenState();
 }
@@ -33,6 +33,11 @@ class _MainscreenState extends State<Mainscreen> {
   @override
   void initState() {
     super.initState();
+    if(widget.initialIndex != null){
+      controller.index = widget.initialIndex;
+      print("TESTING INDEX");
+      print(widget.initialIndex);
+    }
     _incomeBoxFuture = Hive.openBox<IncomeModel>('incomes');
   }
 
