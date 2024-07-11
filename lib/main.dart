@@ -2,6 +2,8 @@ import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Components/theme/theme.dart';
 import 'package:expence_manager/Models/goal_model.dart';
 import 'package:expence_manager/Models/goal_model_adapter.dart';
+import 'package:expence_manager/Models/income_model.dart';
+import 'package:expence_manager/Models/income_model_adapter.dart';
 import 'package:expence_manager/Views/Add_Goals.dart';
 import 'package:expence_manager/Views/Reminder.dart';
 // import 'package:expence_manager/Views/add_page.dart';
@@ -22,8 +24,9 @@ Future<void> main() async {
       overlays: [SystemUiOverlay.bottom]);
 
   await Hive.initFlutter();
-  Hive.registerAdapter(GoalAdapter());
-  await Hive.openBox<Goal>('goals');
+  Hive.registerAdapter(IncomeModelAdapter());
+  await  Hive.openBox<IncomeModel>('incomes');
+
   runApp(MainApp());
 }
 // await Hive.initFlutter();
