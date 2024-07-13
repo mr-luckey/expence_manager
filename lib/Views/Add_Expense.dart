@@ -1,20 +1,19 @@
-// ignore_for_file: unused_import
-
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
-import 'package:expence_manager/Views/Latest_Entries.dart';
+import 'package:expence_manager/Models/expense_model.dart';
+import 'package:expence_manager/Models/expense_model_adapter.dart';
+import 'package:expence_manager/Views/Home_screen.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:expence_manager/widgets/buttons.dart';
-import 'package:expence_manager/widgets/input%20field.dart';
 import 'package:expence_manager/widgets/timeline_calender.dart';
-import 'package:any_animated_button/any_animated_button.dart';
-import 'package:expence_manager/Controllers/colorscontrollers.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 
 // Custom input field function with optional icon and right-side icon option
 Widget inputfield(TextEditingController controller, String hint, IconData? icon,
     bool obscure, TextInputType type,
-    {bool isIconOnRight = false}) {
+    {bool isIconOnRight = false, VoidCallback? onTap}) {
   return Container(
     width: double.infinity,
     margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 5),
@@ -22,38 +21,20 @@ Widget inputfield(TextEditingController controller, String hint, IconData? icon,
       controller: controller,
       keyboardType: type,
       obscureText: obscure,
-      style: TextStyle(
-          // color: Colors.grey,
-          fontSize: 16,
-          fontWeight: FontWeight.bold),
+      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       decoration: InputDecoration(
-        prefixIcon: isIconOnRight
-            ? null
-            : (icon != null
-                ? Icon(
-                    icon,
-                    //  color: Colors.grey
-                  )
-                : null),
-        suffixIcon: isIconOnRight
-            ? (icon != null
-                ? Icon(
-                    icon,
-                    // color: Colors.grey
-                  )
-                : null)
-            : null,
+        prefixIcon: isIconOnRight ? null : (icon != null ? Icon(icon) : null),
+        suffixIcon: isIconOnRight ? (icon != null ? Icon(icon) : null) : null,
         hintText: hint,
-        hintStyle: TextStyle(
-            // color:
-            // Colors.grey
-            ),
+        hintStyle: TextStyle(),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
         contentPadding:
-            const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       ),
+      readOnly: onTap != null, // make readOnly if onTap is provided
+      onTap: onTap,
     ),
   );
 }
@@ -67,67 +48,79 @@ class AddExpense extends StatefulWidget {
 
 class _AddExpenseState extends State<AddExpense> {
   // Controllers for the text fields
+  final TextEditingController _titleController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  late Box<ExpenseModel> _expenseBox;
+  bool _isBoxOpened = false;
 
-  // Selected index for the Card widgets
-  int _selectedIndex = -1;
-
-  // Method to handle button press
-  void _handleAddExpense() {
-    // Handle the button press logic here, e.g., saving the expense
-
-    // Navigate to the LatestEntries page
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => LatestEntries()),
-    );
+  @override
+  void initState() {
+    super.initState();
+    openBox();
   }
 
-  // Method to handle container tap
-  void _onContainerTap(int index) {
+  Future<void> openBox() async {
+    await Hive.initFlutter();
+    if (!Hive.isAdapterRegistered(3)) {
+      Hive.registerAdapter(ExpenseModelAdapter());
+    }
+    _expenseBox = await Hive.openBox<ExpenseModel>('expenses');
     setState(() {
-      _selectedIndex = index;
+      _isBoxOpened = true; // Set the flag to true when the box is opened
     });
   }
 
-  // Method to build container content
-  Widget _buildContainerContent(int index) {
-    switch (index) {
-      case 0:
-        return Center(
-          child: Icon(
-            Icons.add,
-            // color: _selectedIndex == index ? Colors.white : Colors.black,
-          ),
-        );
-      case 1:
-        return Center(
-          child: Text(
-            'Health',
-            style: TextStyle(
-                // color: _selectedIndex == index ? Colors.white : Colors.black,
-                ),
-          ),
-        );
-      case 2:
-        return Center(
-          child: Text(
-            'Grocery',
-            style: TextStyle(
-                // color: _selectedIndex == index ? Colors.white : Colors.black,
-                ),
-          ),
-        );
-      default:
-        return Center(
-          child: Text(
-            'Item $index',
-            style: TextStyle(
-                // color: _selectedIndex == index ? Colors.white : Colors.black,
-                ),
-          ),
-        );
+  // Method to handle button press
+  void _handleAddExpense() async {
+    if (_titleController.text.isNotEmpty &&
+        _amountController.text.isNotEmpty &&
+        _descriptionController.text.isNotEmpty &&
+        _categoryController.text.isNotEmpty &&
+        _dateController.text.isNotEmpty &&
+        _isBoxOpened) {
+
+      final expense = ExpenseModel(
+        title: _titleController.text,
+        amount: double.parse(_amountController.text),
+        description: _descriptionController.text,
+        category: _categoryController.text,
+        date: DateTime.parse(_dateController.text),
+      );
+
+      await _expenseBox.add(expense);
+
+      print('Expense data added to Hive database');
+      displayExpenseData();
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please fill all fields and ensure the box is opened')),
+      );
     }
+  }
+
+  void displayExpenseData() async {
+    List<ExpenseModel> fetchedExpenseData = _expenseBox.values.toList();
+    print('Expense data fetched from Hive database: $fetchedExpenseData');
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != DateTime.now())
+      setState(() {
+        _dateController.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
   }
 
   @override
@@ -152,17 +145,16 @@ class _AddExpenseState extends State<AddExpense> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
-                  'Income Title',
+                  'Expense Title',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    // color: Colors.grey
                   ),
                 ),
               ),
               inputfield(
-                _amountController,
-                '',
+                _titleController,
+                'Enter Expense Title',
                 null,
                 false,
                 TextInputType.text,
@@ -175,13 +167,12 @@ class _AddExpenseState extends State<AddExpense> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    // color: Colors.grey
                   ),
                 ),
               ),
               inputfield(
-                _descriptionController,
-                '',
+                _amountController,
+                'Enter Amount',
                 Icons.attach_money,
                 false,
                 TextInputType.number,
@@ -195,36 +186,55 @@ class _AddExpenseState extends State<AddExpense> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    // color: Colors.grey
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
+              inputfield(
+                _categoryController,
+                'Enter Expense Category',
+                Icons.category,
+                false,
+                TextInputType.text,
+                isIconOnRight: true,
               ),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(3, (index) {
-                    return GestureDetector(
-                      onTap: () => _onContainerTap(index),
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          // color: _selectedIndex == index
-                          //     ? Colors.blue
-                          //     : Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.black45),
-                        ),
-                        child: _buildContainerContent(index),
-                      ),
-                    );
-                  }),
+                child: const Text(
+                  'Date',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+              ),
+              inputfield(
+                _dateController,
+                'Select Date',
+                Icons.date_range,
+                false,
+                TextInputType.datetime,
+                isIconOnRight: true,
+                onTap: () => _selectDate(context), // show date picker on tap
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: const Text(
+                  'Description',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              inputfield(
+                _descriptionController,
+                'Enter Description',
+                Icons.description,
+                false,
+                TextInputType.text,
+                isIconOnRight: true,
               ),
               const SizedBox(height: 20),
               Center(
@@ -244,4 +254,3 @@ class _AddExpenseState extends State<AddExpense> {
     );
   }
 }
-// _handleAddExpense,'Add Expense'

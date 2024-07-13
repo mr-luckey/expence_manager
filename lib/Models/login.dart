@@ -1,4 +1,4 @@
-class LoginRequestData {
-  String email = '';
-  String password = '';
-}
+ class LoginRequestData {
+   String email = '';
+   String password = '';
+  }

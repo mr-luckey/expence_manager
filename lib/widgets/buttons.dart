@@ -169,7 +169,7 @@ class Btn extends StatelessWidget {
   final String text;
   final IconData iconData;
   final int index;
-  final isdark;
+  final bool? isdark;
 
   Btn({
     required this.onTap,
@@ -193,17 +193,13 @@ class Btn extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(0.0),
           child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
             child: Container(
               height: Get.height * 0.05,
               width: Get.width * 0.25,
               decoration: BoxDecoration(
-                color:
-                    isdark ? Colors.white : Colors.blue.shade900.withOpacity(1),
-                //color: isSelected ? Colors.blue : Colors.white,
+                color: isdark == true ? Colors.white : Colors.blue.shade900.withOpacity(1),
                 borderRadius: BorderRadius.circular(10),
-                // border: Border.all(color: Colors.white),
               ),
               child: Center(
                 child: Row(
@@ -211,20 +207,17 @@ class Btn extends StatelessWidget {
                   children: [
                     Icon(
                       iconData,
-                      color: isdark ? Colors.blue.shade900 : Colors.white,
-                      // color: isSelected
-                      //     ? Colors.white
-                      //     : Color.fromARGB(255, 39, 38, 38),
+                      color: isdark == true ? Colors.blue.shade900 : Colors.white,
                     ),
                     SizedBox(width: 8),
-                    Text(
-                      text,
-                      style: TextStyle(
-                        color: isdark ? Colors.blue.shade900 : Colors.white,
-                        fontFamily: GoogleFonts.poppins().fontFamily,
-                        // color: isSelected
-                        //     ? Colors.white
-                        //     : Color.fromARGB(255, 39, 38, 38),
+                    Flexible(
+                      child: Text(
+                        text,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: isdark == true ? Colors.blue.shade900 : Colors.white,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
+                        ),
                       ),
                     ),
                   ],
@@ -237,12 +230,13 @@ class Btn extends StatelessWidget {
     });
   }
 }
+
 // import 'package:expence_manager/Components/theme/btnTheme.dart';
 // import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final String label;
-  final isdark;
+  final bool? isdark;
   final VoidCallback onPressed;
 
   const CustomElevatedButton({
@@ -255,20 +249,25 @@ class CustomElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: isdark ? darkElevatedButton.style : lightElevatedButton.style,
+      style: isdark == true ? darkElevatedButton.style : lightElevatedButton.style,
       onPressed: onPressed,
-      //FIXME:
       child: SizedBox(
         height: 25,
         width: Get.width / 2,
         child: Center(
-          child: Text(label,
+          child: Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: isdark ? Colors.black : Colors.white,
+                color: isdark == true ? Colors.black : Colors.white,
                 fontFamily: GoogleFonts.poppins().fontFamily,
-              )),
+              ),
+            ),
+          ),
         ),
       ),
     );
   }
 }
+
