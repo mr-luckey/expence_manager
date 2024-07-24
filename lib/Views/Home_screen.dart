@@ -150,7 +150,9 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: Get.height / 300,
             ),
+
             CardNavigation(totalIncome: totalAmount,),
+
             SizedBox(
               height: Get.height / 50,
             ),

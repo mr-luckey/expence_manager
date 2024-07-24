@@ -8,6 +8,7 @@ import 'package:expence_manager/widgets/custom_card_1.dart';
 import 'package:expence_manager/widgets/item_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SavingPage extends StatefulWidget {
   const SavingPage({super.key});
@@ -17,7 +18,7 @@ class SavingPage extends StatefulWidget {
 }
 
 class _SavingPageState extends State<SavingPage> {
-  double progress = 0.6; // Example progress value
+  double progress = 0.1; // Example progress value
 
   @override
   Widget build(BuildContext context) {
@@ -34,21 +35,25 @@ class _SavingPageState extends State<SavingPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20), // Space between app bar and text
-            Center(
-              child: Text(
-                "Current Savings",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-            SizedBox(height: 50), // Space between text and circular container
+            // SizedBox(height: 20), // Space between app bar and text
+            // Center(
+            //   child: Text(
+            //     "Current Savings",
+            //     style: TextStyle(
+            //         fontSize: 20,
+            //         color: dark ? Colors.white : Colors.blue.shade900),
+            //   ),
+            // ),
+            // SizedBox(height: 50), // Space between text and circular container
             Center(
               child: CustomContainer(),
             ),
             SizedBox(height: 20), // Space between circular container and card
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: CustomCard1(),
+
             ),
             SizedBox(height: 20), // Space between card and new text
             Padding(
@@ -56,6 +61,7 @@ class _SavingPageState extends State<SavingPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Row(
@@ -72,6 +78,7 @@ class _SavingPageState extends State<SavingPage> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(color: Colors.black45),
+
                           ),
                           child: InkWell(
                             onTap: () {
@@ -92,6 +99,7 @@ class _SavingPageState extends State<SavingPage> {
                 ],
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.all(15),
               child: Center(
@@ -104,6 +112,7 @@ class _SavingPageState extends State<SavingPage> {
                   },
                 ),
               ),
+
             )
           ],
         ),

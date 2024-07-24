@@ -11,9 +11,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:expence_manager/Models/income_model.dart';
 
 class CardNavigation extends StatefulWidget {
+
   CardNavigation({super.key, required this.totalIncome});
 
   final double totalIncome;
+
 
   @override
   _CardNavigationState createState() => _CardNavigationState();
@@ -22,8 +24,10 @@ class CardNavigation extends StatefulWidget {
 class _CardNavigationState extends State<CardNavigation>
     with SingleTickerProviderStateMixin {
   late final TabController _controller;
+
   late TextTheme textTheme;
   // Total income amount
+
 
   @override
   void initState() {
@@ -31,11 +35,11 @@ class _CardNavigationState extends State<CardNavigation>
     _controller = TabController(vsync: this, length: 3);
   }
 
-  @override
-  void didChangeDependencies() {
-    textTheme = Theme.of(context).textTheme;
-    super.didChangeDependencies();
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   textTheme = Theme.of(context).textTheme;
+  //   super.didChangeDependencies();
+  // }
 
   @override
   void dispose() {
@@ -45,8 +49,6 @@ class _CardNavigationState extends State<CardNavigation>
 
   @override
   Widget build(BuildContext context) {
-    final dark = ThemeProvider().isDarkMode(context);
-
     return Padding(
       padding: const EdgeInsets.only(
         right: 20.0,
@@ -57,8 +59,9 @@ class _CardNavigationState extends State<CardNavigation>
           AspectRatio(
             aspectRatio: 8 / 3,
             child: Card(
-              color: dark ? Colors.blue.shade900 : Colors.white,
+              color: widget.dark ? Colors.blue.shade900 : Colors.white,
               child: TabContainer(
+
                 borderRadius: BorderRadius.circular(20),
                 tabEdge: TabEdge.bottom,
                 curve: Curves.easeIn,
@@ -75,6 +78,7 @@ class _CardNavigationState extends State<CardNavigation>
                     child: FadeTransition(
                       opacity: animation,
                       child: child,
+
                     ),
                   );
                 },
@@ -114,6 +118,7 @@ class _CardNavigationState extends State<CardNavigation>
                             Text(
                               '\$ ${widget.totalIncome.toStringAsFixed(2)}',
                               style: TextStyle(
+
                                 color: dark
                                     ? Colors.blue.shade900
                                     : Colors.white,
@@ -121,6 +126,7 @@ class _CardNavigationState extends State<CardNavigation>
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+
                           ],
                         ),
                       ],
@@ -141,6 +147,7 @@ class _CardNavigationState extends State<CardNavigation>
                             Text(
                               '\$ 1000', // Placeholder for Expense amount
                               style: TextStyle(
+
                                 color: dark
                                     ? Colors.blue.shade900
                                     : Colors.white,
@@ -148,6 +155,7 @@ class _CardNavigationState extends State<CardNavigation>
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+
                           ],
                         ),
                       ],
@@ -168,6 +176,7 @@ class _CardNavigationState extends State<CardNavigation>
                             Text(
                               '\$ 1000', // Placeholder for Total amount
                               style: TextStyle(
+
                                 color: dark
                                     ? Colors.blue.shade900
                                     : Colors.white,
@@ -175,6 +184,7 @@ class _CardNavigationState extends State<CardNavigation>
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+
                           ],
                         ),
                       ],
