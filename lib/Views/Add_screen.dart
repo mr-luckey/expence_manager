@@ -92,7 +92,8 @@ class _AddPageState extends State<AddPage> {
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: dark ? Colors.white : Colors.blue.shade900),
+                       // color: dark ? Colors.white : Colors.blue.shade900
+                    ),
                   ),
 
                 ),

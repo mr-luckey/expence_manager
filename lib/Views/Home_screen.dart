@@ -450,32 +450,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     Btn(
                       isdark: dark,
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SavingPage()),
-                        );
+
                       },
-                      text: 'Saving',
+                      text: 'Income',
                       iconData: Icons.add,
                       index: 0,
                     ),
                     Btn(
                       isdark: dark,
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ReminderPage()),
-                        );
                       },
-                      text: 'Remind',
+                      text: 'Expense',
                       iconData: Icons.notifications_active_outlined,
                       index: 1,
                     ),
                     Btn(
                       isdark: dark,
                       onTap: () {},
-                      text: 'Budget',
+                      text: 'Total',
                       iconData: Icons.savings_outlined,
                       index: 2,
                     ),
