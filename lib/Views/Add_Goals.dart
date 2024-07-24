@@ -1,7 +1,10 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
+import 'package:expence_manager/Models/goal_model.dart';
 import 'package:expence_manager/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
+import 'package:hive/hive.dart';
+
 
 class AddGoals extends StatefulWidget {
   const AddGoals({Key? key}) : super(key: key);
@@ -11,18 +14,18 @@ class AddGoals extends StatefulWidget {
 }
 
 class _AddGoalsState extends State<AddGoals> {
+  final TextEditingController _titleController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _contributionController = TextEditingController();
   final TextEditingController _deadlineController = TextEditingController();
   List<String> _contributions = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
-  String _selectedContribution = ''; // Set an initial value
+  String _selectedContribution = '';
 
   @override
   void initState() {
     super.initState();
-    _contributionController.text =
-        _selectedContribution; // Initialize with the default value
+    _contributionController.text = _selectedContribution;
+
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -37,6 +40,25 @@ class _AddGoalsState extends State<AddGoals> {
         _deadlineController.text = "${picked.toLocal()}".split(' ')[0];
       });
     }
+  }
+
+  void _handleAddGoal() async {
+    final String title = _titleController.text;
+    final double amount = double.tryParse(_amountController.text) ?? 0;
+    final String contributionType = _contributionController.text;
+    final DateTime deadline = DateTime.parse(_deadlineController.text);
+
+    final goal = Goal(
+      title: title,
+      amount: amount,
+      contributionType: contributionType,
+      deadline: deadline,
+    );
+
+    final box = Hive.box<Goal>('goals');
+    await box.add(goal);
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -62,17 +84,15 @@ class _AddGoalsState extends State<AddGoals> {
                   'Income Title',
                   style: TextStyle(
                     fontSize: 16, fontWeight: FontWeight.bold,
-                    // color: Colors.grey
                   ),
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
-                  height: 40, // Set the height of the input field
+                  height: 40,
                   child: TextField(
-                    controller: _amountController,
+                    controller: _titleController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       hintText: '',
@@ -90,17 +110,15 @@ class _AddGoalsState extends State<AddGoals> {
                   'Amount',
                   style: TextStyle(
                     fontSize: 16, fontWeight: FontWeight.bold,
-                    // color: Colors.grey
                   ),
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
-                  height: 40, // Set the height of the input field
+                  height: 40,
                   child: TextField(
-                    controller: _descriptionController,
+                    controller: _amountController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: '',
@@ -119,15 +137,13 @@ class _AddGoalsState extends State<AddGoals> {
                   'Contribution Type',
                   style: TextStyle(
                     fontSize: 16, fontWeight: FontWeight.bold,
-                    // color: Colors.grey
                   ),
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
-                  height: 40, // Set the height of the input field
+                  height: 40,
                   child: TextField(
                     controller: _contributionController,
                     readOnly: true,
@@ -165,15 +181,13 @@ class _AddGoalsState extends State<AddGoals> {
                   'Deadline',
                   style: TextStyle(
                     fontSize: 16, fontWeight: FontWeight.bold,
-                    // color: Colors.grey
                   ),
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Container(
-                  height: 40, // Set the height of the input field
+                  height: 40,
                   child: TextField(
                     controller: _deadlineController,
                     readOnly: true,
@@ -199,10 +213,7 @@ class _AddGoalsState extends State<AddGoals> {
                   child: CustomElevatedButton(
                     isdark: dark,
                     label: 'Add Goal',
-                    onPressed: () {
-                      //onTap: _handleAddGoal,
-                    },
-                    //onTap: _handleAddGoal,
+                    onPressed: _handleAddGoal,
                   ),
                 ),
               ),
@@ -213,7 +224,6 @@ class _AddGoalsState extends State<AddGoals> {
     );
   }
 }
-// 'Add Goal',
 
 class ContributionDialog extends StatelessWidget {
   final List<String> contributions;
@@ -226,8 +236,7 @@ class ContributionDialog extends StatelessWidget {
     return AlertDialog(
       title: Text('Select Contribution Type'),
       content: Container(
-        width: double
-            .minPositive, // Make the dialog size just enough to fit its content
+        width: double.minPositive,
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: contributions.length,

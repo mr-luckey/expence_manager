@@ -1,8 +1,8 @@
-import 'package:hive/hive.dart';
+ import 'package:hive/hive.dart';
  // Generated file
 
 @HiveType(typeId: 0)
-class ReminderModel extends HiveObject {
+class ReminderModel  {
   @HiveField(0)
   late String reminderDate;
 

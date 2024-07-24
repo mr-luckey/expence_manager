@@ -35,17 +35,17 @@ class _EditReminderState extends State<EditReminder> {
     _reminderBox = await Hive.openBox<ReminderModel>('reminders');
   }
 
-  void _updateReminder() async {
-    widget.reminder.description = _descriptionController.text;
-    widget.reminder.amount = _amountController.text;
-    widget.reminder.dueDate = _dueDateController.text;
-
-    await _reminderBox.put(widget.reminder.key,
-        widget.reminder); // Save updated reminder to Hive box
-
-    Navigator.pop(context,
-        widget.reminder); // Pass updated reminder back to the previous screen
-  }
+  // void _updateReminder() async {
+  //   widget.reminder.description = _descriptionController.text;
+  //   widget.reminder.amount = _amountController.text;
+  //   widget.reminder.dueDate = _dueDateController.text;
+  //
+  //   await _reminderBox.put(widget.reminder.key,
+  //       widget.reminder); // Save updated reminder to Hive box
+  //
+  //   Navigator.pop(context,
+  //       widget.reminder); // Pass updated reminder back to the previous screen
+  // }
 
   @override
   void dispose() {
@@ -95,10 +95,10 @@ class _EditReminderState extends State<EditReminder> {
               ),
             ),
             SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _updateReminder,
-              child: Text('Update Reminder'),
-            ),
+            // ElevatedButton(
+            //   //onPressed: _updateReminder,
+            //   child: Text('Update Reminder'),
+            // ),
           ],
         ),
       ),

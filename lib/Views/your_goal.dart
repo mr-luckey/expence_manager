@@ -1,6 +1,9 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
+import 'package:expence_manager/Models/goal_model.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class YourGoal extends StatefulWidget {
   const YourGoal({super.key});
@@ -10,7 +13,13 @@ class YourGoal extends StatefulWidget {
 }
 
 class _YourGoalState extends State<YourGoal> {
-  double progress = 0.6;
+  late Box<Goal> _goalBox;
+
+  @override
+  void initState() {
+    super.initState();
+    _goalBox = Hive.box<Goal>('goals');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,128 +44,78 @@ class _YourGoalState extends State<YourGoal> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      //  color: Colors.grey,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.directions_bike,
-                        //color: Colors.white
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    "Bike",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: LinearProgressIndicator(
-                      value: progress,
-                      // backgroundColor: Colors.grey[300],
-                      //color: Colors.blue,
-                      minHeight: 6,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '\$300',
-                        style: TextStyle(
-                          fontSize: 16,
-                          //color: Colors.black
+            Expanded(
+              child: ValueListenableBuilder(
+                valueListenable: _goalBox.listenable(),
+                builder: (context, Box<Goal> box, _) {
+                  if (box.values.isEmpty) {
+                    return Center(
+                      child: Text("No goals added yet."),
+                    );
+                  }
+
+                  return ListView.builder(
+                    itemCount: box.length,
+                    itemBuilder: (context, index) {
+                      final goal = box.getAt(index);
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Icon(Icons.directions_bike),
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  goal!.title,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: LinearProgressIndicator(
+                                      value: goal.amount / 500, // example progress calculation
+                                      minHeight: 6,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '\$${goal.amount}',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                      Text(
+                                        '\$500', // example target amount
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Text(
-                        '\$500',
-                        style: TextStyle(
-                          fontSize: 16,
-                          //color: Colors.black
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      // color: Colors.grey,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.phone_iphone,
-                        //color: Colors.white
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    "I Phone",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: LinearProgressIndicator(
-                      value: progress,
-                      //backgroundColor: Colors.grey[300],
-                      // color: Colors.blue,
-                      minHeight: 6,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '\$300',
-                        style: TextStyle(
-                          fontSize: 16,
-                          //color: Colors.black
-                        ),
-                      ),
-                      Text(
-                        '\$500',
-                        style: TextStyle(
-                          fontSize: 16,
-                          //color: Colors.black
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ],

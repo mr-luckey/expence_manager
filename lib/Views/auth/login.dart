@@ -34,80 +34,82 @@ class _LoginState extends State<Login> {
       // backgroundColor: ThemeData.scaffoldBackgroundColor,
       // backgroundColor: T
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Column(
-        children: [
-          // SizedBox(
-          //   height: Get.height / 20,
-          // ),
-          CustomAppBar(
-            title: 'Login',
-            onBackPressed: () {},
-            isDark: dark,
-            // isDark: dark,
-          ),
-          // topbar(
-          //   title: 'Login',
-          //   leading: IconButton(
-          //     icon: Icon(
-          //       Icons.arrow_back,
-          //     ),
-          //     onPressed: () {
-          //       Get.back();
-          //     },
-          //   ),
-          //   trailing: IconButton(
-          //     icon: Icon(Icons.dark_mode_rounded),
-          //     onPressed: () {
-          //       Provider.of<ThemeProvider>(context, listen: false)
-          //           .toggleTheme();
-          //     },
-          //   ),
-          // ),
-          Center(
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: Get.height / 6,
-                ),
-                const CircleAvatar(
-                  radius: 50,
-                  child: Icon(Icons.person),
-                ),
-                SizedBox(height: 50),
-                inputfield(_emailcontroller, 'Email', Icons.email, false,
-                    TextInputType.emailAddress),
-                SizedBox(height: 30),
-                inputfield(_passwordcontroller, 'Password', Icons.password,
-                    true, TextInputType.text),
-                SizedBox(
-                  height: Get.height / 20,
-                ),
-                CustomElevatedButton(
-                  label: 'Login',
-                  isdark: dark,
-                  onPressed: () {
-                    Get.to(Mainscreen(
-                        // selectedIndex: 1,
-                        ));
-                  },
-                  //complete animation on button here.
-                ),
-                SizedBox(
-                  height: Get.height / 20,
-                ),
-                CustomElevatedButton(
-                  label: "Don't have an account?",
-                  onPressed: () {
-                    Get.to(Signup());
-                  },
-                  isdark: dark,
-                )
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // SizedBox(
+            //   height: Get.height / 20,
+            // ),
+            CustomAppBar(
+              title: 'Login',
+              onBackPressed: () {},
+              isDark: dark,
+              // isDark: dark,
             ),
-          ),
-        ],
+            // topbar(
+            //   title: 'Login',
+            //   leading: IconButton(
+            //     icon: Icon(
+            //       Icons.arrow_back,
+            //     ),
+            //     onPressed: () {
+            //       Get.back();
+            //     },
+            //   ),
+            //   trailing: IconButton(
+            //     icon: Icon(Icons.dark_mode_rounded),
+            //     onPressed: () {
+            //       Provider.of<ThemeProvider>(context, listen: false)
+            //           .toggleTheme();
+            //     },
+            //   ),
+            // ),
+            Center(
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: Get.height / 6,
+                  ),
+                  const CircleAvatar(
+                    radius: 50,
+                    child: Icon(Icons.person),
+                  ),
+                  SizedBox(height: 50),
+                  inputfield(_emailcontroller, 'Email', Icons.email, false,
+                      TextInputType.emailAddress),
+                  SizedBox(height: 30),
+                  inputfield(_passwordcontroller, 'Password', Icons.password,
+                      true, TextInputType.text),
+                  SizedBox(
+                    height: Get.height / 20,
+                  ),
+                  CustomElevatedButton(
+                    label: 'Login',
+                    isdark: dark,
+                    onPressed: () {
+                      Get.to(Mainscreen(
+                          // selectedIndex: 1,
+                          ));
+                    },
+                    //complete animation on button here.
+                  ),
+                  SizedBox(
+                    height: Get.height / 20,
+                  ),
+                  CustomElevatedButton(
+                    label: "Don't have an account?",
+                    onPressed: () {
+                      Get.to(Signup());
+                    },
+                    isdark: dark,
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
