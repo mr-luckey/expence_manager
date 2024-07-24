@@ -1,6 +1,7 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AlertScreen extends StatefulWidget {
   const AlertScreen({super.key});
@@ -62,8 +63,11 @@ class _AlertScreenState extends State<AlertScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
-                        icons[index %
-                            icons.length], // Use different icons dynamically
+                        icons[index % icons.length],
+                        color: dark
+                            ? Colors.white
+                            : Colors.blue
+                                .shade900, // Use different icons dynamically
                         size: 30,
                         //color: Colors.grey[600],
                       ),
@@ -75,24 +79,41 @@ class _AlertScreenState extends State<AlertScreen> {
                         children: [
                           Text(items[index % items.length],
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
+                                  color: dark
+                                      ? Colors.white
+                                      : Colors.blue.shade900)),
                           SizedBox(height: 4),
                           Text(alertTexts[index],
-                              style: TextStyle(fontSize: 14)),
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: dark
+                                      ? Colors.white
+                                      : Colors.blue.shade900)),
                         ],
                       ),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('Just now', style: TextStyle(fontSize: 14)),
+                        Text('Just now',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: dark
+                                    ? Colors.white
+                                    : Colors.blue.shade900)),
                         Icon(Icons.more_horiz, size: 20),
                       ],
                     ),
                   ],
                 ),
               ),
-              Divider(),
+              Divider(
+                color:
+                    dark ? Colors.white : Colors.blue.shade900.withOpacity(0.5),
+              ),
             ],
           );
         },

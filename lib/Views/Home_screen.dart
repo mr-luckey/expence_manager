@@ -1,24 +1,27 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
-import 'package:get/get.dart';
 import 'package:expence_manager/Models/income_model.dart';
 import 'package:expence_manager/Models/income_model_adapter.dart';
-import 'package:expence_manager/Models/expense_model.dart';
-import 'package:expence_manager/Models/expense_model_adapter.dart';
+import 'package:expence_manager/Views/Reminder.dart';
 import 'package:expence_manager/Views/add_income.dart';
+import 'package:expence_manager/Views/mainscreen.dart';
+import 'package:expence_manager/Views/todo_screen.dart';
 import 'package:expence_manager/Views/total_Expense.dart';
+import 'package:expence_manager/widgets/Card_navigation.dart';
+import 'package:expence_manager/widgets/Topbar.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:expence_manager/widgets/buttons.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key, BuildContext? initialIndex});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -444,41 +447,35 @@ class _HomeScreenState extends State<HomeScreen> {
                     Btn(
                       isdark: dark,
                       onTap: () {
-                        setState(() {
-                          showIncome = true;
-                          showTotal = false;
-                        });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SavingPage()),
+                        );
                       },
-                      text: 'Income',
-                      iconData: Icons.attach_money,
+                      text: 'Saving',
+                      iconData: Icons.add,
                       index: 0,
                     ),
                     Btn(
                       isdark: dark,
                       onTap: () {
-                        setState(() {
-                          showIncome = false;
-                          showTotal =false;
-                        });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ReminderPage()),
+                        );
                       },
-                      text: 'Expenses',
-                      iconData: Icons.money_off,
+                      text: 'Remind',
+                      iconData: Icons.notifications_active_outlined,
                       index: 1,
                     ),
                     Btn(
                       isdark: dark,
-                      onTap: () {
-                        setState(() {
-                          _calculateRemainingBalance();
-                          showIncome = false;
-                          showTotal = true;
-                        });
-                      },
-                      text: 'Total',
+                      onTap: () {},
+                      text: 'Budget',
                       iconData: Icons.savings_outlined,
                       index: 2,
                     ),
-
                   ],
                 ),
               ),
