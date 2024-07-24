@@ -11,11 +11,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:expence_manager/Models/income_model.dart';
 
 class CardNavigation extends StatefulWidget {
-
   CardNavigation({super.key, required this.totalIncome});
 
   final double totalIncome;
-
 
   @override
   _CardNavigationState createState() => _CardNavigationState();
@@ -27,7 +25,6 @@ class _CardNavigationState extends State<CardNavigation>
 
   late TextTheme textTheme;
   // Total income amount
-
 
   @override
   void initState() {
@@ -59,9 +56,8 @@ class _CardNavigationState extends State<CardNavigation>
           AspectRatio(
             aspectRatio: 8 / 3,
             child: Card(
-              color: widget.dark ? Colors.blue.shade900 : Colors.white,
+              // color: widget.dark ? Colors.blue.shade900 : Colors.white,
               child: TabContainer(
-
                 borderRadius: BorderRadius.circular(20),
                 tabEdge: TabEdge.bottom,
                 curve: Curves.easeIn,
@@ -78,20 +74,19 @@ class _CardNavigationState extends State<CardNavigation>
                     child: FadeTransition(
                       opacity: animation,
                       child: child,
-
                     ),
                   );
                 },
-                color: dark
-                    ? Color.fromARGB(255, 255, 255, 255)
-                    : Colors.blue.shade900,
+                // color: dark
+                //     ? Color.fromARGB(255, 255, 255, 255)
+                //     : Colors.blue.shade900,
                 selectedTextStyle: TextStyle(
-                  color: dark ? Colors.blue.shade900 : Colors.white,
+                  // color: dark ? Colors.blue.shade900 : Colors.white,
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
                 unselectedTextStyle: TextStyle(
-                  color: dark ? Colors.white : Colors.blue.shade900,
+                  // color: dark ? Colors.white : Colors.blue.shade900,
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
@@ -118,15 +113,13 @@ class _CardNavigationState extends State<CardNavigation>
                             Text(
                               '\$ ${widget.totalIncome.toStringAsFixed(2)}',
                               style: TextStyle(
-
-                                color: dark
-                                    ? Colors.blue.shade900
-                                    : Colors.white,
+                                // color: dark
+                                //     ? Colors.blue.shade900
+                                //     : Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-
                           ],
                         ),
                       ],
@@ -147,15 +140,13 @@ class _CardNavigationState extends State<CardNavigation>
                             Text(
                               '\$ 1000', // Placeholder for Expense amount
                               style: TextStyle(
-
-                                color: dark
-                                    ? Colors.blue.shade900
-                                    : Colors.white,
+                                // color: dark
+                                //     ? Colors.blue.shade900
+                                //     : Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-
                           ],
                         ),
                       ],
@@ -176,15 +167,13 @@ class _CardNavigationState extends State<CardNavigation>
                             Text(
                               '\$ 1000', // Placeholder for Total amount
                               style: TextStyle(
-
-                                color: dark
-                                    ? Colors.blue.shade900
-                                    : Colors.white,
+                                // color: dark
+                                //     ? Colors.blue.shade900
+                                //     : Colors.white,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-
                           ],
                         ),
                       ],

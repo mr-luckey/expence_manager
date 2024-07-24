@@ -1,4 +1,5 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
+import 'package:expence_manager/Components/theme/theme.dart';
 import 'package:expence_manager/Views/add_income.dart';
 import 'package:expence_manager/Views/add_expense.dart'; // Import the AddExpensePage
 import 'package:expence_manager/widgets/app_bar.dart';
@@ -80,21 +81,19 @@ class _AddPageState extends State<AddPage> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 12.0),
                   child: const Text(
-
                     "Latest Entries",
                     style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: dark ? Colors.white : Colors.blue.shade900),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      // color: dark ? Colors.white : Colors.blue.shade900
+                    ),
                   ),
-
                 ),
                 Container(
                   height: 30,
@@ -102,7 +101,6 @@ class _AddPageState extends State<AddPage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: Colors.black45),
-
                   ),
                   child: Center(child: Icon(Icons.more_vert_rounded)),
                 ),

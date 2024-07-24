@@ -62,50 +62,52 @@ class TotalExpense extends StatelessWidget {
       },
     ];
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // topbar(
-            //   title: 'Total Expense',
-            //   leading: IconButton(
-            //     icon: Icon(Icons.menu),
-            //     onPressed: () {
-            //       // Add your leading button functionality here
-            //     },
-            //   ),
-            //   trailing: IconButton(
-            //     icon: Icon(Icons.add),
-            //     onPressed: () {
-            //       // Add your trailing button functionality here
-            //     },
-            //   ),
-            // ),
-            TimelineCalender(), // Timeline calendar
-            CustomContainer(), // Circular container
-            Container(
-              height:
-                  400.0, // Set an appropriate height for the tab bar section
-              child: CustomTabBar(
-                tabs: [
-                  Tab(text: 'Spends'),
-                  Tab(text: 'Category'),
-                ],
-                tabViews: [
-                  recordWidget(
-                      records, dark), // Use the recordWidget with dynamic data
-                  CustomCategoryCard(
-                    expenses: expenses,
-                    labels: labels,
-                    colors: colors,
-                    records: records,
-                  ),
-                ],
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // topbar(
+              //   title: 'Total Expense',
+              //   leading: IconButton(
+              //     icon: Icon(Icons.menu),
+              //     onPressed: () {
+              //       // Add your leading button functionality here
+              //     },
+              //   ),
+              //   trailing: IconButton(
+              //     icon: Icon(Icons.add),
+              //     onPressed: () {
+              //       // Add your trailing button functionality here
+              //     },
+              //   ),
+              // ),
+              TimelineCalender(), // Timeline calendar
+              CustomContainer(), // Circular container
+              Container(
+                height:
+                    400.0, // Set an appropriate height for the tab bar section
+                child: CustomTabBar(
+                  tabs: [
+                    Tab(text: 'Spends'),
+                    Tab(text: 'Category'),
+                  ],
+                  tabViews: [
+                    recordWidget(records,
+                        dark), // Use the recordWidget with dynamic data
+                    CustomCategoryCard(
+                      expenses: expenses,
+                      labels: labels,
+                      colors: colors,
+                      records: records,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -47,8 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
       Hive.registerAdapter(IncomeModelAdapter()); // Register the adapter
     }
 
-    final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
-    Hive.init(appDocumentDir.path); // Initialize Hive with the app's document directory
+    final appDocumentDir =
+        await path_provider.getApplicationDocumentsDirectory();
+    Hive.init(appDocumentDir
+        .path); // Initialize Hive with the app's document directory
 
     _incomeBox = await Hive.openBox<IncomeModel>('incomes');
 
@@ -61,7 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
     _calculateTotalAmount(); // Calculate the initial total amount
 
     setState(() {
-      _isBoxOpened = true; // Set a flag to indicate the box is opened, if necessary
+      _isBoxOpened =
+          true; // Set a flag to indicate the box is opened, if necessary
     });
   }
 
@@ -150,9 +153,10 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: Get.height / 300,
             ),
-
-            CardNavigation(totalIncome: totalAmount,),
-
+            CardNavigation(
+              totalIncome: totalAmount,
+              // dark: true,
+            ),
             SizedBox(
               height: Get.height / 50,
             ),
@@ -232,7 +236,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Center(
                           child: Icon(Icons.more_vert_rounded,
-                              color: dark ? Colors.white : Colors.blue.shade900)),
+                              color:
+                                  dark ? Colors.white : Colors.blue.shade900)),
                     ),
                   ),
                 ],
@@ -248,103 +253,103 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 child: _incomeBox != null
                     ? _incomeBox!.isOpen
-                    ? ValueListenableBuilder(
-                  valueListenable: _incomeBox!.listenable(),
-                  builder: (context, Box<IncomeModel> box, _) {
-                    if (box.values.isEmpty) {
-                      return Center(
-                        child: Text(
-                          'No income entries',
-                          style: TextStyle(
-                            color: dark ? Colors.white : Colors.black,
-                          ),
-                        ),
-                      );
-                    }
+                        ? ValueListenableBuilder(
+                            valueListenable: _incomeBox!.listenable(),
+                            builder: (context, Box<IncomeModel> box, _) {
+                              if (box.values.isEmpty) {
+                                return Center(
+                                  child: Text(
+                                    'No income entries',
+                                    style: TextStyle(
+                                      color: dark ? Colors.white : Colors.black,
+                                    ),
+                                  ),
+                                );
+                              }
 
-                    return ListView.builder(
-                      itemCount: box.values.length,
-                      itemBuilder: (context, index) {
-                        final income = box.getAt(index);
-                        return Card(
-                          margin:
-                          const EdgeInsets.symmetric(vertical: 10),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      income?.title ?? '',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
+                              return ListView.builder(
+                                itemCount: box.values.length,
+                                itemBuilder: (context, index) {
+                                  final income = box.getAt(index);
+                                  return Card(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                income?.title ?? '',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Amount: ${income?.amount ?? ''}',
+                                                style: TextStyle(
+                                                  color: Colors.green,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            'Description: ${income?.description ?? ''}',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Category: ${income?.categoryIndex.toString() ?? ''}',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Date: ${income != null ? DateFormat.yMd().format(income.datetime) : ''}',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 5),
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: IconButton(
+                                              icon: Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              ),
+                                              onPressed: () =>
+                                                  _deleteIncome(index),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    Text(
-                                      'Amount: ${income?.amount ?? ''}',
-                                      style: TextStyle(
-                                        color: Colors.green,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5),
-                                Text(
-                                  'Description: ${income?.description ?? ''}',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                SizedBox(height: 5),
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Category: ${income?.categoryIndex.toString() ?? ''}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Date: ${income != null ? DateFormat.yMd().format(income.datetime) : ''}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.delete,
-                                      color: Colors.red,
-                                    ),
-                                    onPressed: () =>
-                                        _deleteIncome(index),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                )
-                    : Center(
-                  child: CircularProgressIndicator(),
-                )
+                                  );
+                                },
+                              );
+                            },
+                          )
+                        : Center(
+                            child: CircularProgressIndicator(),
+                          )
                     : CircularProgressIndicator(),
               ),
             ),
