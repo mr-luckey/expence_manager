@@ -17,6 +17,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:intl/intl.dart';
 
+import '../Models/expense_model.dart';
+import '../Models/expense_model_adapter.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, BuildContext? initialIndex});
 
