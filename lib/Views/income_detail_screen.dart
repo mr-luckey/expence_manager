@@ -35,6 +35,13 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
             Tab(text: 'Monthly'),
             Tab(text: 'Yearly'),
           ],
+          indicator: BoxDecoration(
+            borderRadius: BorderRadius.circular(50), // Creates rounded rectangle
+            color: Colors.blueAccent, // Changes indicator color
+          ),
+          labelColor: Colors.black, // Text color when tab is selected
+          unselectedLabelColor: Colors.white, // Text color when tab is not selected
+          indicatorSize: TabBarIndicatorSize.tab, // Makes indicator the size of the tab
         ),
       ),
       body: TabBarView(
