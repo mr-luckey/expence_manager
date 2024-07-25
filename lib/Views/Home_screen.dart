@@ -1,8 +1,10 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Models/income_model.dart';
 import 'package:expence_manager/Models/income_model_adapter.dart';
+import 'package:expence_manager/Views/Add_Expense.dart';
 import 'package:expence_manager/Views/Reminder.dart';
 import 'package:expence_manager/Views/add_income.dart';
+import 'package:expence_manager/Views/income_detail_screen.dart';
 import 'package:expence_manager/Views/mainscreen.dart';
 import 'package:expence_manager/Views/todo_screen.dart';
 import 'package:expence_manager/Views/total_Expense.dart';
@@ -176,8 +178,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _addExpense() async {
-    // Implement navigation to add expense screen
-    // Similar to _addIncome()
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddExpense()),
+    );
+    _calculateTotalExpense(); // Recalculate the total expense after adding a new entry
+    setState(() {}); // Refresh the state when coming back to HomeScreen
   }
 
   Widget _buildIncomeList() {
@@ -450,7 +456,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Btn(
                       isdark: dark,
                       onTap: () {
-
+                        setState(() {
+                          showIncome = true;
+                          showTotal = false;
+                        });
                       },
                       text: 'Income',
                       iconData: Icons.add,
@@ -459,6 +468,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     Btn(
                       isdark: dark,
                       onTap: () {
+                        setState(() {
+                          showIncome = false;
+                          showTotal = false;
+                        });
                       },
                       text: 'Expense',
                       iconData: Icons.notifications_active_outlined,
@@ -466,7 +479,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Btn(
                       isdark: dark,
-                      onTap: () {},
+                      onTap: () {
+                        setState(() {
+                          showTotal = true;
+                          showIncome = false;
+                        });
+                      },
                       text: 'Total',
                       iconData: Icons.savings_outlined,
                       index: 2,
@@ -483,12 +501,17 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Latest Entries",
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black), // Set text color to black
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => IncomeDetailScreen()));
+            },
+                    child: Text(
+                      "Latest Entries",
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black), // Set text color to black
+                    ),
                   ),
                   Container(
                     height: 30,
