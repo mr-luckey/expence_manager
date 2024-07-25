@@ -1,4 +1,5 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
+import 'package:expence_manager/Controllers/Income_controller.dart';
 import 'package:expence_manager/Models/income_model.dart';
 import 'package:expence_manager/Models/income_model_adapter.dart';
 import 'package:expence_manager/Views/Add_Expense.dart';
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   double remainingBalance = 0;
   bool showIncome = true;
   bool showTotal = false;
+  var incomeController = Get.put(IncomeController());
 
   @override
   void initState() {

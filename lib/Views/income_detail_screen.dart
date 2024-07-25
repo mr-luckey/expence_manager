@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../controllers/income_controller.dart'; // Import the controller
 
 class IncomeDetailScreen extends StatefulWidget {
   const IncomeDetailScreen({super.key});
@@ -9,6 +11,9 @@ class IncomeDetailScreen extends StatefulWidget {
 
 class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final IncomeController _incomeController = Get.find(); // Get the controller
+  var incomeController = Get.put(IncomeController());
+
 
   @override
   void initState() {
@@ -57,26 +62,38 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
   }
 
   Widget _buildDailyView() {
-    return Center(
-      child: Text('Daily Income Details'),
-    );
+    return Obx(() {
+      if (_incomeController.incomeList.isEmpty) {
+        return Center(child: Text('No Income Entries'));
+      }
+
+      // Filter income data for daily view
+      // Assuming you have a way to filter the data by date
+      return ListView.builder(
+        itemCount: _incomeController.incomeList.length,
+        itemBuilder: (context, index) {
+          final income = _incomeController.incomeList[index];
+          return ListTile(
+            title: Text(income.title ?? ''),
+            subtitle: Text('\$${income.amount}'),
+          );
+        },
+      );
+    });
   }
 
   Widget _buildWeeklyView() {
-    return Center(
-      child: Text('Weekly Income Details'),
-    );
+    // Implement weekly view
+    return Center(child: Text('Weekly Income Details'));
   }
 
   Widget _buildMonthlyView() {
-    return Center(
-      child: Text('Monthly Income Details'),
-    );
+    // Implement monthly view
+    return Center(child: Text('Monthly Income Details'));
   }
 
   Widget _buildYearlyView() {
-    return Center(
-      child: Text('Yearly Income Details'),
-    );
+    // Implement yearly view
+    return Center(child: Text('Yearly Income Details'));
   }
 }
