@@ -8,6 +8,7 @@ import 'package:expence_manager/Models/goal_model_adapter.dart';
 import 'package:expence_manager/Models/income_model.dart';
 import 'package:expence_manager/Models/income_model_adapter.dart';
 import 'package:expence_manager/Views/Add_Goals.dart';
+import 'package:expence_manager/Views/Login_with_google.dart';
 import 'package:expence_manager/Views/Reminder.dart';
 import 'package:expence_manager/Views/auth/login.dart';
 import 'package:expence_manager/Views/home_screen.dart';
@@ -47,7 +48,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: SignInScreen(),
+      //Login(),
       theme: lightTheme,
       darkTheme: darkTheme,
     );
