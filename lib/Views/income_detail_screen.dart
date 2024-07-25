@@ -1,6 +1,7 @@
 import 'package:expence_manager/Controllers/Income_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 
 class IncomeDetailScreen extends StatefulWidget {
@@ -75,9 +76,66 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
           itemCount: incomeController.incomeList.length,
           itemBuilder: (context, index) {
             final income = incomeController.incomeList[index];
-            return ListTile(
-              title: Text(income.title ?? ''),
-              subtitle: Text('\$${income.amount}'),
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      income.title ?? '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      'Amount: ${income.amount ?? ''}',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Description: ${income.description ?? ''}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Category: ${income.categoryIndex.toString() ?? ''}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      'Date: ${income != null ? DateFormat.yMd().format(income.datetime) : ''}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () => incomeController.deleteIncome(index, context),
+                  ),
+                ),
+              ],
             );
           },
         );
