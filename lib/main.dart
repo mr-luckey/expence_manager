@@ -15,6 +15,7 @@ import 'package:expence_manager/Views/home_screen.dart';
 import 'package:expence_manager/Views/mainscreen.dart';
 import 'package:expence_manager/Views/set_remainder.dart';
 import 'package:expence_manager/widgets/Card_navigation.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,7 @@ import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [SystemUiOverlay.bottom]);
 
 

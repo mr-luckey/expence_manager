@@ -1,4 +1,5 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
+import 'package:expence_manager/Controllers/Expense_controller.dart';
 import 'package:expence_manager/Controllers/Income_controller.dart';
 import 'package:expence_manager/Models/income_model.dart';
 import 'package:expence_manager/Models/income_model_adapter.dart';
@@ -32,6 +33,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final incomeController = Get.put(IncomeController());
+  final expenseController = Get.put(ExpenseController());
 
   @override
   void initState() {
