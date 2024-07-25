@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "249338108509",
+    "project_id": "expense-manager-bbaaa",
+    "storage_bucket": "expense-manager-bbaaa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249338108509:android:698794defe1fcf5e694bb4",
+        "android_client_info": {
+          "package_name": "com.example.expence_manager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANajA9i7eZSc0uzFbkosEgP09U-pUFc5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

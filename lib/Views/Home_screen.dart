@@ -31,20 +31,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Box<IncomeModel>? _incomeBox;
-  Box<ExpenseModel>? _expenseBox;
-  bool _isBoxOpened = false;
-  double totalAmount = 0;
-  double totalExpense = 0;
-  double remainingBalance = 0;
-  bool showIncome = true;
-  bool showTotal = false;
-  var incomeController = Get.put(IncomeController());
+  final incomeController = Get.put(IncomeController());
 
   @override
   void initState() {
     super.initState();
-    _openHiveBox();
+    incomeController.openHiveBox();
   }
 
   @override
@@ -52,147 +44,11 @@ class _HomeScreenState extends State<HomeScreen> {
     Hive.close(); // Close all Hive boxes when the app is terminated
     super.dispose();
   }
-
-  Future<void> _openHiveBox() async {
-    await Hive.initFlutter(); // Initialize Hive for Flutter
-
-    // Register adapters for models
-    if (!Hive.isAdapterRegistered(2)) {
-      Hive.registerAdapter(IncomeModelAdapter()); // Register IncomeModel adapter
-    }
-    if (!Hive.isAdapterRegistered(3)) {
-      Hive.registerAdapter(ExpenseModelAdapter()); // Register ExpenseModel adapter
-    }
-
-    final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
-    Hive.init(appDocumentDir.path); // Initialize Hive with the app's document directory
-
-    _incomeBox = await Hive.openBox<IncomeModel>('incomes');
-    _expenseBox = await Hive.openBox<ExpenseModel>('expenses');
-
-    _calculateTotalIncome(); // Calculate the initial total income
-    _calculateTotalExpense(); // Calculate the initial total expense
-    _calculateRemainingBalance(); // Calculate the initial remaining balance
-
-    setState(() {
-      _isBoxOpened = true; // Set a flag to indicate the box is opened, if necessary
-    });
-  }
-
-  void _calculateTotalIncome() {
-    totalAmount = 0;
-    if (_incomeBox != null) {
-      for (var income in _incomeBox!.values) {
-        totalAmount += double.parse(income.amount);
-      }
-    }
-    print('Total income: \$${totalAmount.toStringAsFixed(2)}');
-  }
-
-  void _calculateTotalExpense() {
-    totalExpense = 0;
-    if (_expenseBox != null) {
-      for (var expense in _expenseBox!.values) {
-        if (expense.amount is String) {
-          totalExpense += double.parse(expense.amount as String);
-        } else if (expense.amount is double) {
-          totalExpense += expense.amount as double;
-        } else {
-          print('Invalid amount type for expense: ${expense.amount.runtimeType}');
-        }
-      }
-    }
-    print('Total expense: \$${totalExpense.toStringAsFixed(2)}');
-  }
-
-  void _calculateRemainingBalance() {
-    remainingBalance = totalAmount - totalExpense;
-    print('Remaining balance: \$${remainingBalance.toStringAsFixed(2)}');
-  }
-
-  Future<void> _deleteIncome(int index) async {
-    final shouldDelete = await showDialog<bool>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Delete Income'),
-          content: Text('Are you sure you want to delete this income entry?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);
-                _incomeBox?.deleteAt(index);
-                _calculateTotalIncome();
-              },
-              child: Text('Delete'),
-            ),
-          ],
-        );
-      },
-    );
-
-    if (shouldDelete == true) {
-      setState(() {}); // Refresh the UI after deletion
-    }
-  }
-
-  Future<void> _deleteExpense(int index) async {
-    final shouldDelete = await showDialog<bool>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Delete Expense'),
-          content: Text('Are you sure you want to delete this expense entry?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);
-                _expenseBox?.deleteAt(index);
-                _calculateTotalExpense();
-              },
-              child: Text('Delete'),
-            ),
-          ],
-        );
-      },
-    );
-
-    if (shouldDelete == true) {
-      setState(() {}); // Refresh the UI after deletion
-    }
-  }
-
-  Future<void> _addIncome() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddIncome()),
-    );
-    _calculateTotalIncome(); // Recalculate the total income after adding a new entry
-    setState(() {}); // Refresh the state when coming back to HomeScreen
-  }
-
-  Future<void> _addExpense() async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddExpense()),
-    );
-    _calculateTotalExpense(); // Recalculate the total expense after adding a new entry
-    setState(() {}); // Refresh the state when coming back to HomeScreen
-  }
-
   Widget _buildIncomeList() {
-    return _incomeBox != null
-        ? _incomeBox!.isOpen
+    return incomeController.incomeBox != null
+        ? incomeController.incomeBox!.isOpen
         ? ValueListenableBuilder(
-      valueListenable: _incomeBox!.listenable(),
+      valueListenable: incomeController.incomeBox!.listenable(),
       builder: (context, Box<IncomeModel> box, _) {
         if (box.values.isEmpty) {
           return Center(
@@ -269,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icons.delete,
                           color: Colors.red,
                         ),
-                        onPressed: () => _deleteIncome(index),
+                        onPressed: () => incomeController.deleteIncome(index, context),
                       ),
                     ),
                   ],
@@ -287,10 +143,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildExpenseList() {
-    return _expenseBox != null
-        ? _expenseBox!.isOpen
+    return incomeController.expenseBox != null
+        ? incomeController.expenseBox!.isOpen
         ? ValueListenableBuilder(
-      valueListenable: _expenseBox!.listenable(),
+      valueListenable: incomeController.expenseBox!.listenable(),
       builder: (context, Box<ExpenseModel> box, _) {
         if (box.values.isEmpty) {
           return Center(
@@ -367,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icons.delete,
                           color: Colors.red,
                         ),
-                        onPressed: () => _deleteExpense(index),
+                        onPressed: () => incomeController.deleteExpense(index, context),
                       ),
                     ),
                   ],
@@ -394,7 +250,9 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: _addIncome,
+            onPressed: (){
+              incomeController.addIncome(context);
+            },
           ),
         ],
       ),
@@ -422,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Text(
-                        showIncome ? 'Total Income' : showTotal ? 'Total' : 'Total Expenses',
+                        incomeController.showIncome ? 'Total Income' : incomeController.showTotal ? 'Total' : 'Total Expenses',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -431,11 +289,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        '\$${(showIncome ? totalAmount : showTotal ? remainingBalance : totalExpense).toStringAsFixed(2)}',
+                        '\$${(incomeController.showIncome ? incomeController.totalAmount : incomeController.showTotal ? incomeController.remainingBalance : incomeController.totalExpense).toStringAsFixed(2)}',
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: showIncome ? Colors.green : Colors.red,
+                          color: incomeController.showIncome ? Colors.green : Colors.red,
                         ),
                       ),
                     ],
@@ -459,8 +317,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       isdark: dark,
                       onTap: () {
                         setState(() {
-                          showIncome = true;
-                          showTotal = false;
+                          incomeController.showIncome = true;
+                          incomeController.showTotal = false;
                         });
                       },
                       text: 'Income',
@@ -471,8 +329,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       isdark: dark,
                       onTap: () {
                         setState(() {
-                          showIncome = false;
-                          showTotal = false;
+                          incomeController.showIncome = false;
+                          incomeController.showTotal = false;
                         });
                       },
                       text: 'Expense',
@@ -483,8 +341,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       isdark: dark,
                       onTap: () {
                         setState(() {
-                          showTotal = true;
-                          showIncome = false;
+                          incomeController.showTotal = true;
+                          incomeController.showIncome = false;
                         });
                       },
                       text: 'Total',
@@ -546,7 +404,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 height: 400,
                 width: double.infinity,
-                child: showIncome ? _buildIncomeList() : _buildExpenseList(),
+                child: incomeController.showIncome ? _buildIncomeList() : _buildExpenseList(),
               ),
             ),
           ],

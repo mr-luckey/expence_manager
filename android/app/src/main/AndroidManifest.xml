@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutterdemo">
+    package="com.example.expence_manager">
     <application
         android:label="expence_manager"
         android:name="${applicationName}"
