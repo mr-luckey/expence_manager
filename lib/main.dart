@@ -14,6 +14,7 @@ import 'package:expence_manager/Views/auth/login.dart';
 import 'package:expence_manager/Views/home_screen.dart';
 import 'package:expence_manager/Views/mainscreen.dart';
 import 'package:expence_manager/Views/set_remainder.dart';
+import 'package:expence_manager/Views/splash_screen.dart';
 import 'package:expence_manager/widgets/Card_navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignInScreen(),
+      home: SplashScreen(),
       //Login(),
       theme: lightTheme,
       darkTheme: darkTheme,
