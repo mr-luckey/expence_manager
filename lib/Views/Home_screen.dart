@@ -36,12 +36,15 @@ class _HomeScreenState extends State<HomeScreen> {
   final incomeController = Get.put(IncomeController());
   final expenseController = Get.put(ExpenseController());
 
+
+
   @override
   void initState() {
     super.initState();
-    incomeController.openHiveBox();
-    expenseController.openHiveBox();
+
+
   }
+
 
   @override
   void dispose() {
@@ -56,14 +59,14 @@ class _HomeScreenState extends State<HomeScreen> {
       valueListenable: incomeController.incomeBox!.listenable(),
       builder: (context, Box<IncomeModel> box, _) {
         if (box.values.isEmpty) {
-          return Center(
-            child: Text(
-              'No income entries',
-              style: TextStyle(
-                color: Colors.black,
+          return  Center(
+              child: Text(
+                'No income entries',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
               ),
-            ),
-          );
+            );
         }
 
         return ListView.builder(
@@ -144,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
         : Center(
       child: CircularProgressIndicator(),
     )
-        : CircularProgressIndicator();
+        : Center(child: CircularProgressIndicator());
   }
 
   Widget _buildExpenseList() {
@@ -285,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Text(
-                        incomeController.showIncome ? 'Total Income' : incomeController.showTotal ? 'Total' : 'Total Expenses',
+                        incomeController.showIncome.value ? 'Total Income' : incomeController.showTotal.value ? 'Total' : 'Total Expenses',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -294,11 +297,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        '\$${(incomeController.showIncome ? incomeController.totalAmount : incomeController.showTotal ? incomeController.remainingBalance : incomeController.totalExpense).toStringAsFixed(2)}',
+                        '\$${(incomeController.showIncome.value ? incomeController.totalAmount : incomeController.showTotal.value ? incomeController.remainingBalance : incomeController.totalExpense).toStringAsFixed(2)}',
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: incomeController.showIncome ? Colors.green : Colors.red,
+                          color: incomeController.showIncome.value ? Colors.green : Colors.red,
                         ),
                       ),
                     ],
@@ -321,8 +324,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       isdark: dark,
                       onTap: () {
                         setState(() {
-                          incomeController.showIncome = true;
-                          incomeController.showTotal = false;
+                          incomeController.showIncome = true.obs;
+                          incomeController.showTotal = false.obs;
                         });
                       },
                       text: 'Income',
@@ -333,8 +336,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       isdark: dark,
                       onTap: () {
                         setState(() {
-                          incomeController.showIncome = false;
-                          incomeController.showTotal = false;
+                          incomeController.showIncome = false.obs;
+                          incomeController.showTotal = false.obs;
                         });
                       },
                       text: 'Expense',
@@ -345,8 +348,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       isdark: dark,
                       onTap: () {
                         setState(() {
-                          incomeController.showTotal = true;
-                          incomeController.showIncome = false;
+                          incomeController.showTotal = true.obs;
+                          incomeController.showIncome = false.obs;
                         });
                       },
                       text: 'Total',
@@ -367,7 +370,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      if (incomeController.showIncome) {
+                      if (incomeController.showIncome.value) {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => IncomeDetailScreen()));
                       } else {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => ExpenseDetailScreen()));
@@ -412,7 +415,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 height: 400,
                 width: double.infinity,
-                child: incomeController.showIncome ? _buildIncomeList() : _buildExpenseList(),
+                child: Obx(()=>  incomeController.showIncome.value ? _buildIncomeList() : _buildExpenseList(),),
               ),
             ),
           ],

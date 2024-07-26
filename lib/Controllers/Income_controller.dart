@@ -18,8 +18,8 @@ class IncomeController extends GetxController {
   double totalAmount = 0;
   double totalExpense = 0;
   double remainingBalance = 0;
-  bool showIncome = true;
-  bool showTotal = false;
+  RxBool showIncome = true.obs;
+  RxBool showTotal = false.obs;
 
 
   @override
@@ -31,6 +31,7 @@ class IncomeController extends GetxController {
   Future<void> fetchIncomeData() async {
     var box = await Hive.openBox<IncomeModel>('incomes');
     incomeList.value = box.values.toList();
+    update();
   }
 
   Future<void> openHiveBox() async {
@@ -65,6 +66,7 @@ class IncomeController extends GetxController {
     if (incomeBox != null) {
       for (var income in incomeBox!.values) {
         totalAmount += double.parse(income.amount);
+        update();
       }
     }
     print('Total income: \$${totalAmount.toStringAsFixed(2)}');

@@ -49,8 +49,8 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
             borderRadius: BorderRadius.circular(50), // Creates rounded rectangle
             color: Colors.blueAccent, // Changes indicator color
           ),
-          labelColor: Colors.black, // Text color when tab is selected
-          unselectedLabelColor: Colors.white, // Text color when tab is not selected
+          labelColor: Colors.white, // Text color when tab is selected
+          unselectedLabelColor: Colors.black, // Text color when tab is not selected
           indicatorSize: TabBarIndicatorSize.tab, // Makes indicator the size of the tab
         ),
       ),
@@ -68,16 +68,16 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
 
   Widget _buildDailyView() {
     return Obx(() {
-      if (expenseController.incomeList.isEmpty) {
+      if (expenseController.expenseList.isEmpty) {
         return Center(child: Text('No Expense Entries'));
       }
       else{
         // Filter income data for daily view
         // Assuming you have a way to filter the data by date
         return ListView.builder(
-          itemCount: expenseController.incomeList.length,
+          itemCount: expenseController.expenseList.length,
           itemBuilder: (context, index) {
-            final expense = expenseController.incomeList[index];
+            final expense = expenseController.expenseList[index];
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -113,13 +113,13 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Category: ${expense.categoryIndex.toString() ?? ''}',
+                      'Category: ${expense.category.toString() ?? ''}',
                       style: TextStyle(
                         fontSize: 14,
                       ),
                     ),
                     Text(
-                      'Date: ${expense != null ? DateFormat.yMd().format(expense.datetime) : ''}',
+                      'Date: ${expense != null ? DateFormat.yMd().format(expense.date) : ''}',
                       style: TextStyle(
                         fontSize: 14,
                       ),
@@ -159,17 +159,278 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
   }
 
   Widget _buildWeeklyView() {
-    // Implement weekly view
-    return Center(child: Text('Weekly Income Details'));
+    return Obx(() {
+      if (expenseController.expenseList.isEmpty) {
+        return Center(child: Text('No Expense Entries'));
+      }
+      else{
+        // Filter income data for daily view
+        // Assuming you have a way to filter the data by date
+        return ListView.builder(
+          itemCount: expenseController.expenseList.length,
+          itemBuilder: (context, index) {
+            final expense = expenseController.expenseList[index];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      expense.title ?? '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      'Amount: ${expense.amount ?? ''}',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Description: ${expense.description ?? ''}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Category: ${expense.category.toString() ?? ''}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      'Date: ${expense != null ? DateFormat.yMd().format(expense.date) : ''}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () => expenseController.deleteIncome(index, context),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      }
+
+      // Filter income data for daily view
+      // Assuming you have a way to filter the data by date
+      return ListView.builder(
+        itemCount: incomeController.incomeList.length,
+        itemBuilder: (context, index) {
+          final income = incomeController.incomeList[index];
+          return ListTile(
+            title: Text(income.title ?? ''),
+            subtitle: Text('\$${income.amount}'),
+          );
+        },
+      );
+    });
   }
 
   Widget _buildMonthlyView() {
-    // Implement monthly view
-    return Center(child: Text('Monthly Income Details'));
+    return Obx(() {
+      if (expenseController.expenseList.isEmpty) {
+        return Center(child: Text('No Expense Entries'));
+      }
+      else{
+        // Filter income data for daily view
+        // Assuming you have a way to filter the data by date
+        return ListView.builder(
+          itemCount: expenseController.expenseList.length,
+          itemBuilder: (context, index) {
+            final expense = expenseController.expenseList[index];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      expense.title ?? '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      'Amount: ${expense.amount ?? ''}',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Description: ${expense.description ?? ''}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Category: ${expense.category.toString() ?? ''}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      'Date: ${expense != null ? DateFormat.yMd().format(expense.date) : ''}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () => expenseController.deleteIncome(index, context),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      }
+
+      // Filter income data for daily view
+      // Assuming you have a way to filter the data by date
+      return ListView.builder(
+        itemCount: incomeController.incomeList.length,
+        itemBuilder: (context, index) {
+          final income = incomeController.incomeList[index];
+          return ListTile(
+            title: Text(income.title ?? ''),
+            subtitle: Text('\$${income.amount}'),
+          );
+        },
+      );
+    });
   }
 
   Widget _buildYearlyView() {
-    // Implement yearly view
-    return Center(child: Text('Yearly Income Details'));
+    return Obx(() {
+      if (expenseController.expenseList.isEmpty) {
+        return Center(child: Text('No Expense Entries'));
+      }
+      else{
+        // Filter income data for daily view
+        // Assuming you have a way to filter the data by date
+        return ListView.builder(
+          itemCount: expenseController.expenseList.length,
+          itemBuilder: (context, index) {
+            final expense = expenseController.expenseList[index];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      expense.title ?? '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      'Amount: ${expense.amount ?? ''}',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Description: ${expense.description ?? ''}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Category: ${expense.category.toString() ?? ''}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      'Date: ${expense != null ? DateFormat.yMd().format(expense.date) : ''}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () => expenseController.deleteIncome(index, context),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      }
+
+      // Filter income data for daily view
+      // Assuming you have a way to filter the data by date
+      return ListView.builder(
+        itemCount: incomeController.incomeList.length,
+        itemBuilder: (context, index) {
+          final income = incomeController.incomeList[index];
+          return ListTile(
+            title: Text(income.title ?? ''),
+            subtitle: Text('\$${income.amount}'),
+          );
+        },
+      );
+    });
   }
 }
