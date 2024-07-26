@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                "assets/images/pdf_reader.png",
+                "assets/images/expense manager.png",
                 color: Colors.white, // Change logo color to white
                 colorBlendMode: BlendMode.modulate, // Apply the color filter
                 height: 250, // Adjust the size as needed

@@ -6,6 +6,7 @@ import 'package:expence_manager/Models/income_model_adapter.dart';
 import 'package:expence_manager/Views/Add_Expense.dart';
 import 'package:expence_manager/Views/Reminder.dart';
 import 'package:expence_manager/Views/add_income.dart';
+import 'package:expence_manager/Views/expense_detail_screen.dart';
 import 'package:expence_manager/Views/income_detail_screen.dart';
 import 'package:expence_manager/Views/mainscreen.dart';
 import 'package:expence_manager/Views/todo_screen.dart';
@@ -39,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     incomeController.openHiveBox();
+    expenseController.openHiveBox();
   }
 
   @override
@@ -46,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Hive.close(); // Close all Hive boxes when the app is terminated
     super.dispose();
   }
+
   Widget _buildIncomeList() {
     return incomeController.incomeBox != null
         ? incomeController.incomeBox!.isOpen
@@ -145,10 +148,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildExpenseList() {
-    return incomeController.expenseBox != null
-        ? incomeController.expenseBox!.isOpen
+    return expenseController.expenseBox != null
+        ? expenseController.expenseBox!.isOpen
         ? ValueListenableBuilder(
-      valueListenable: incomeController.expenseBox!.listenable(),
+      valueListenable: expenseController.expenseBox!.listenable(),
       builder: (context, Box<ExpenseModel> box, _) {
         if (box.values.isEmpty) {
           return Center(
@@ -225,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icons.delete,
                           color: Colors.red,
                         ),
-                        onPressed: () => incomeController.deleteExpense(index, context),
+                        onPressed: () => expenseController.deleteExpense(index, context),
                       ),
                     ),
                   ],
@@ -252,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: (){
+            onPressed: () {
               incomeController.addIncome(context);
             },
           ),
@@ -303,7 +306,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-
             SizedBox(
               height: Get.height / 50,
             ),
@@ -364,9 +366,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => IncomeDetailScreen()));
-            },
+                    onTap: () {
+                      if (incomeController.showIncome) {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => IncomeDetailScreen()));
+                      } else {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ExpenseDetailScreen()));
+                      }
+                    },
                     child: Text(
                       "Latest Entries",
                       style: TextStyle(

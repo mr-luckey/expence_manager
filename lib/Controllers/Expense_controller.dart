@@ -30,7 +30,7 @@ class ExpenseController extends GetxController {
   }
 
   Future<void> fetchExpenseData() async {
-    var box = await Hive.openBox<IncomeModel>('incomes');
+    var box = await Hive.openBox<ExpenseModel>('expenses');
     expenseList.value = box.values.cast<ExpenseModel>().toList();
   }
 

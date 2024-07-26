@@ -77,7 +77,7 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
         return ListView.builder(
           itemCount: expenseController.incomeList.length,
           itemBuilder: (context, index) {
-            final income = expenseController.incomeList[index];
+            final expense = expenseController.incomeList[index];
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -85,14 +85,14 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      income.title ?? '',
+                      expense.title ?? '',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
                     ),
                     Text(
-                      'Amount: ${income.amount ?? ''}',
+                      'Amount: ${expense.amount ?? ''}',
                       style: TextStyle(
                         color: Colors.green,
                         fontSize: 14,
@@ -102,7 +102,7 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
                 ),
                 SizedBox(height: 5),
                 Text(
-                  'Description: ${income.description ?? ''}',
+                  'Description: ${expense.description ?? ''}',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14,
@@ -113,13 +113,13 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Category: ${income.categoryIndex.toString() ?? ''}',
+                      'Category: ${expense.categoryIndex.toString() ?? ''}',
                       style: TextStyle(
                         fontSize: 14,
                       ),
                     ),
                     Text(
-                      'Date: ${income != null ? DateFormat.yMd().format(income.datetime) : ''}',
+                      'Date: ${expense != null ? DateFormat.yMd().format(expense.datetime) : ''}',
                       style: TextStyle(
                         fontSize: 14,
                       ),
