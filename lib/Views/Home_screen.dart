@@ -36,15 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
   final incomeController = Get.put(IncomeController());
   final expenseController = Get.put(ExpenseController());
 
-
-
   @override
   void initState() {
     super.initState();
-
-
+    incomeController.openHiveBox();
+    expenseController.openHiveBox();
   }
-
 
   @override
   void dispose() {
@@ -59,14 +56,14 @@ class _HomeScreenState extends State<HomeScreen> {
       valueListenable: incomeController.incomeBox!.listenable(),
       builder: (context, Box<IncomeModel> box, _) {
         if (box.values.isEmpty) {
-          return  Center(
-              child: Text(
-                'No income entries',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
+          return Center(
+            child: Text(
+              'No income entries',
+              style: TextStyle(
+                color: Colors.black,
               ),
-            );
+            ),
+          );
         }
 
         return ListView.builder(
@@ -147,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
         : Center(
       child: CircularProgressIndicator(),
     )
-        : Center(child: CircularProgressIndicator());
+        : CircularProgressIndicator();
   }
 
   Widget _buildExpenseList() {
@@ -247,7 +244,6 @@ class _HomeScreenState extends State<HomeScreen> {
     )
         : CircularProgressIndicator();
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -416,7 +412,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 height: 400,
                 width: double.infinity,
-                child: Obx(()=>  incomeController.showIncome.value ? _buildIncomeList() : _buildExpenseList(),),
+                child: incomeController.showIncome.value ? _buildIncomeList() : _buildExpenseList(),
               ),
             ),
           ],
