@@ -45,9 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+<<<<<<< HEAD
     incomeController.openHiveBox();
     expenseController.openHiveBox();
     totalController.openHiveBox();
+=======
+>>>>>>> 64e607e7504c2a1ab9b26706fe180d6abc45a35d
   }
 
   @override
@@ -59,17 +62,118 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildIncomeList() {
     return incomeController.incomeBox != null
         ? incomeController.incomeBox!.isOpen
-        ? ValueListenableBuilder(
-      valueListenable: incomeController.incomeBox!.listenable(),
-      builder: (context, Box<IncomeModel> box, _) {
-        if (box.values.isEmpty) {
-          return Center(
-            child: Text(
-              'No income entries',
+            ? ValueListenableBuilder(
+                valueListenable: incomeController.incomeBox!.listenable(),
+                builder: (context, Box<IncomeModel> box, _) {
+                  if (box.values.isEmpty) {
+                    return Center(
+                      child: Text(
+                        'No income entries',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    );
+                  }
+
+                  return ListView.builder(
+                    itemCount: box.values.length,
+                    itemBuilder: (context, index) {
+                      final income = box.getAt(index);
+                      return Card(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    income?.title ?? '',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Amount: ${income?.amount ?? ''}',
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                'Description: ${income?.description ?? ''}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Category: ${income?.categoryIndex.toString() ?? ''}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Date: ${income != null ? DateFormat.yMd().format(income.datetime) : ''}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () => incomeController
+                                      .deleteIncome(index, context),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              )
+        : Center(child: CircularProgressIndicator());
+  }
+
+  Widget _totalscreen() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Column(
+          children: [
+            Text(
+              'Total Income',
               style: TextStyle(
-                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
             ),
+<<<<<<< HEAD
           );
         }
 
@@ -149,56 +253,135 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
+=======
+            Text(
+              '\$${incomeController.totalAmount.toStringAsFixed(2)}',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+>>>>>>> 64e607e7504c2a1ab9b26706fe180d6abc45a35d
               ),
-            );
-          },
-        );
-      },
-    )
-        : Center(
-      child: CircularProgressIndicator(),
-    )
-        : CircularProgressIndicator();
+            ),
+          ],
+        ),
+        Divider(
+          height: double.infinity,
+          thickness: 10,
+          color: Colors.black,
+        ),
+        Column(
+          children: [
+            Text(
+              'Total Expense',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              '\$${incomeController.totalExpense.toStringAsFixed(2)}',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   Widget _buildExpenseList() {
     return expenseController.expenseBox != null
         ? expenseController.expenseBox!.isOpen
-        ? ValueListenableBuilder(
-      valueListenable: expenseController.expenseBox!.listenable(),
-      builder: (context, Box<ExpenseModel> box, _) {
-        if (box.values.isEmpty) {
-          return Center(
-            child: Text(
-              'No expense entries',
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          );
-        }
+            ? ValueListenableBuilder(
+                valueListenable: expenseController.expenseBox!.listenable(),
+                builder: (context, Box<ExpenseModel> box, _) {
+                  if (box.values.isEmpty) {
+                    return Center(
+                      child: Text(
+                        'No expense entries',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    );
+                  }
 
-        return ListView.builder(
-          itemCount: box.values.length,
-          itemBuilder: (context, index) {
-            final expense = box.getAt(index);
-            return Card(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          expense?.title ?? '',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                  return ListView.builder(
+                    itemCount: box.values.length,
+                    itemBuilder: (context, index) {
+                      final expense = box.getAt(index);
+                      return Card(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    expense?.title ?? '',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Amount: ${expense?.amount ?? ''}',
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                'Description: ${expense?.description ?? ''}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              SizedBox(height: 5),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Category: ${expense?.category.toString() ?? ''}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Date: ${expense != null ? DateFormat.yMd().format(expense.date) : ''}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                  onPressed: () => expenseController
+                                      .deleteExpense(index, context),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
+<<<<<<< HEAD
                         Text(
                           'Amount: ${expense?.amount ?? ''}',
                           style: TextStyle(
@@ -262,6 +445,16 @@ class _HomeScreenState extends State<HomeScreen> {
         : Center(
       child: CircularProgressIndicator(),
     )
+=======
+                      );
+                    },
+                  );
+                },
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              )
+>>>>>>> 64e607e7504c2a1ab9b26706fe180d6abc45a35d
         : CircularProgressIndicator();
   }
 
@@ -398,14 +591,19 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               width: MediaQuery.of(context).size.width,
               child: Card(
-                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 color: Colors.white, // Set background color to white
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: [
                       Text(
-                        incomeController.showIncome.value ? 'Total Income' : incomeController.showTotal.value ? 'Total' : 'Total Expenses',
+                        incomeController.showIncome.value
+                            ? 'Total Income'
+                            : incomeController.showTotal.value
+                                ? 'Total'
+                                : 'Total Expenses',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -418,7 +616,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: incomeController.showIncome.value ? Colors.green : Colors.red,
+                          color: incomeController.showIncome.value
+                              ? Colors.green
+                              : Colors.red,
                         ),
                       ),
                     ],
@@ -441,6 +641,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       isdark: dark,
                       onTap: () {
                         setState(() {
+                          print('checking cod3');
                           incomeController.showIncome = true.obs;
                           incomeController.showTotal = false.obs;
                           showCombinedEntries = false;
@@ -490,12 +691,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
+<<<<<<< HEAD
                       if (showCombinedEntries) {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => TotalDetailScreen()));
                       } else if (incomeController.showIncome.value) {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => IncomeDetailScreen()));
+=======
+                      if (incomeController.showIncome.value) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => IncomeDetailScreen()));
+>>>>>>> 64e607e7504c2a1ab9b26706fe180d6abc45a35d
                       } else {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ExpenseDetailScreen()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ExpenseDetailScreen()));
                       }
                     },
                     child: Text(
@@ -537,7 +749,24 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 height: 400,
                 width: double.infinity,
+<<<<<<< HEAD
                 child: showCombinedEntries ? _buildCombinedList() : incomeController.showIncome.value ? _buildIncomeList() : _buildExpenseList(),
+=======
+                child: Obx(() => incomeController.showIncome.value
+
+                        ///FIXME: this is the conition of the list i need to code here and make logics heere...
+                        ? _buildIncomeList()
+                        : incomeController.showTotal.value
+                            ? _totalscreen()
+                            : //FIXME: i need to add amount of the income and amount of the expence side by side.
+                            _buildExpenseList() //FIXME: i need to use same condition which i use previously for the total amount.
+                    // incomeController.showIncome.value
+                    //     ? incomeController.totalAmount
+                    //     : incomeController.showTotal.value
+                    //         ? incomeController.remainingBalance
+                    //         : incomeController.totalExpense
+                    ),
+>>>>>>> 64e607e7504c2a1ab9b26706fe180d6abc45a35d
               ),
             ),
           ],
