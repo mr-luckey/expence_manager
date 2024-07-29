@@ -1,13 +1,13 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Controllers/Expense_controller.dart';
 import 'package:expence_manager/Controllers/Income_controller.dart';
-import 'package:expence_manager/Models/income_model.dart';
-import 'package:expence_manager/Models/income_model_adapter.dart';
+import 'package:expence_manager/Controllers/total_controller.dart';
 import 'package:expence_manager/Views/Add_Expense.dart';
 import 'package:expence_manager/Views/Reminder.dart';
 import 'package:expence_manager/Views/add_income.dart';
 import 'package:expence_manager/Views/expense_detail_screen.dart';
 import 'package:expence_manager/Views/income_detail_screen.dart';
+import 'package:expence_manager/Views/total_detail_screen.dart';
 import 'package:expence_manager/Views/mainscreen.dart';
 import 'package:expence_manager/Views/todo_screen.dart';
 import 'package:expence_manager/Views/total_Expense.dart';
@@ -24,6 +24,8 @@ import 'package:intl/intl.dart';
 
 import '../Models/expense_model.dart';
 import '../Models/expense_model_adapter.dart';
+import '../Models/income_model.dart';
+import '../Models/income_model_adapter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, BuildContext? initialIndex});
@@ -35,12 +37,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final incomeController = Get.put(IncomeController());
   final expenseController = Get.put(ExpenseController());
+  final totalController = Get.put(TotalController());
+
+  // Boolean to control the visibility of combined latest entries
+  bool showCombinedEntries = false;
 
   @override
   void initState() {
     super.initState();
     incomeController.openHiveBox();
     expenseController.openHiveBox();
+    totalController.openHiveBox();
   }
 
   @override
@@ -109,13 +116,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Category: ${income?.categoryIndex.toString() ?? ''}',
+                          'Category: ${income?.category.toString() ?? ''}',
                           style: TextStyle(
                             fontSize: 14,
                           ),
                         ),
                         Text(
-                          'Date: ${income != null ? DateFormat.yMd().format(income.datetime) : ''}',
+                          'Date: ${income != null ? DateFormat.yMd().format(income.dateTime) : ''}',
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -213,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          'Date: ${expense != null ? DateFormat.yMd().format(expense.date) : ''}',
+                          'Date: ${expense != null ? DateFormat.yMd().format(expense.dateTime) : ''}',
                           style: TextStyle(
                             fontSize: 14,
                           ),
@@ -243,6 +250,97 @@ class _HomeScreenState extends State<HomeScreen> {
       child: CircularProgressIndicator(),
     )
         : CircularProgressIndicator();
+  }
+
+  // Method to build the combined list of latest entries
+  Widget _buildCombinedList() {
+    List<dynamic> combinedList = [];
+    combinedList.addAll(incomeController.incomeBox!.values);
+    combinedList.addAll(expenseController.expenseBox!.values);
+
+    combinedList.sort((a, b) => b.dateTime.compareTo(a.dateTime)); // Sorting by date
+
+    return ListView.builder(
+      itemCount: combinedList.length,
+      itemBuilder: (context, index) {
+        final entry = combinedList[index];
+        bool isIncome = entry is IncomeModel;
+
+        return Card(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      entry.title ?? '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      'Amount: ${entry.amount ?? ''}',
+                      style: TextStyle(
+                        color: isIncome ? Colors.green : Colors.red,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Description: ${entry.description ?? ''}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Category: ${entry.category?.toString() ?? ''}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      'Date: ${entry != null ? DateFormat.yMd().format(entry.dateTime) : ''}',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {
+                      if (isIncome) {
+                        incomeController.deleteIncome(index, context);
+                      } else {
+                        expenseController.deleteExpense(index, context);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -323,6 +421,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         setState(() {
                           incomeController.showIncome = true.obs;
                           incomeController.showTotal = false.obs;
+                          showCombinedEntries = false;
                         });
                       },
                       text: 'Income',
@@ -335,6 +434,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         setState(() {
                           incomeController.showIncome = false.obs;
                           incomeController.showTotal = false.obs;
+                          showCombinedEntries = false;
                         });
                       },
                       text: 'Expense',
@@ -347,6 +447,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         setState(() {
                           incomeController.showTotal = true.obs;
                           incomeController.showIncome = false.obs;
+                          showCombinedEntries = true;
                         });
                       },
                       text: 'Total',
@@ -367,7 +468,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      if (incomeController.showIncome.value) {
+                      if (showCombinedEntries) {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => TotalDetailScreen()));
+                      } else if (incomeController.showIncome.value) {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => IncomeDetailScreen()));
                       } else {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => ExpenseDetailScreen()));
@@ -412,7 +515,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 height: 400,
                 width: double.infinity,
-                child: incomeController.showIncome.value ? _buildIncomeList() : _buildExpenseList(),
+                child: showCombinedEntries ? _buildCombinedList() : incomeController.showIncome.value ? _buildIncomeList() : _buildExpenseList(),
               ),
             ),
           ],

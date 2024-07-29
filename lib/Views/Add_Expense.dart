@@ -87,7 +87,7 @@ class _AddExpenseState extends State<AddExpense> {
         amount: double.parse(_amountController.text),
         description: _descriptionController.text,
         category: _categoryController.text,
-        date: DateTime.parse(_dateController.text),
+        dateTime: DateTime.parse(_dateController.text),
       );
 
       await _expenseBox.add(expense);

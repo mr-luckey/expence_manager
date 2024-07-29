@@ -119,7 +119,7 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
                       ),
                     ),
                     Text(
-                      'Date: ${expense != null ? DateFormat.yMd().format(expense.date) : ''}',
+                      'Date: ${expense != null ? DateFormat.yMd().format(expense.dateTime) : ''}',
                       style: TextStyle(
                         fontSize: 14,
                       ),
@@ -211,7 +211,7 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
                       ),
                     ),
                     Text(
-                      'Date: ${expense != null ? DateFormat.yMd().format(expense.date) : ''}',
+                      'Date: ${expense != null ? DateFormat.yMd().format(expense.dateTime) : ''}',
                       style: TextStyle(
                         fontSize: 14,
                       ),
@@ -303,7 +303,7 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
                       ),
                     ),
                     Text(
-                      'Date: ${expense != null ? DateFormat.yMd().format(expense.date) : ''}',
+                      'Date: ${expense != null ? DateFormat.yMd().format(expense.dateTime) : ''}',
                       style: TextStyle(
                         fontSize: 14,
                       ),
@@ -395,7 +395,7 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
                       ),
                     ),
                     Text(
-                      'Date: ${expense != null ? DateFormat.yMd().format(expense.date) : ''}',
+                      'Date: ${expense != null ? DateFormat.yMd().format(expense.dateTime) : ''}',
                       style: TextStyle(
                         fontSize: 14,
                       ),

@@ -1,8 +1,7 @@
 import 'package:hive/hive.dart';
 
-
-@HiveType(typeId: 3)
-class ExpenseModel {
+@HiveType(typeId: 4)
+class TotalModel {
   @HiveField(0)
   final String title;
 
@@ -18,7 +17,7 @@ class ExpenseModel {
   @HiveField(4)
   final String description;
 
-  ExpenseModel({
+  TotalModel({
     required this.title,
     required this.amount,
     required this.category,

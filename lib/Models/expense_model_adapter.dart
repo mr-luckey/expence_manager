@@ -11,7 +11,7 @@ class ExpenseModelAdapter extends TypeAdapter<ExpenseModel> {
       title: reader.read(),
       amount: reader.read(),
       category: reader.read(),
-      date: reader.read(),
+      dateTime: reader.read(),
       description: reader.read(),
     );
   }
@@ -21,7 +21,7 @@ class ExpenseModelAdapter extends TypeAdapter<ExpenseModel> {
     writer.write(obj.title);
     writer.write(obj.amount);
     writer.write(obj.category);
-    writer.write(obj.date);
+    writer.write(obj.dateTime);
     writer.write(obj.description);
   }
 }

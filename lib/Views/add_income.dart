@@ -60,8 +60,8 @@ class _AddIncomeState extends State<AddIncome> {
       final income = IncomeModel(
         title: _titleController.text,
         amount: _amountController.text,
-        categoryIndex: int.parse(_categoryController.text),
-        datetime: DateTime.parse(_datetimeController.text), // new parameter
+        category: int.parse(_categoryController.text),
+        dateTime: DateTime.parse(_datetimeController.text), // new parameter
         description: _descriptionController.text, // new parameter
       );
 

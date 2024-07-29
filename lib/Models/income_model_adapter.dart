@@ -17,8 +17,8 @@ class IncomeModelAdapter extends TypeAdapter<IncomeModel> {
       return IncomeModel(
         title: title,
         amount: amount,
-        categoryIndex: categoryIndex,
-        datetime: datetime,
+        category: categoryIndex,
+        dateTime: datetime,
         description: description,
       );
     } catch (e) {
@@ -32,8 +32,8 @@ class IncomeModelAdapter extends TypeAdapter<IncomeModel> {
   void write(BinaryWriter writer, IncomeModel obj) {
     writer.write(obj.title);
     writer.write(obj.amount);
-    writer.write(obj.categoryIndex);
-    writer.write(obj.datetime.toIso8601String());
+    writer.write(obj.category);
+    writer.write(obj.dateTime.toIso8601String());
     writer.write(obj.description);
   }
 }

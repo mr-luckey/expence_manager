@@ -9,10 +9,10 @@ class IncomeModel {
   late String amount;
 
   @HiveField(2)
-  late int categoryIndex;
+  late int category;
 
   @HiveField(3)
-  late DateTime datetime;
+  late DateTime dateTime;
 
   @HiveField(4)
   late String description;
@@ -20,8 +20,8 @@ class IncomeModel {
   IncomeModel({
     required this.title,
     required this.amount,
-    required this.categoryIndex,
-    required this.datetime,
+    required this.category,
+    required this.dateTime,
     required this.description,
   });
 }
