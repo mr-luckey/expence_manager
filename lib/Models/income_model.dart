@@ -17,11 +17,15 @@ class IncomeModel {
   @HiveField(4)
   late String description;
 
+  @HiveField(5)
+  late String type; // New field added
+
   IncomeModel({
     required this.title,
     required this.amount,
     required this.category,
     required this.dateTime,
     required this.description,
+    required this.type, // Update constructor
   });
 }

@@ -1,4 +1,4 @@
-import 'package:expence_manager/Controllers/Total_controller.dart';
+import 'package:expence_manager/Controllers/total_controller.dart';
 import 'package:expence_manager/Models/expense_model.dart';
 import 'package:expence_manager/Models/income_model.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +14,15 @@ class TotalDetailScreen extends StatefulWidget {
 
 class _TotalDetailScreenState extends State<TotalDetailScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  var totalController = Get.put(TotalController());
+  final TotalController totalController = Get.put(TotalController());
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
-    totalController.fetchIncomeData();
-    totalController.fetchExpenseData();
+    totalController.openHiveBox().then((_) {
+      setState(() {}); // Ensure the state is updated after fetching data
+    });
   }
 
   @override
@@ -66,64 +67,135 @@ class _TotalDetailScreenState extends State<TotalDetailScreen> with SingleTicker
 
   Widget _buildDailyView() {
     return Obx(() {
-      if (totalController.expenseList.isEmpty && totalController.incomeList.isEmpty) {
+      List<dynamic> combinedList = totalController.getCombinedList();
+      if (combinedList.isEmpty) {
         return Center(child: Text('No Entries'));
       }
+
+      DateTime today = DateTime.now();
+      List<dynamic> todayList = combinedList.where((item) {
+        DateTime itemDate = item.dateTime;
+        return itemDate.year == today.year &&
+            itemDate.month == today.month &&
+            itemDate.day == today.day;
+      }).toList();
+
+      if (todayList.isEmpty) {
+        return Center(child: Text('No Entries for Today'));
+      }
+
+      todayList.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+
       return ListView(
-        children: [
-          _buildSectionHeader('Income'),
-          ...totalController.incomeList.map((income) => _buildIncomeTile(income)),
-          _buildSectionHeader('Expenses'),
-          ...totalController.expenseList.map((expense) => _buildExpenseTile(expense)),
-        ],
+        children: todayList.map((item) {
+          if (item is IncomeModel) {
+            return _buildIncomeTile(item);
+          } else if (item is ExpenseModel) {
+            return _buildExpenseTile(item);
+          } else {
+            return Container();
+          }
+        }).toList(),
       );
     });
   }
 
+
   Widget _buildWeeklyView() {
     return Obx(() {
-      if (totalController.expenseList.isEmpty && totalController.incomeList.isEmpty) {
-        return Center(child: Text('No Entries'));
+      List<dynamic> combinedList = totalController.getCombinedList();
+      DateTime now = DateTime.now();
+      DateTime startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+      DateTime endOfWeek = startOfWeek.add(Duration(days: 6));
+
+      List<dynamic> weeklyList = combinedList.where((item) {
+        DateTime itemDate = item.dateTime;
+        return itemDate.isAfter(startOfWeek.subtract(Duration(days: 1))) &&
+            itemDate.isBefore(endOfWeek.add(Duration(days: 1)));
+      }).toList();
+
+      if (weeklyList.isEmpty) {
+        return Center(child: Text('No Entries for this Week'));
       }
+
+      weeklyList.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+
       return ListView(
-        children: [
-          _buildSectionHeader('Income'),
-          ...totalController.incomeList.map((income) => _buildIncomeTile(income)),
-          _buildSectionHeader('Expenses'),
-          ...totalController.expenseList.map((expense) => _buildExpenseTile(expense)),
-        ],
+        children: weeklyList.map((item) {
+          if (item is IncomeModel) {
+            return _buildIncomeTile(item);
+          } else if (item is ExpenseModel) {
+            return _buildExpenseTile(item);
+          } else {
+            return Container();
+          }
+        }).toList(),
       );
     });
   }
 
   Widget _buildMonthlyView() {
     return Obx(() {
-      if (totalController.expenseList.isEmpty && totalController.incomeList.isEmpty) {
-        return Center(child: Text('No Entries'));
+      List<dynamic> combinedList = totalController.getCombinedList();
+      DateTime now = DateTime.now();
+      DateTime startOfMonth = DateTime(now.year, now.month, 1);
+      DateTime endOfMonth = DateTime(now.year, now.month + 1, 0);
+
+      List<dynamic> monthlyList = combinedList.where((item) {
+        DateTime itemDate = item.dateTime;
+        return itemDate.isAfter(startOfMonth.subtract(Duration(days: 1))) &&
+            itemDate.isBefore(endOfMonth.add(Duration(days: 1)));
+      }).toList();
+
+      if (monthlyList.isEmpty) {
+        return Center(child: Text('No Entries for this Month'));
       }
+
+      monthlyList.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+
       return ListView(
-        children: [
-          _buildSectionHeader('Income'),
-          ...totalController.incomeList.map((income) => _buildIncomeTile(income)),
-          _buildSectionHeader('Expenses'),
-          ...totalController.expenseList.map((expense) => _buildExpenseTile(expense)),
-        ],
+        children: monthlyList.map((item) {
+          if (item is IncomeModel) {
+            return _buildIncomeTile(item);
+          } else if (item is ExpenseModel) {
+            return _buildExpenseTile(item);
+          } else {
+            return Container();
+          }
+        }).toList(),
       );
     });
   }
 
   Widget _buildYearlyView() {
     return Obx(() {
-      if (totalController.expenseList.isEmpty && totalController.incomeList.isEmpty) {
-        return Center(child: Text('No Entries'));
+      List<dynamic> combinedList = totalController.getCombinedList();
+      DateTime now = DateTime.now();
+      DateTime startOfYear = DateTime(now.year, 1, 1);
+      DateTime endOfYear = DateTime(now.year, 12, 31);
+
+      List<dynamic> yearlyList = combinedList.where((item) {
+        DateTime itemDate = item.dateTime;
+        return itemDate.isAfter(startOfYear.subtract(Duration(days: 1))) &&
+            itemDate.isBefore(endOfYear.add(Duration(days: 1)));
+      }).toList();
+
+      if (yearlyList.isEmpty) {
+        return Center(child: Text('No Entries for this Year'));
       }
+
+      yearlyList.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+
       return ListView(
-        children: [
-          _buildSectionHeader('Income'),
-          ...totalController.incomeList.map((income) => _buildIncomeTile(income)),
-          _buildSectionHeader('Expenses'),
-          ...totalController.expenseList.map((expense) => _buildExpenseTile(expense)),
-        ],
+        children: yearlyList.map((item) {
+          if (item is IncomeModel) {
+            return _buildIncomeTile(item);
+          } else if (item is ExpenseModel) {
+            return _buildExpenseTile(item);
+          } else {
+            return Container();
+          }
+        }).toList(),
       );
     });
   }
@@ -149,6 +221,7 @@ class _TotalDetailScreenState extends State<TotalDetailScreen> with SingleTicker
         children: [
           Text('Amount: \$${income.amount}'),
           Text('Date: ${DateFormat.yMd().format(income.dateTime)}'),
+          Text('Type: Income'), // Added type visibility
         ],
       ),
       trailing: IconButton(
@@ -168,6 +241,7 @@ class _TotalDetailScreenState extends State<TotalDetailScreen> with SingleTicker
           Text('Description: ${expense.description ?? ''}'),
           Text('Category: ${expense.category.toString() ?? ''}'),
           Text('Date: ${DateFormat.yMd().format(expense.dateTime)}'),
+          Text('Type: Expense'), // Added type visibility
         ],
       ),
       trailing: IconButton(

@@ -19,7 +19,7 @@ class IncomeModelAdapter extends TypeAdapter<IncomeModel> {
         amount: amount,
         category: categoryIndex,
         dateTime: datetime,
-        description: description,
+        description: description, type: '',
       );
     } catch (e) {
       // Log the error and rethrow
@@ -35,5 +35,6 @@ class IncomeModelAdapter extends TypeAdapter<IncomeModel> {
     writer.write(obj.category);
     writer.write(obj.dateTime.toIso8601String());
     writer.write(obj.description);
+    writer.write(obj.type);
   }
 }

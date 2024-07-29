@@ -127,8 +127,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 14,
                           ),
                         ),
+
                       ],
                     ),
+                    // Text(
+                    //   '  ${income?.type.toString() ?? ''}',
+                    //   style: TextStyle(
+                    //     fontSize: 14,
+                    //   ),
+                    // ),
                     SizedBox(height: 5),
                     Align(
                       alignment: Alignment.centerRight,
@@ -227,6 +234,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
+                    // Text(
+                    //   'type: ${expense?.type.toString() ?? ''}',
+                    //   style: TextStyle(
+                    //     fontSize: 14,
+                    //   ),
+                    // ),
                     SizedBox(height: 5),
                     Align(
                       alignment: Alignment.centerRight,
@@ -319,6 +332,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 SizedBox(height: 5),
+                Text(
+                  'Type: ${isIncome ? 'Income' : 'Expense'}', // Added type visibility
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 5),
                 Align(
                   alignment: Alignment.centerRight,
                   child: IconButton(
@@ -342,6 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {

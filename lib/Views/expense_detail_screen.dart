@@ -1,23 +1,19 @@
 import 'package:expence_manager/Controllers/Expense_controller.dart';
-import 'package:expence_manager/Controllers/Income_controller.dart';
+import 'package:expence_manager/Models/expense_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 
 class ExpenseDetailScreen extends StatefulWidget {
   const ExpenseDetailScreen({super.key});
 
   @override
-  State<ExpenseDetailScreen> createState() => _IncomeDetailScreenState();
+  State<ExpenseDetailScreen> createState() => _ExpenseDetailScreenState();
 }
 
-class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTickerProviderStateMixin {
+class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  // final IncomeController _incomeController = Get.find(); // Get the controller
-  var incomeController = Get.put(IncomeController());
   var expenseController = Get.put(ExpenseController());
-
 
   @override
   void initState() {
@@ -46,12 +42,12 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
             Tab(text: 'Yearly'),
           ],
           indicator: BoxDecoration(
-            borderRadius: BorderRadius.circular(50), // Creates rounded rectangle
-            color: Colors.blueAccent, // Changes indicator color
+            borderRadius: BorderRadius.circular(50),
+            color: Colors.blueAccent,
           ),
-          labelColor: Colors.white, // Text color when tab is selected
-          unselectedLabelColor: Colors.black, // Text color when tab is not selected
-          indicatorSize: TabBarIndicatorSize.tab, // Makes indicator the size of the tab
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.black,
+          indicatorSize: TabBarIndicatorSize.tab,
         ),
       ),
       body: TabBarView(
@@ -68,339 +64,116 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
 
   Widget _buildDailyView() {
     return Obx(() {
-      if (expenseController.expenseList.isEmpty) {
-        return Center(child: Text('No Expense Entries'));
-      }
-      else{
-        // Filter income data for daily view
-        // Assuming you have a way to filter the data by date
-        return ListView.builder(
-          itemCount: expenseController.expenseList.length,
-          itemBuilder: (context, index) {
-            final expense = expenseController.expenseList[index];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      expense.title ?? '',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      'Amount: ${expense.amount ?? ''}',
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Text(
-                  'Description: ${expense.description ?? ''}',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Category: ${expense.category.toString() ?? ''}',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    Text(
-                      'Date: ${expense != null ? DateFormat.yMd().format(expense.dateTime) : ''}',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    onPressed: () => expenseController.deleteIncome(index, context),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
+      DateTime today = DateTime.now();
+
+      List<ExpenseModel> dailyExpenses = expenseController.expenseList.where((expense) {
+        return isSameDay(expense.dateTime, today);
+      }).toList();
+
+      if (dailyExpenses.isEmpty) {
+        return Center(child: Text('No Expense Entries for Today'));
       }
 
-      // Filter income data for daily view
-      // Assuming you have a way to filter the data by date
-      return ListView.builder(
-        itemCount: incomeController.incomeList.length,
-        itemBuilder: (context, index) {
-          final income = incomeController.incomeList[index];
-          return ListTile(
-            title: Text(income.title ?? ''),
-            subtitle: Text('\$${income.amount}'),
-          );
-        },
-      );
+      return _buildExpenseList(dailyExpenses);
     });
   }
 
   Widget _buildWeeklyView() {
     return Obx(() {
-      if (expenseController.expenseList.isEmpty) {
-        return Center(child: Text('No Expense Entries'));
-      }
-      else{
-        // Filter income data for daily view
-        // Assuming you have a way to filter the data by date
-        return ListView.builder(
-          itemCount: expenseController.expenseList.length,
-          itemBuilder: (context, index) {
-            final expense = expenseController.expenseList[index];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      expense.title ?? '',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      'Amount: ${expense.amount ?? ''}',
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Text(
-                  'Description: ${expense.description ?? ''}',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Category: ${expense.category.toString() ?? ''}',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    Text(
-                      'Date: ${expense != null ? DateFormat.yMd().format(expense.dateTime) : ''}',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    onPressed: () => expenseController.deleteIncome(index, context),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
+      DateTime now = DateTime.now();
+
+      List<ExpenseModel> weeklyExpenses = expenseController.expenseList.where((expense) {
+        return isSameWeek(expense.dateTime, now);
+      }).toList();
+
+      if (weeklyExpenses.isEmpty) {
+        return Center(child: Text('No Expense Entries This Week'));
       }
 
-      // Filter income data for daily view
-      // Assuming you have a way to filter the data by date
-      return ListView.builder(
-        itemCount: incomeController.incomeList.length,
-        itemBuilder: (context, index) {
-          final income = incomeController.incomeList[index];
-          return ListTile(
-            title: Text(income.title ?? ''),
-            subtitle: Text('\$${income.amount}'),
-          );
-        },
-      );
+      return _buildExpenseList(weeklyExpenses);
     });
   }
 
   Widget _buildMonthlyView() {
     return Obx(() {
-      if (expenseController.expenseList.isEmpty) {
-        return Center(child: Text('No Expense Entries'));
-      }
-      else{
-        // Filter income data for daily view
-        // Assuming you have a way to filter the data by date
-        return ListView.builder(
-          itemCount: expenseController.expenseList.length,
-          itemBuilder: (context, index) {
-            final expense = expenseController.expenseList[index];
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      expense.title ?? '',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      'Amount: ${expense.amount ?? ''}',
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Text(
-                  'Description: ${expense.description ?? ''}',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Category: ${expense.category.toString() ?? ''}',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    Text(
-                      'Date: ${expense != null ? DateFormat.yMd().format(expense.dateTime) : ''}',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    onPressed: () => expenseController.deleteIncome(index, context),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
+      DateTime now = DateTime.now();
+
+      List<ExpenseModel> monthlyExpenses = expenseController.expenseList.where((expense) {
+        return isSameMonth(expense.dateTime, now);
+      }).toList();
+
+      if (monthlyExpenses.isEmpty) {
+        return Center(child: Text('No Expense Entries This Month'));
       }
 
-      // Filter income data for daily view
-      // Assuming you have a way to filter the data by date
-      return ListView.builder(
-        itemCount: incomeController.incomeList.length,
-        itemBuilder: (context, index) {
-          final income = incomeController.incomeList[index];
-          return ListTile(
-            title: Text(income.title ?? ''),
-            subtitle: Text('\$${income.amount}'),
-          );
-        },
-      );
+      return _buildExpenseList(monthlyExpenses);
     });
   }
 
   Widget _buildYearlyView() {
     return Obx(() {
-      if (expenseController.expenseList.isEmpty) {
-        return Center(child: Text('No Expense Entries'));
+      DateTime now = DateTime.now();
+
+      List<ExpenseModel> yearlyExpenses = expenseController.expenseList.where((expense) {
+        return isSameYear(expense.dateTime, now);
+      }).toList();
+
+      if (yearlyExpenses.isEmpty) {
+        return Center(child: Text('No Expense Entries This Year'));
       }
-      else{
-        // Filter income data for daily view
-        // Assuming you have a way to filter the data by date
-        return ListView.builder(
-          itemCount: expenseController.expenseList.length,
-          itemBuilder: (context, index) {
-            final expense = expenseController.expenseList[index];
-            return Column(
+
+      return _buildExpenseList(yearlyExpenses);
+    });
+  }
+
+  Widget _buildExpenseList(List<ExpenseModel> expenses) {
+    return ListView.builder(
+      itemCount: expenses.length,
+      itemBuilder: (context, index) {
+        final expense = expenses[index];
+
+        return Card(
+          margin: EdgeInsets.all(8.0),
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      expense.title ?? '',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      'Amount: ${expense.amount ?? ''}',
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
+                Text(
+                  expense.title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
                 SizedBox(height: 5),
                 Text(
-                  'Description: ${expense.description ?? ''}',
-                  textAlign: TextAlign.center,
+                  'Amount: ${expense.amount}',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Description: ${expense.description}',
                   style: TextStyle(
                     fontSize: 14,
                   ),
                 ),
                 SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Category: ${expense.category.toString() ?? ''}',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                    Text(
-                      'Date: ${expense != null ? DateFormat.yMd().format(expense.dateTime) : ''}',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
+                Text(
+                  'Category: ${expense.category}',
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Date: ${DateFormat.yMd().format(expense.dateTime)}',
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
                 ),
                 SizedBox(height: 5),
                 Align(
@@ -410,27 +183,35 @@ class _IncomeDetailScreenState extends State<ExpenseDetailScreen> with SingleTic
                       Icons.delete,
                       color: Colors.red,
                     ),
-                    onPressed: () => expenseController.deleteIncome(index, context),
+                    onPressed: () {
+                      expenseController.deleteExpense(index, context);
+                    },
                   ),
                 ),
               ],
-            );
-          },
+            ),
+          ),
         );
-      }
+      },
+    );
+  }
 
-      // Filter income data for daily view
-      // Assuming you have a way to filter the data by date
-      return ListView.builder(
-        itemCount: incomeController.incomeList.length,
-        itemBuilder: (context, index) {
-          final income = incomeController.incomeList[index];
-          return ListTile(
-            title: Text(income.title ?? ''),
-            subtitle: Text('\$${income.amount}'),
-          );
-        },
-      );
-    });
+  bool isSameDay(DateTime date1, DateTime date2) {
+    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
+  }
+
+  bool isSameWeek(DateTime date1, DateTime date2) {
+    final startOfWeek = date1.subtract(Duration(days: date1.weekday - 1));
+    final endOfWeek = startOfWeek.add(Duration(days: 6));
+    return date2.isAfter(startOfWeek.subtract(Duration(days: 1))) &&
+        date2.isBefore(endOfWeek.add(Duration(days: 1)));
+  }
+
+  bool isSameMonth(DateTime date1, DateTime date2) {
+    return date1.year == date2.year && date1.month == date2.month;
+  }
+
+  bool isSameYear(DateTime date1, DateTime date2) {
+    return date1.year == date2.year;
   }
 }

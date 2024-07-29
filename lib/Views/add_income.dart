@@ -62,7 +62,7 @@ class _AddIncomeState extends State<AddIncome> {
         amount: _amountController.text,
         category: int.parse(_categoryController.text),
         dateTime: DateTime.parse(_datetimeController.text), // new parameter
-        description: _descriptionController.text, // new parameter
+        description: _descriptionController.text, type: 'income', // new parameter
       );
 
       final box = await Hive.openBox<IncomeModel>('incomes');
@@ -98,6 +98,10 @@ class _AddIncomeState extends State<AddIncome> {
     if (picked != null && picked != DateTime.now())
       setState(() {
         _datetimeController.text = DateFormat('yyyy-MM-dd').format(picked);
+        print("TESTING DATE");
+       print(DateTime.parse(_datetimeController.text), );
+       print(_datetimeController.text );
+
       });
   }
 

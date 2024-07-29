@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 
-
 @HiveType(typeId: 3)
 class ExpenseModel {
   @HiveField(0)
@@ -18,11 +17,15 @@ class ExpenseModel {
   @HiveField(4)
   final String description;
 
+  @HiveField(5)
+  final String type; // New field added
+
   ExpenseModel({
     required this.title,
     required this.amount,
     required this.category,
     required this.dateTime,
     required this.description,
+    required this.type, // Update constructor
   });
 }

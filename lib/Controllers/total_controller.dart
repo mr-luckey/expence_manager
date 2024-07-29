@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../Models/income_model.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-//import 'package:expence_manager/Controllers/Total_controller.dart';
+import 'package:expence_manager/Controllers/total_controller.dart';
 
 class TotalController extends GetxController {
   var incomeList = <IncomeModel>[].obs;
@@ -45,6 +45,8 @@ class TotalController extends GetxController {
     combinedList.addAll(expenseList);
     combinedList.sort((a, b) => a.dateTime.compareTo(b.dateTime));
     return combinedList;
+
+
   }
 
   Future<void> openHiveBox() async {

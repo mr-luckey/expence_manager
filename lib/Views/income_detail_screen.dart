@@ -42,12 +42,12 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
             Tab(text: 'Yearly'),
           ],
           indicator: BoxDecoration(
-            borderRadius: BorderRadius.circular(50), // Creates rounded rectangle
-            color: Colors.blueAccent, // Changes indicator color
+            borderRadius: BorderRadius.circular(50),
+            color: Colors.blueAccent,
           ),
-          labelColor: Colors.white, // Text color when tab is selected
-          unselectedLabelColor: Colors.black, // Text color when tab is not selected
-          indicatorSize: TabBarIndicatorSize.tab, // Makes indicator the size of the tab
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.black,
+          indicatorSize: TabBarIndicatorSize.tab,
         ),
       ),
       body: TabBarView(
@@ -64,12 +64,14 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
 
   Widget _buildDailyView() {
     return Obx(() {
+      DateTime today = DateTime.now();
+
       List<IncomeModel> dailyIncomes = incomeController.incomeList.where((income) {
-        return isSameDay(income.dateTime, DateTime.now());
+        return isSameDay(income.dateTime, today);
       }).toList();
 
       if (dailyIncomes.isEmpty) {
-        return Center(child: Text('No Income Entries'));
+        return Center(child: Text('No Income Entries for Today'));
       }
 
       return _buildIncomeList(dailyIncomes);
@@ -78,12 +80,14 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
 
   Widget _buildWeeklyView() {
     return Obx(() {
+      DateTime now = DateTime.now();
+
       List<IncomeModel> weeklyIncomes = incomeController.incomeList.where((income) {
-        return isSameWeek(income.dateTime, DateTime.now());
+        return isSameWeek(income.dateTime, now);
       }).toList();
 
       if (weeklyIncomes.isEmpty) {
-        return Center(child: Text('No Income Entries'));
+        return Center(child: Text('No Income Entries This Week'));
       }
 
       return _buildIncomeList(weeklyIncomes);
@@ -92,12 +96,14 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
 
   Widget _buildMonthlyView() {
     return Obx(() {
+      DateTime now = DateTime.now();
+
       List<IncomeModel> monthlyIncomes = incomeController.incomeList.where((income) {
-        return isSameMonth(income.dateTime, DateTime.now());
+        return isSameMonth(income.dateTime, now);
       }).toList();
 
       if (monthlyIncomes.isEmpty) {
-        return Center(child: Text('No Income Entries'));
+        return Center(child: Text('No Income Entries This Month'));
       }
 
       return _buildIncomeList(monthlyIncomes);
@@ -106,12 +112,14 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
 
   Widget _buildYearlyView() {
     return Obx(() {
+      DateTime now = DateTime.now();
+
       List<IncomeModel> yearlyIncomes = incomeController.incomeList.where((income) {
-        return isSameYear(income.dateTime, DateTime.now());
+        return isSameYear(income.dateTime, now);
       }).toList();
 
       if (yearlyIncomes.isEmpty) {
-        return Center(child: Text('No Income Entries'));
+        return Center(child: Text('No Income Entries This Year'));
       }
 
       return _buildIncomeList(yearlyIncomes);
@@ -123,6 +131,7 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
       itemCount: incomes.length,
       itemBuilder: (context, index) {
         final income = incomes[index];
+
         return Card(
           margin: EdgeInsets.all(8.0),
           child: Padding(
@@ -174,7 +183,9 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
                       Icons.delete,
                       color: Colors.red,
                     ),
-                    onPressed: () => incomeController.deleteIncome(index, context),
+                    onPressed: () {
+                      incomeController.deleteIncome(index, context);
+                    },
                   ),
                 ),
               ],
@@ -190,9 +201,10 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
   }
 
   bool isSameWeek(DateTime date1, DateTime date2) {
-    final startOfWeek1 = date1.subtract(Duration(days: date1.weekday - 1));
-    final endOfWeek1 = startOfWeek1.add(Duration(days: 6));
-    return date2.isAfter(startOfWeek1) && date2.isBefore(endOfWeek1);
+    final startOfWeek = date1.subtract(Duration(days: date1.weekday - 1));
+    final endOfWeek = startOfWeek.add(Duration(days: 6));
+    return date2.isAfter(startOfWeek.subtract(Duration(days: 1))) &&
+        date2.isBefore(endOfWeek.add(Duration(days: 1)));
   }
 
   bool isSameMonth(DateTime date1, DateTime date2) {
