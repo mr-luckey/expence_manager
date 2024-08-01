@@ -213,7 +213,7 @@ class _AddGoalsState extends State<AddGoals> {
                   child: CustomElevatedButton(
                     isdark: dark,
                     label: 'Add Goal',
-                    onPressed: _handleAddGoal,
+                    onPressed: _handleAddGoal, title: null,
                   ),
                 ),
               ),
