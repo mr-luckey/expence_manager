@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CustomCard1 extends StatefulWidget {
-  const CustomCard1({super.key});
+class CustomCard1 extends StatelessWidget {
+  final double totalGoalsAmount;
+  final double currentSavings;
+  //final double saveAmount;
 
-  @override
-  State<CustomCard1> createState() => _CustomCard1State();
-}
-
-class _CustomCard1State extends State<CustomCard1> {
-  double progress = 0.6;
+  const CustomCard1({
+    Key? key,
+    required this.totalGoalsAmount,
+    required this.currentSavings,
+    //required this.saveAmount
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double progress = 0.0;
+    if (totalGoalsAmount != 0) {
+      progress = currentSavings / totalGoalsAmount;
+      if (progress > 1.0) progress = 1.0;
+    }
+
     return Center(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.0), // Reduced left and right padding outside the card
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
         child: Card(
           elevation: 10,
           shape: RoundedRectangleBorder(
@@ -27,59 +35,47 @@ class _CustomCard1State extends State<CustomCard1> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Icon(Icons.calendar_today, color: Colors.blue),
-                    SizedBox(width: 10),
-                    Text(
-                      'June 10, 2024',
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 Text(
-                  'Goal for this month',
-                  style: TextStyle(
-                    fontSize: 14,
-                    //  color: Colors.black54
-                  ),
+                  'Savings Progress',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 10),
                 Stack(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                          10), // Rounded edges for the task bar
+                      borderRadius: BorderRadius.circular(10),
                       child: LinearProgressIndicator(
-                        value: progress, // Example progress value
-                        //backgroundColor: Colors.grey[300],
-                        //  color: Colors.blue,
-                        minHeight: 40, // Increased height of the task bar
+                        value: progress,
+                        minHeight: 40,
+                        backgroundColor: Colors.grey[300],
+                        color: Colors.blue,
                       ),
                     ),
-                    Positioned(
-                      left: 8,
-                      top: 12,
-                      child: Text(
-                        '\$300',
-                        style: TextStyle(
-                          fontSize: 16,
-                          //color: Colors.white
+                    Positioned.fill(
+                      child: Center(
+                        child: Text(
+                          '${(progress * 100).toStringAsFixed(1)}%',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                    Positioned(
-                      right: 8,
-                      top: 12,
-                      child: Text(
-                        '\$500',
-                        style: TextStyle(
-                          fontSize: 16,
-                          //color: Colors.black
-                        ),
-                      ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '\$${currentSavings.toStringAsFixed(2)}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    Text(
+                      '\$${totalGoalsAmount.toStringAsFixed(2)}',
+                      style: TextStyle(fontSize: 16),
                     ),
                   ],
                 ),

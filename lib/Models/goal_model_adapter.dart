@@ -11,7 +11,8 @@ class GoalAdapter extends TypeAdapter<Goal> {
     final amount = reader.readDouble();
     final contributionType = reader.readString();
     final deadline = DateTime.fromMillisecondsSinceEpoch(reader.readInt());
-    return Goal(title: title, amount: amount, contributionType: contributionType, deadline: deadline);
+    final saveAmount = reader.readDouble();
+    return Goal(title: title, amount: amount, contributionType: contributionType, deadline: deadline, saveAmount: saveAmount);
   }
 
   @override
@@ -20,5 +21,6 @@ class GoalAdapter extends TypeAdapter<Goal> {
     writer.writeDouble(obj.amount);
     writer.writeString(obj.contributionType);
     writer.writeInt(obj.deadline.millisecondsSinceEpoch);
+    writer.writeDouble(obj.saveAmount);
   }
 }

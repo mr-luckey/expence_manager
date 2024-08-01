@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:hive/hive.dart';
 
-
 class AddGoals extends StatefulWidget {
   const AddGoals({Key? key}) : super(key: key);
 
@@ -25,7 +24,6 @@ class _AddGoalsState extends State<AddGoals> {
   void initState() {
     super.initState();
     _contributionController.text = _selectedContribution;
-
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -48,15 +46,45 @@ class _AddGoalsState extends State<AddGoals> {
     final String contributionType = _contributionController.text;
     final DateTime deadline = DateTime.parse(_deadlineController.text);
 
+    // Calculate save amount based on contribution type and deadline
+    final int daysUntilDeadline = deadline.difference(DateTime.now()).inDays;
+    double saveAmount = 0;
+
+    // Debug print statements
+    print('Title: $title');
+    print('Total Amount: \$${amount.toStringAsFixed(2)}');
+    print('Contribution Type: $contributionType');
+    print('Deadline: ${deadline.toLocal()}');
+    print('Days Until Deadline: $daysUntilDeadline');
+
+    if (contributionType == 'Daily') {
+      saveAmount = amount / daysUntilDeadline;
+      print('Save Amount (Daily): \$${saveAmount.toStringAsFixed(2)}');
+    } else if (contributionType == 'Weekly') {
+      saveAmount = amount / (daysUntilDeadline / 7);
+      print('Save Amount (Weekly): \$${saveAmount.toStringAsFixed(2)}');
+    } else if (contributionType == 'Monthly') {
+      saveAmount = amount / (daysUntilDeadline / 30);
+      print('Save Amount (Monthly): \$${saveAmount.toStringAsFixed(2)}');
+    } else if (contributionType == 'Yearly') {
+      saveAmount = amount / (daysUntilDeadline / 365);
+      print('Save Amount (Yearly): \$${saveAmount.toStringAsFixed(2)}');
+    } else {
+      print('Unknown Contribution Type');
+    }
+
     final goal = Goal(
       title: title,
       amount: amount,
       contributionType: contributionType,
       deadline: deadline,
+      saveAmount: saveAmount, // Save amount is now included
     );
 
     final box = Hive.box<Goal>('goals');
     await box.add(goal);
+
+    print('Goal added successfully.');
 
     Navigator.of(context).pop();
   }
@@ -214,6 +242,7 @@ class _AddGoalsState extends State<AddGoals> {
                     isdark: dark,
                     label: 'Add Goal',
                     onPressed: _handleAddGoal,
+                    title: null,
                   ),
                 ),
               ),

@@ -14,10 +14,16 @@ class Goal  {
   @HiveField(3)
   late DateTime deadline;
 
+  @HiveField(3)
+  late double saveAmount;
+
+
+
   Goal({
     required this.title,
     required this.amount,
     required this.contributionType,
     required this.deadline,
+    required this.saveAmount,
   });
 }

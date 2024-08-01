@@ -1,8 +1,6 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Components/theme/theme.dart';
 import 'package:expence_manager/Controllers/Income_controller.dart';
-import 'package:expence_manager/Models/custom_card_1_model.dart';
-import 'package:expence_manager/Models/custom_card_model_adapter.dart';
 import 'package:expence_manager/Models/expense_model.dart';
 import 'package:expence_manager/Models/expense_model_adapter.dart';
 import 'package:expence_manager/Models/goal_model.dart';
@@ -37,14 +35,14 @@ Future<void> main() async {
   Hive.registerAdapter(ExpenseModelAdapter());
   Hive.registerAdapter(IncomeModelAdapter());
   Hive.registerAdapter(GoalAdapter());
-  Hive.registerAdapter(CardModelAdapter());
+  // Hive.registerAdapter(CardModelAdapter());
 
 
   // Open Hive boxes
   await Hive.openBox<ExpenseModel>('expenses');
   await Hive.openBox<IncomeModel>('incomes');
   await Hive.openBox<Goal>('goals');
-  await Hive.openBox<CardModel>('cardModels');
+  // await Hive.openBox<CardModel>('cardModels');
 
   runApp(MainApp());
 }

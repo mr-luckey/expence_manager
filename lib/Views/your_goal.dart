@@ -89,24 +89,26 @@ class _YourGoalState extends State<YourGoal> {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: LinearProgressIndicator(
-                                      value: goal.amount / 500, // example progress calculation
+                                      value: goal.amount / goal.amount, // progress calculation based on the entered amount
                                       minHeight: 6,
                                     ),
                                   ),
                                   SizedBox(height: 10),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                                     children: [
                                       Text(
                                         '\$${goal.amount}',
                                         style: TextStyle(fontSize: 16),
                                       ),
                                       Text(
-                                        '\$500', // example target amount
+                                        '\$${goal.amount}', // use the user-entered amount as the target
                                         style: TextStyle(fontSize: 16),
                                       ),
                                     ],
                                   ),
+
                                 ],
                               ),
                             ),
