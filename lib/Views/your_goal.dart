@@ -101,10 +101,10 @@ class _YourGoalState extends State<YourGoal> {
                                         '\$${goal.amount}',
                                         style: TextStyle(fontSize: 16),
                                       ),
-                                      // Text(
-                                      //   '\$500', // example target amount
-                                      //   style: TextStyle(fontSize: 16),
-                                      // ),
+                                      Text(
+                                        '\$500', // example target amount
+                                        style: TextStyle(fontSize: 16),
+                                      ),
                                     ],
                                   ),
                                 ],

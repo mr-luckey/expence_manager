@@ -27,7 +27,62 @@ class _CustomCard1State extends State<CustomCard1> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
+                Row(
+                  children: [
+                    Icon(Icons.calendar_today, color: Colors.blue),
+                    SizedBox(width: 10),
+                    Text(
+                      'June 10, 2024',
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Goal for this month',
+                  style: TextStyle(
+                    fontSize: 14,
+                    //  color: Colors.black54
+                  ),
+                ),
+                SizedBox(height: 10),
+                Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          10), // Rounded edges for the task bar
+                      child: LinearProgressIndicator(
+                        value: progress, // Example progress value
+                        //backgroundColor: Colors.grey[300],
+                        //  color: Colors.blue,
+                        minHeight: 40, // Increased height of the task bar
+                      ),
+                    ),
+                    Positioned(
+                      left: 8,
+                      top: 12,
+                      child: Text(
+                        '\$300',
+                        style: TextStyle(
+                          fontSize: 16,
+                          //color: Colors.white
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 8,
+                      top: 12,
+                      child: Text(
+                        '\$500',
+                        style: TextStyle(
+                          fontSize: 16,
+                          //color: Colors.black
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

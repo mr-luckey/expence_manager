@@ -1,5 +1,4 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
-import 'package:expence_manager/Controllers/Expense_controller.dart';
 import 'package:expence_manager/Views/Add_Goals.dart';
 import 'package:expence_manager/Views/your_goal.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
@@ -19,7 +18,6 @@ class SavingPage extends StatefulWidget {
 }
 
 class _SavingPageState extends State<SavingPage> {
-  final ExpenseController expenseController = Get.put(ExpenseController());
   double progress = 0.1; // Example progress value
 
   @override
@@ -48,7 +46,7 @@ class _SavingPageState extends State<SavingPage> {
             // ),
             // SizedBox(height: 50), // Space between text and circular container
             Center(
-              child: CustomContainer(totalExpenses: expenseController.totalExpense,),
+              child: CustomContainer(),
             ),
             SizedBox(height: 20), // Space between circular container and card
 
@@ -97,7 +95,7 @@ class _SavingPageState extends State<SavingPage> {
                       ],
                     ),
                   ),
-                  //ItemList(),
+                  ItemList(),
                 ],
               ),
             ),
@@ -111,7 +109,7 @@ class _SavingPageState extends State<SavingPage> {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => AddGoals()));
-                  }, title: null,
+                  },
                 ),
               ),
 
