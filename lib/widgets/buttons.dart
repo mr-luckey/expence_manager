@@ -238,12 +238,14 @@ class CustomElevatedButton extends StatelessWidget {
   final String label;
   final bool? isdark;
   final VoidCallback onPressed;
+  final title ;
 
   const CustomElevatedButton({
     Key? key,
     required this.label,
     this.isdark,
     required this.onPressed,
+    required this.title,
   }) : super(key: key);
 
   @override

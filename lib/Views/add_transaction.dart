@@ -1,4 +1,5 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
+import 'package:expence_manager/Models/income_model.dart';
 import 'package:expence_manager/Models/expense_model.dart';
 import 'package:expence_manager/Models/expense_model_adapter.dart';
 import 'package:expence_manager/Views/Home_screen.dart';
@@ -10,7 +11,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 
-// Custom input field function with optional icon and right-side icon option
+// Input field widget
 Widget inputfield(TextEditingController controller, String hint, IconData? icon,
     bool obscure, TextInputType type,
     {bool isIconOnRight = false, VoidCallback? onTap}) {
@@ -30,8 +31,7 @@ Widget inputfield(TextEditingController controller, String hint, IconData? icon,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        contentPadding:
-        const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       ),
       readOnly: onTap != null, // make readOnly if onTap is provided
       onTap: onTap,
@@ -39,22 +39,22 @@ Widget inputfield(TextEditingController controller, String hint, IconData? icon,
   );
 }
 
-class AddExpense extends StatefulWidget {
-  const AddExpense({Key? key}) : super(key: key);
+class AddTransaction extends StatefulWidget {
+  const AddTransaction({Key? key}) : super(key: key);
 
   @override
-  State<AddExpense> createState() => _AddExpenseState();
+  State<AddTransaction> createState() => _AddTransactionState();
 }
 
-class _AddExpenseState extends State<AddExpense> {
-  // Controllers for the text fields
+class _AddTransactionState extends State<AddTransaction> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _datetimeController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   late Box<ExpenseModel> _expenseBox;
   bool _isBoxOpened = false;
+  bool _isIncomeSelected = true;
 
   @override
   void initState() {
@@ -73,41 +73,48 @@ class _AddExpenseState extends State<AddExpense> {
     });
   }
 
-  // Method to handle button press
-  void _handleAddExpense() async {
+  void _handleAddTransaction() async {
     if (_titleController.text.isNotEmpty &&
         _amountController.text.isNotEmpty &&
-        _descriptionController.text.isNotEmpty &&
         _categoryController.text.isNotEmpty &&
-        _dateController.text.isNotEmpty &&
-        _isBoxOpened) {
+        _datetimeController.text.isNotEmpty &&
+        _descriptionController.text.isNotEmpty) {
 
-      final expense = ExpenseModel(
-        title: _titleController.text,
-        amount: double.parse(_amountController.text),
-        description: _descriptionController.text,
-        category: _categoryController.text,
-        dateTime: DateTime.parse(_dateController.text), type: 'expense',
-      );
+      if (_isIncomeSelected) {
+        final income = IncomeModel(
+          title: _titleController.text,
+          amount: _amountController.text,
+          category: int.parse(_categoryController.text),
+          dateTime: DateTime.parse(_datetimeController.text),
+          description: _descriptionController.text,
+          type: 'income',
+        );
 
-      await _expenseBox.add(expense);
+        final box = await Hive.openBox<IncomeModel>('incomes');
+        await box.add(income);
+        print('Income data added to Hive database');
+      } else {
+        final expense = ExpenseModel(
+          title: _titleController.text,
+          amount: double.parse(_amountController.text),
+          description: _descriptionController.text,
+          category: _categoryController.text,
+          dateTime: DateTime.parse(_datetimeController.text),
+          type: 'expense',
+        );
 
-      print('Expense data added to Hive database');
-      displayExpenseData();
+        await _expenseBox.add(expense);
+        print('Expense data added to Hive database');
+      }
 
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => HomeScreen()),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill all fields and ensure the box is opened')),
+        SnackBar(content: Text('Please fill all fields')),
       );
     }
-  }
-
-  void displayExpenseData() async {
-    List<ExpenseModel> fetchedExpenseData = _expenseBox.values.toList();
-    print('Expense data fetched from Hive database: $fetchedExpenseData');
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -117,9 +124,9 @@ class _AddExpenseState extends State<AddExpense> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != DateTime.now())
+    if (picked != null)
       setState(() {
-        _dateController.text = DateFormat('yyyy-MM-dd').format(picked);
+        _datetimeController.text = DateFormat('yyyy-MM-dd').format(picked);
       });
   }
 
@@ -129,7 +136,7 @@ class _AddExpenseState extends State<AddExpense> {
     return Scaffold(
       appBar: CustomAppBar(
         isDark: dark,
-        title: 'Add Expense',
+        title: 'Add Transaction',
         onBackPressed: () {
           Navigator.of(context).pop();
         },
@@ -142,10 +149,31 @@ class _AddExpenseState extends State<AddExpense> {
             children: [
               TimelineCalender(),
               const SizedBox(height: 20),
+              Center(
+                child: ToggleButtons(
+                  isSelected: [_isIncomeSelected, !_isIncomeSelected],
+                  onPressed: (int index) {
+                    setState(() {
+                      _isIncomeSelected = index == 0;
+                    });
+                  },
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Text('Income'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Text('Expense'),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: const Text(
-                  'Expense Title',
+                child: Text(
+                  _isIncomeSelected ? 'Income Title' : 'Expense Title',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -154,7 +182,7 @@ class _AddExpenseState extends State<AddExpense> {
               ),
               inputfield(
                 _titleController,
-                'Enter Expense Title',
+                '',
                 null,
                 false,
                 TextInputType.text,
@@ -172,7 +200,7 @@ class _AddExpenseState extends State<AddExpense> {
               ),
               inputfield(
                 _amountController,
-                'Enter Amount',
+                '',
                 Icons.attach_money,
                 false,
                 TextInputType.number,
@@ -181,8 +209,8 @@ class _AddExpenseState extends State<AddExpense> {
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
-                child: const Text(
-                  'Expense Category',
+                child: Text(
+                  _isIncomeSelected ? 'Income Category' : 'Expense Category',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -191,17 +219,17 @@ class _AddExpenseState extends State<AddExpense> {
               ),
               inputfield(
                 _categoryController,
-                'Enter Expense Category',
+                '',
                 Icons.category,
                 false,
-                TextInputType.text,
+                TextInputType.number,
                 isIconOnRight: true,
               ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: const Text(
-                  'Date',
+                  'Datetime',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -209,13 +237,13 @@ class _AddExpenseState extends State<AddExpense> {
                 ),
               ),
               inputfield(
-                _dateController,
-                'Select Date',
+                _datetimeController,
+                '',
                 Icons.date_range,
                 false,
                 TextInputType.datetime,
                 isIconOnRight: true,
-                onTap: () => _selectDate(context), // show date picker on tap
+                onTap: () => _selectDate(context),
               ),
               const SizedBox(height: 20),
               Padding(
@@ -230,7 +258,7 @@ class _AddExpenseState extends State<AddExpense> {
               ),
               inputfield(
                 _descriptionController,
-                'Enter Description',
+                '',
                 Icons.description,
                 false,
                 TextInputType.text,
@@ -242,8 +270,8 @@ class _AddExpenseState extends State<AddExpense> {
                   padding: const EdgeInsets.all(15),
                   child: CustomElevatedButton(
                     isdark: dark,
-                    onPressed: _handleAddExpense,
-                    label: 'Add Expense', title: null,
+                    onPressed: _handleAddTransaction,
+                    label: _isIncomeSelected ? 'Add Income' : 'Add Expense', title: null,
                   ),
                 ),
               ),

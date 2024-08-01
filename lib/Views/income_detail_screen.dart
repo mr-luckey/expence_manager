@@ -14,6 +14,10 @@ class IncomeDetailScreen extends StatefulWidget {
 class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   var incomeController = Get.put(IncomeController());
+  DateTime selectedDate = DateTime.now();
+  int selectedWeek = 1;
+  int selectedMonth = DateTime.now().month;
+  int selectedYear = DateTime.now().year;
 
   @override
   void initState() {
@@ -28,11 +32,34 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
     super.dispose();
   }
 
+  void showCalendarDialog(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(3000),
+    );
+    if (pickedDate != null && pickedDate != selectedDate) {
+      setState(() {
+        selectedDate = pickedDate;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Income Details'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Income Details'),
+            IconButton(
+              icon: Icon(Icons.calendar_today),
+              onPressed: () => showCalendarDialog(context),
+            ),
+          ],
+        ),
         bottom: TabBar(
           controller: _tabController,
           tabs: [
@@ -63,67 +90,67 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
   }
 
   Widget _buildDailyView() {
-    return Obx(() {
-      DateTime today = DateTime.now();
+    return Expanded(
+      child: Obx(() {
+        List<IncomeModel> dailyIncomes = incomeController.incomeList.where((income) {
+          return isSameDay(income.dateTime, selectedDate);
+        }).toList();
 
-      List<IncomeModel> dailyIncomes = incomeController.incomeList.where((income) {
-        return isSameDay(income.dateTime, today);
-      }).toList();
+        if (dailyIncomes.isEmpty) {
+          return Center(child: Text('No Income Entries for Selected Date'));
+        }
 
-      if (dailyIncomes.isEmpty) {
-        return Center(child: Text('No Income Entries for Today'));
-      }
-
-      return _buildIncomeList(dailyIncomes);
-    });
+        return _buildIncomeList(dailyIncomes);
+      }),
+    );
   }
 
   Widget _buildWeeklyView() {
-    return Obx(() {
-      DateTime now = DateTime.now();
+    return Expanded(
+      child: Obx(() {
+        List<IncomeModel> weeklyIncomes = incomeController.incomeList.where((income) {
+          return isSameWeek(income.dateTime, selectedDate, selectedWeek);
+        }).toList();
 
-      List<IncomeModel> weeklyIncomes = incomeController.incomeList.where((income) {
-        return isSameWeek(income.dateTime, now);
-      }).toList();
+        if (weeklyIncomes.isEmpty) {
+          return Center(child: Text('No Income Entries for Selected Week'));
+        }
 
-      if (weeklyIncomes.isEmpty) {
-        return Center(child: Text('No Income Entries This Week'));
-      }
-
-      return _buildIncomeList(weeklyIncomes);
-    });
+        return _buildIncomeList(weeklyIncomes);
+      }),
+    );
   }
 
   Widget _buildMonthlyView() {
-    return Obx(() {
-      DateTime now = DateTime.now();
+    return Expanded(
+      child: Obx(() {
+        List<IncomeModel> monthlyIncomes = incomeController.incomeList.where((income) {
+          return isSameMonth(income.dateTime, selectedDate, selectedMonth);
+        }).toList();
 
-      List<IncomeModel> monthlyIncomes = incomeController.incomeList.where((income) {
-        return isSameMonth(income.dateTime, now);
-      }).toList();
+        if (monthlyIncomes.isEmpty) {
+          return Center(child: Text('No Income Entries for Selected Month'));
+        }
 
-      if (monthlyIncomes.isEmpty) {
-        return Center(child: Text('No Income Entries This Month'));
-      }
-
-      return _buildIncomeList(monthlyIncomes);
-    });
+        return _buildIncomeList(monthlyIncomes);
+      }),
+    );
   }
 
   Widget _buildYearlyView() {
-    return Obx(() {
-      DateTime now = DateTime.now();
+    return Expanded(
+      child: Obx(() {
+        List<IncomeModel> yearlyIncomes = incomeController.incomeList.where((income) {
+          return isSameYear(income.dateTime, selectedDate, selectedYear);
+        }).toList();
 
-      List<IncomeModel> yearlyIncomes = incomeController.incomeList.where((income) {
-        return isSameYear(income.dateTime, now);
-      }).toList();
+        if (yearlyIncomes.isEmpty) {
+          return Center(child: Text('No Income Entries for Selected Year'));
+        }
 
-      if (yearlyIncomes.isEmpty) {
-        return Center(child: Text('No Income Entries This Year'));
-      }
-
-      return _buildIncomeList(yearlyIncomes);
-    });
+        return _buildIncomeList(yearlyIncomes);
+      }),
+    );
   }
 
   Widget _buildIncomeList(List<IncomeModel> incomes) {
@@ -200,18 +227,19 @@ class _IncomeDetailScreenState extends State<IncomeDetailScreen> with SingleTick
     return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
   }
 
-  bool isSameWeek(DateTime date1, DateTime date2) {
-    final startOfWeek = date1.subtract(Duration(days: date1.weekday - 1));
-    final endOfWeek = startOfWeek.add(Duration(days: 6));
-    return date2.isAfter(startOfWeek.subtract(Duration(days: 1))) &&
-        date2.isBefore(endOfWeek.add(Duration(days: 1)));
+  bool isSameWeek(DateTime date1, DateTime date2, int week) {
+    final startOfWeek = date2.subtract(Duration(days: date2.weekday - 1));
+    final targetWeekStart = startOfWeek.add(Duration(days: (week - 1) * 7));
+    final targetWeekEnd = targetWeekStart.add(Duration(days: 6));
+    return date1.isAfter(targetWeekStart.subtract(Duration(days: 1))) &&
+        date1.isBefore(targetWeekEnd.add(Duration(days: 1)));
   }
 
-  bool isSameMonth(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month;
+  bool isSameMonth(DateTime date1, DateTime date2, int month) {
+    return date1.year == date2.year && date1.month == month;
   }
 
-  bool isSameYear(DateTime date1, DateTime date2) {
-    return date1.year == date2.year;
+  bool isSameYear(DateTime date1, DateTime date2, int year) {
+    return date1.year == year;
   }
 }

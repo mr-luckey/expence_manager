@@ -92,7 +92,7 @@ class _LoginState extends State<Login> {
                       Get.to(Mainscreen(
                           // selectedIndex: 1,
                           ));
-                    },
+                    }, title: null,
                     //complete animation on button here.
                   ),
                   SizedBox(
@@ -103,6 +103,7 @@ class _LoginState extends State<Login> {
                     onPressed: () {
                       Get.to(Signup());
                     },
+                    title: null,
                     isdark: dark,
                   )
                 ],

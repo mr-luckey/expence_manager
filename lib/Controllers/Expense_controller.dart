@@ -3,6 +3,7 @@ import 'package:expence_manager/Models/expense_model_adapter.dart';
 import 'package:expence_manager/Models/income_model_adapter.dart';
 import 'package:expence_manager/Views/Add_Expense.dart';
 import 'package:expence_manager/Views/add_income.dart';
+import 'package:expence_manager/Views/add_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -160,7 +161,7 @@ class ExpenseController extends GetxController {
   Future<void> addIncome(BuildContext context) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddIncome()),
+      MaterialPageRoute(builder: (context) => AddTransaction()),
     );
     _calculateTotalIncome(); // Recalculate the total income after adding a new entry
     //setState(() {}); // Refresh the state when coming back to HomeScreen
@@ -170,7 +171,7 @@ class ExpenseController extends GetxController {
   Future<void> addExpense(BuildContext context) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AddExpense()),
+      MaterialPageRoute(builder: (context) => AddTransaction()),
     );
     _calculateTotalExpense(); // Recalculate the total expense after adding a new entry
     //setState(() {}); // Refresh the state when coming back to HomeScreen

@@ -44,15 +44,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 colorBlendMode: BlendMode.modulate, // Apply the color filter
                 height: 250, // Adjust the size as needed
               ),
-              SizedBox(height: 20), // Space between the logo and the text
-              Text(
-                'PDF Reader',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white, // Update text color to white
-                ),
-              ),
+
+
             ],
           ),
         ),

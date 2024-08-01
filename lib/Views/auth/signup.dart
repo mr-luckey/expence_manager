@@ -66,7 +66,7 @@ class _SignupState extends State<Signup> {
                     Get.to(Mainscreen(
                         // selectedIndex: 1,
                         ));
-                  },
+                  }, title: null,
 
                   //complete animation on button here.
                 ),

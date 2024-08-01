@@ -1,4 +1,5 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
+import 'package:expence_manager/Controllers/Expense_controller.dart';
 import 'package:expence_manager/widgets/custom_catagory_card.dart';
 import 'package:flutter/material.dart';
 import 'package:expence_manager/widgets/container.dart';
@@ -6,6 +7,7 @@ import 'package:expence_manager/widgets/record_widget.dart';
 import 'package:expence_manager/widgets/tab_bar.dart';
 import 'package:expence_manager/widgets/timeline_calender.dart';
 import 'package:expence_manager/widgets/Topbar.dart';
+import 'package:get/get.dart';
 
 class TotalExpense extends StatelessWidget {
   const TotalExpense({Key? key}) : super(key: key);
@@ -13,6 +15,7 @@ class TotalExpense extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = ThemeProvider().isDarkMode(context);
+    final ExpenseController expenseController = Get.put(ExpenseController());
 
     // Sample data for the CustomCategoryCard
     final List<double> expenses = [300, 150, 100, 50];
@@ -84,7 +87,7 @@ class TotalExpense extends StatelessWidget {
             //   ),
             // ),
             TimelineCalender(), // Timeline calendar
-            CustomContainer(), // Circular container
+            CustomContainer(totalExpenses: expenseController.totalExpense,), // Circular container
             Container(
               height:
                   400.0, // Set an appropriate height for the tab bar section

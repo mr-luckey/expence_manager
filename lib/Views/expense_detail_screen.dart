@@ -14,6 +14,10 @@ class ExpenseDetailScreen extends StatefulWidget {
 class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   var expenseController = Get.put(ExpenseController());
+  DateTime selectedDate = DateTime.now();
+  int selectedWeek = 1;
+  int selectedMonth = DateTime.now().month;
+  int selectedYear = DateTime.now().year;
 
   @override
   void initState() {
@@ -28,11 +32,34 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> with SingleTi
     super.dispose();
   }
 
+  void showCalendarDialog(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(3000),
+    );
+    if (pickedDate != null && pickedDate != selectedDate) {
+      setState(() {
+        selectedDate = pickedDate;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expense Details'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Expense Details'),
+            IconButton(
+              icon: Icon(Icons.calendar_today),
+              onPressed: () => showCalendarDialog(context),
+            ),
+          ],
+        ),
         bottom: TabBar(
           controller: _tabController,
           tabs: [
@@ -63,67 +90,67 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> with SingleTi
   }
 
   Widget _buildDailyView() {
-    return Obx(() {
-      DateTime today = DateTime.now();
+    return Expanded(
+      child: Obx(() {
+        List<ExpenseModel> dailyExpenses = expenseController.expenseList.where((expense) {
+          return isSameDay(expense.dateTime, selectedDate);
+        }).toList();
 
-      List<ExpenseModel> dailyExpenses = expenseController.expenseList.where((expense) {
-        return isSameDay(expense.dateTime, today);
-      }).toList();
+        if (dailyExpenses.isEmpty) {
+          return Center(child: Text('No Expense Entries for Selected Date'));
+        }
 
-      if (dailyExpenses.isEmpty) {
-        return Center(child: Text('No Expense Entries for Today'));
-      }
-
-      return _buildExpenseList(dailyExpenses);
-    });
+        return _buildExpenseList(dailyExpenses);
+      }),
+    );
   }
 
   Widget _buildWeeklyView() {
-    return Obx(() {
-      DateTime now = DateTime.now();
+    return Expanded(
+      child: Obx(() {
+        List<ExpenseModel> weeklyExpenses = expenseController.expenseList.where((expense) {
+          return isSameWeek(expense.dateTime, selectedDate, selectedWeek);
+        }).toList();
 
-      List<ExpenseModel> weeklyExpenses = expenseController.expenseList.where((expense) {
-        return isSameWeek(expense.dateTime, now);
-      }).toList();
+        if (weeklyExpenses.isEmpty) {
+          return Center(child: Text('No Expense Entries for Selected Week'));
+        }
 
-      if (weeklyExpenses.isEmpty) {
-        return Center(child: Text('No Expense Entries This Week'));
-      }
-
-      return _buildExpenseList(weeklyExpenses);
-    });
+        return _buildExpenseList(weeklyExpenses);
+      }),
+    );
   }
 
   Widget _buildMonthlyView() {
-    return Obx(() {
-      DateTime now = DateTime.now();
+    return Expanded(
+      child: Obx(() {
+        List<ExpenseModel> monthlyExpenses = expenseController.expenseList.where((expense) {
+          return isSameMonth(expense.dateTime, selectedDate, selectedMonth);
+        }).toList();
 
-      List<ExpenseModel> monthlyExpenses = expenseController.expenseList.where((expense) {
-        return isSameMonth(expense.dateTime, now);
-      }).toList();
+        if (monthlyExpenses.isEmpty) {
+          return Center(child: Text('No Expense Entries for Selected Month'));
+        }
 
-      if (monthlyExpenses.isEmpty) {
-        return Center(child: Text('No Expense Entries This Month'));
-      }
-
-      return _buildExpenseList(monthlyExpenses);
-    });
+        return _buildExpenseList(monthlyExpenses);
+      }),
+    );
   }
 
   Widget _buildYearlyView() {
-    return Obx(() {
-      DateTime now = DateTime.now();
+    return Expanded(
+      child: Obx(() {
+        List<ExpenseModel> yearlyExpenses = expenseController.expenseList.where((expense) {
+          return isSameYear(expense.dateTime, selectedDate, selectedYear);
+        }).toList();
 
-      List<ExpenseModel> yearlyExpenses = expenseController.expenseList.where((expense) {
-        return isSameYear(expense.dateTime, now);
-      }).toList();
+        if (yearlyExpenses.isEmpty) {
+          return Center(child: Text('No Expense Entries for Selected Year'));
+        }
 
-      if (yearlyExpenses.isEmpty) {
-        return Center(child: Text('No Expense Entries This Year'));
-      }
-
-      return _buildExpenseList(yearlyExpenses);
-    });
+        return _buildExpenseList(yearlyExpenses);
+      }),
+    );
   }
 
   Widget _buildExpenseList(List<ExpenseModel> expenses) {
@@ -200,18 +227,19 @@ class _ExpenseDetailScreenState extends State<ExpenseDetailScreen> with SingleTi
     return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
   }
 
-  bool isSameWeek(DateTime date1, DateTime date2) {
-    final startOfWeek = date1.subtract(Duration(days: date1.weekday - 1));
-    final endOfWeek = startOfWeek.add(Duration(days: 6));
-    return date2.isAfter(startOfWeek.subtract(Duration(days: 1))) &&
-        date2.isBefore(endOfWeek.add(Duration(days: 1)));
+  bool isSameWeek(DateTime date1, DateTime date2, int week) {
+    final startOfWeek = date2.subtract(Duration(days: date2.weekday - 1));
+    final targetWeekStart = startOfWeek.add(Duration(days: (week - 1) * 7));
+    final targetWeekEnd = targetWeekStart.add(Duration(days: 6));
+    return date1.isAfter(targetWeekStart.subtract(Duration(days: 1))) &&
+        date1.isBefore(targetWeekEnd.add(Duration(days: 1)));
   }
 
-  bool isSameMonth(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month;
+  bool isSameMonth(DateTime date1, DateTime date2, int month) {
+    return date1.year == date2.year && date1.month == month;
   }
 
-  bool isSameYear(DateTime date1, DateTime date2) {
-    return date1.year == date2.year;
+  bool isSameYear(DateTime date1, DateTime date2, int year) {
+    return date1.year == year;
   }
 }

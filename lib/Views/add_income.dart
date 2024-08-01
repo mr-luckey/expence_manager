@@ -225,7 +225,7 @@ class _AddIncomeState extends State<AddIncome> {
                   child: CustomElevatedButton(
                     isdark: dark,
                     onPressed: _handleAddIncome,
-                    label: 'Add Income',
+                    label: 'Add Income', title: null,
                   ),
                 ),
               ),

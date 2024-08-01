@@ -5,6 +5,7 @@ import 'package:expence_manager/Controllers/total_controller.dart';
 import 'package:expence_manager/Views/Add_Expense.dart';
 import 'package:expence_manager/Views/Reminder.dart';
 import 'package:expence_manager/Views/add_income.dart';
+import 'package:expence_manager/Views/add_transaction.dart';
 import 'package:expence_manager/Views/expense_detail_screen.dart';
 import 'package:expence_manager/Views/income_detail_screen.dart';
 import 'package:expence_manager/Views/total_detail_screen.dart';
@@ -376,7 +377,7 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
-              incomeController.addIncome(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AddTransaction()));
             },
           ),
         ],

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomContainer extends StatelessWidget {
+  final double totalExpenses;
+
+  const CustomContainer({super.key, required this.totalExpenses});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -9,16 +13,16 @@ class CustomContainer extends StatelessWidget {
       width: 200,
       height: 200,
       decoration: BoxDecoration(
-        // color: Colors.blue,
         shape: BoxShape.circle,
+        color: Colors.blue,
       ),
       child: Center(
         child: Text(
-          'Circular Container',
+          ' \$${totalExpenses.toStringAsFixed(2)}',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 16,
-            //color: Colors.white
+            color: Colors.white,
           ),
         ),
       ),
