@@ -1,4 +1,5 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
+import 'package:expence_manager/Views/Add_Goals.dart';
 import 'package:expence_manager/Views/add_income.dart';
 import 'package:expence_manager/Views/add_expense.dart'; // Import the AddExpensePage
 import 'package:expence_manager/Views/add_transaction.dart';
@@ -127,10 +128,15 @@ class _AddPageState extends State<AddPage> {
 
   Widget _buildContainerContent(int index) {
     if (index == 0) {
-      return Center(
-        child: Icon(
-          Icons.add,
-          // color: _selectedIndex == index ? Colors.white : Colors.black,
+      return GestureDetector(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddGoals()));
+        },
+        child: Center(
+          child: Icon(
+            Icons.add,
+            // color: _selectedIndex == index ? Colors.white : Colors.black,
+          ),
         ),
       );
     } else if (index == 1) {

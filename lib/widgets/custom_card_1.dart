@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomCard1 extends StatelessWidget {
-  final double totalGoalsAmount;
-  final double currentSavings;
-  //final double saveAmount;
+  final double amount;
+  final double saveAmount;
 
   const CustomCard1({
     Key? key,
-    required this.totalGoalsAmount,
-    required this.currentSavings,
-    //required this.saveAmount
+    required this.amount,
+    required this.saveAmount,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double progress = 0.0;
-    if (totalGoalsAmount != 0) {
-      progress = currentSavings / totalGoalsAmount;
+    if (amount != 0) {
+      progress = saveAmount / amount;
       if (progress > 1.0) progress = 1.0;
     }
 
@@ -70,11 +68,11 @@ class CustomCard1 extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '\$${currentSavings.toStringAsFixed(2)}',
+                      '\$${saveAmount.toStringAsFixed(2)}',
                       style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      '\$${totalGoalsAmount.toStringAsFixed(2)}',
+                      '\$${amount.toStringAsFixed(2)}',
                       style: TextStyle(fontSize: 16),
                     ),
                   ],

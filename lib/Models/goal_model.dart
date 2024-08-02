@@ -1,29 +1,32 @@
 import 'package:hive/hive.dart';
 
-@HiveType(typeId: 1)
-class Goal  {
+
+@HiveType(typeId: 0)
+class Goal extends HiveObject {
   @HiveField(0)
-  late String title;
+  String title;
 
   @HiveField(1)
-  late double amount;
+  double amount;
 
   @HiveField(2)
-  late String contributionType;
+  double saveAmount;
 
   @HiveField(3)
-  late DateTime deadline;
+  DateTime deadline;
 
-  @HiveField(3)
-  late double saveAmount;
+  @HiveField(4)
+  String contributionType;
 
-
+  @HiveField(5)
+  DateTime lastContributionDate;
 
   Goal({
     required this.title,
     required this.amount,
-    required this.contributionType,
-    required this.deadline,
     required this.saveAmount,
+    required this.deadline,
+    required this.contributionType,
+    required this.lastContributionDate,
   });
 }

@@ -1,9 +1,11 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Models/goal_model.dart';
+import 'package:expence_manager/Views/todo_screen.dart';
 import 'package:expence_manager/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:hive/hive.dart';
+
 
 class AddGoals extends StatefulWidget {
   const AddGoals({Key? key}) : super(key: key);
@@ -79,6 +81,7 @@ class _AddGoalsState extends State<AddGoals> {
       contributionType: contributionType,
       deadline: deadline,
       saveAmount: saveAmount, // Save amount is now included
+      lastContributionDate: DateTime.now(), // Initialize with the current date
     );
 
     final box = Hive.box<Goal>('goals');
@@ -86,7 +89,9 @@ class _AddGoalsState extends State<AddGoals> {
 
     print('Goal added successfully.');
 
-    Navigator.of(context).pop();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => SavingPage()),
+    );
   }
 
   @override
