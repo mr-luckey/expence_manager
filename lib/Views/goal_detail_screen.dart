@@ -1,6 +1,6 @@
 import 'package:expence_manager/Models/goal_model.dart';
-import 'package:flutter/material.dart'; // Corrected import
-import 'package:intl/intl.dart'; // Import for date formatting
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:hive/hive.dart';
 import 'dart:developer' as developer;
 
@@ -15,17 +15,14 @@ class EditGoal extends StatefulWidget {
 
 class _EditGoalState extends State<EditGoal> {
   late String _selectedContribution;
+  bool _isButtonDisabled = false;
   List<String> contributions = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
-  bool _canCompleteDaily = false;
-  bool _amountAdded = false;
-  TextEditingController _amountController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _selectedContribution = widget.goal.contributionType;
     _logGoalsData();
-    _checkDailyCompletion();
   }
 
   Future<void> _logGoalsData() async {
@@ -34,14 +31,6 @@ class _EditGoalState extends State<EditGoal> {
     for (var goal in goals) {
       developer.log('Goal: ${goal.title}, Amount: ${goal.amount}, Saved Amount: ${goal.saveAmount}, Contribution Type: ${goal.contributionType}, Deadline: ${goal.deadline}');
     }
-  }
-
-  void _checkDailyCompletion() {
-    // Add your condition here to check if the daily goal can be completed
-    // For example, let's assume the daily goal can be completed if savedAmount is less than amount
-    setState(() {
-      _canCompleteDaily = widget.goal.saveAmount < widget.goal.amount;
-    });
   }
 
   Future<void> _selectContributionType(BuildContext context) async {
@@ -75,8 +64,11 @@ class _EditGoalState extends State<EditGoal> {
       goal.saveAmount += newAmount;
       await goal.save(); // Save the updated goal
       setState(() {
-        _amountAdded = true; // Disable the button after adding the amount
+        _isButtonDisabled = true; // Disable the button after updating the amount
       });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Amount added and saved.')),
+      );
     }
   }
 
@@ -87,64 +79,79 @@ class _EditGoalState extends State<EditGoal> {
   @override
   Widget build(BuildContext context) {
     final currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
-    final deadlineDate = DateFormat('yyyy-MM-dd').format(widget.goal.deadline); // Assuming 'deadline' is a DateTime field in Goal
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('View Goal'),
+        title: Text('Edit Goal'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          elevation: 5,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Title: ${widget.goal.title}', style: TextStyle(fontSize: 18)),
-                SizedBox(height: 10),
-                Text('Amount: \$${widget.goal.amount.toStringAsFixed(0)}', style: TextStyle(fontSize: 18)),
-                SizedBox(height: 10),
-                Text('Saved Amount: \$${widget.goal.saveAmount.toStringAsFixed(0)}', style: TextStyle(fontSize: 18)),
-                SizedBox(height: 10),
-                Text('Current Date: $currentDate', style: TextStyle(fontSize: 18)),
-                SizedBox(height: 10),
-                Text('Deadline Date: $deadlineDate', style: TextStyle(fontSize: 18)),
-                SizedBox(height: 10),
-                Text('Contribution Type: $_selectedContribution', style: TextStyle(fontSize: 18)),
-                Spacer(),
-                TextField(
-                  controller: _amountController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Enter Amount',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: 20),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: _canCompleteDaily && !_amountAdded ? () async {
-                      double newAmount = double.tryParse(_amountController.text) ?? 0; // Get the user-entered amount
-                      _updateSavedAmount(newAmount);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Amount added and saved.')),
-                      );
-                    } : null, // Disable button if the daily goal cannot be completed or the amount has been added
-                    style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(20),
+        child: StreamBuilder(
+          stream: Hive.box<Goal>('goals').watch(),
+          builder: (context, snapshot) {
+            final goalBox = Hive.box<Goal>('goals');
+            final goal = goalBox.get(widget.goal.key);
+
+            if (goal == null) {
+              return Center(child: Text('Goal not found.'));
+            }
+
+            final deadlineDate = DateFormat('yyyy-MM-dd').format(goal.deadline);
+            final isDeadlinePassed = _isDeadlinePassed();
+
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Title: ${goal.title}', style: TextStyle(fontSize: 18)),
+                    SizedBox(height: 10),
+                    Text('Amount: \$${goal.amount.toStringAsFixed(0)}', style: TextStyle(fontSize: 18)),
+                    SizedBox(height: 10),
+                    Text('Saved Amount: \$${goal.saveAmount.toStringAsFixed(0)}', style: TextStyle(fontSize: 18)),
+                    SizedBox(height: 10),
+                    Text('Current Date: $currentDate', style: TextStyle(fontSize: 18)),
+                    SizedBox(height: 10),
+                    Text('Deadline Date: $deadlineDate', style: TextStyle(fontSize: 18)),
+                    SizedBox(height: 10),
+                    Text('Contribution Type: $_selectedContribution', style: TextStyle(fontSize: 18)),
+                    Spacer(),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: _isButtonDisabled
+                            ? null
+                            : () async {
+                          double newAmount = 10.0; // Replace with the desired amount to add
+                          if (isDeadlinePassed) {
+                            _updateSavedAmount(newAmount);
+                          } else {
+                            bool exists = await _goalExists(_selectedContribution);
+                            if (exists) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Goal with $_selectedContribution contribution type already exists.')),
+                              );
+                            } else {
+                              await _selectContributionType(context);
+                            }
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(20),
+                        ),
+                        child: Icon(Icons.add, color: Colors.blue),
+                      ),
                     ),
-                    child: Icon(Icons.add, color: Colors.blue),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

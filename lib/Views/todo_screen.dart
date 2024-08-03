@@ -54,55 +54,56 @@ class _SavingPageState extends State<SavingPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Icon(Icons.directions_bike),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    goal.title,
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Column(
+              children: [
+                Row(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: LinearProgressIndicator(
-                        value: goal.saveAmount / goal.amount, // progress calculation based on the entered amount
-                        minHeight: 6,
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Icon(Icons.directions_bike),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '\$${goal.saveAmount.toStringAsFixed(0)}', // Remove values after point
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Text(
-                          '\$${goal.amount.toStringAsFixed(0)}', // Remove values after point
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
+                    SizedBox(width: 10),
+                    Text(
+                      goal.title,
+                      style: TextStyle(fontSize: 16),
                     ),
                   ],
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Column(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: LinearProgressIndicator(
+                          value: goal.saveAmount / goal.amount, // progress calculation based on the entered amount
+                          minHeight: 6,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '\$${goal.saveAmount.toStringAsFixed(0)}', // Remove values after point
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          Text(
+                            '\$${goal.amount.toStringAsFixed(0)}', // Remove values after point
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ],
+
+                  ),
+                )
+              ]
           ),
         ),
       );
@@ -189,19 +190,6 @@ class _SavingPageState extends State<SavingPage> {
                     ],
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.all(15),
-                //   child: Center(
-                //     child: CustomElevatedButton(
-                //       isdark: dark,
-                //       label: '',
-                //       onPressed: () {
-                //         Navigator.push(context, MaterialPageRoute(builder: (context) => AddGoals()));
-                //       },
-                //       title: null,
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           );
