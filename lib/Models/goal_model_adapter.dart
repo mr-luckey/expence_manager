@@ -9,18 +9,20 @@ class GoalAdapter extends TypeAdapter<Goal> {
   Goal read(BinaryReader reader) {
     final title = reader.readString();
     final amount = reader.readDouble();
-    final saveAmount = reader.readDouble();
-    final deadline = DateTime.fromMillisecondsSinceEpoch(reader.readInt());
     final contributionType = reader.readString();
+    final deadline = DateTime.fromMillisecondsSinceEpoch(reader.readInt());
+    final saveAmount = reader.readDouble();
     final lastContributionDate = DateTime.fromMillisecondsSinceEpoch(reader.readInt());
+    final dividedAmount = reader.readDouble(); // Read dividedAmount
 
     return Goal(
       title: title,
       amount: amount,
-      saveAmount: saveAmount,
-      deadline: deadline,
       contributionType: contributionType,
+      deadline: deadline,
+      saveAmount: saveAmount,
       lastContributionDate: lastContributionDate,
+      dividedAmount: dividedAmount, // Set dividedAmount
     );
   }
 
@@ -28,9 +30,10 @@ class GoalAdapter extends TypeAdapter<Goal> {
   void write(BinaryWriter writer, Goal obj) {
     writer.writeString(obj.title);
     writer.writeDouble(obj.amount);
-    writer.writeDouble(obj.saveAmount);
-    writer.writeInt(obj.deadline.millisecondsSinceEpoch);
     writer.writeString(obj.contributionType);
+    writer.writeInt(obj.deadline.millisecondsSinceEpoch);
+    writer.writeDouble(obj.saveAmount);
     writer.writeInt(obj.lastContributionDate.millisecondsSinceEpoch);
+    writer.writeDouble(obj.dividedAmount); // Write dividedAmount
   }
 }

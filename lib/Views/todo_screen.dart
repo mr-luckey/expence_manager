@@ -13,8 +13,6 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-
-
 class SavingPage extends StatefulWidget {
   const SavingPage({super.key});
 
@@ -90,17 +88,16 @@ class _SavingPageState extends State<SavingPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '\$${goal.saveAmount.toStringAsFixed(0)}', // Remove values after point
+                            '\$${goal.saveAmount.toStringAsFixed(2)}', // Display two decimal points
                             style: TextStyle(fontSize: 16),
                           ),
                           Text(
-                            '\$${goal.amount.toStringAsFixed(0)}', // Remove values after point
+                            '\$${goal.amount.toStringAsFixed(2)}', // Display two decimal points
                             style: TextStyle(fontSize: 16),
                           ),
                         ],
                       ),
                     ],
-
                   ),
                 )
               ]
@@ -188,6 +185,7 @@ class _SavingPageState extends State<SavingPage> {
                         children: buildGoalList(),
                       ),
                     ],
+
                   ),
                 ),
               ],

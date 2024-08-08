@@ -50,29 +50,20 @@ class _AddGoalsState extends State<AddGoals> {
     // Calculate save amount based on contribution type and deadline
     final int minutesUntilDeadline = deadline.difference(DateTime.now()).inMinutes;
     double saveAmount = 0;
-
-    // Debug print statements
-    print('Title: $title');
-    print('Total Amount: \$${amount.toStringAsFixed(2)}');
-    print('Contribution Type: $contributionType');
-    print('Deadline: ${deadline.toLocal()}');
-    print('Minutes Until Deadline: $minutesUntilDeadline');
+    double dividedAmount = 0;
 
     if (contributionType == 'Daily') {
-      // Change the calculation to use 2 minutes as the daily deadline
       saveAmount = amount / (minutesUntilDeadline / 2);
-      print('Save Amount (2 minutes): \$${saveAmount.toStringAsFixed(2)}');
+      dividedAmount = saveAmount;
     } else if (contributionType == 'Weekly') {
       saveAmount = amount / (minutesUntilDeadline / (7 * 24 * 60));
-      print('Save Amount (Weekly): \$${saveAmount.toStringAsFixed(2)}');
+      dividedAmount = saveAmount;
     } else if (contributionType == 'Monthly') {
       saveAmount = amount / (minutesUntilDeadline / (30 * 24 * 60));
-      print('Save Amount (Monthly): \$${saveAmount.toStringAsFixed(2)}');
+      dividedAmount = saveAmount;
     } else if (contributionType == 'Yearly') {
       saveAmount = amount / (minutesUntilDeadline / (365 * 24 * 60));
-      print('Save Amount (Yearly): \$${saveAmount.toStringAsFixed(2)}');
-    } else {
-      print('Unknown Contribution Type');
+      dividedAmount = saveAmount;
     }
 
     final goal = Goal(
@@ -80,8 +71,9 @@ class _AddGoalsState extends State<AddGoals> {
       amount: amount,
       contributionType: contributionType,
       deadline: deadline,
-      saveAmount: saveAmount, // Save amount is now included
+      saveAmount: 0, // Initial save amount
       lastContributionDate: DateTime.now(), // Initialize with the current date
+      dividedAmount: dividedAmount, // Set divided amount
     );
 
     final box = Hive.box<Goal>('goals');
