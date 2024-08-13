@@ -1,7 +1,6 @@
 import 'package:expence_manager/Components/helpers/theme_provider.dart';
 import 'package:expence_manager/Controllers/Expense_controller.dart';
 import 'package:expence_manager/Models/goal_model.dart';
-import 'package:expence_manager/Views/Add_Goals.dart';
 import 'package:expence_manager/Views/goal_detail_screen.dart';
 import 'package:expence_manager/Views/your_goal.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
@@ -12,6 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class SavingPage extends StatefulWidget {
   const SavingPage({super.key});
@@ -23,11 +25,48 @@ class SavingPage extends StatefulWidget {
 class _SavingPageState extends State<SavingPage> {
   final ExpenseController expenseController = Get.put(ExpenseController());
   late Box<Goal> _goalBox;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
     super.initState();
     _goalBox = Hive.box<Goal>('goals');
+
+    tz.initializeTimeZones();
+    var initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    // Optional: Schedule notifications for all existing goals
+    _scheduleNotificationsForGoals();
+  }
+
+  // Function to show notification
+  Future<void> _showNotification(DateTime deadline, String contribution, String title) async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'your_channel_id', 'your_channel_name',
+        importance: Importance.max, priority: Priority.high, ticker: 'ticker');
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics);
+    var scheduledTime = tz.TZDateTime.from(deadline, tz.local);
+    print('Notification scheduled for: $scheduledTime');
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        title,
+        'This is a scheduled notification',
+        scheduledTime,
+        platformChannelSpecifics,
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
+  }
+
+  // Schedule notifications for all goals
+  void _scheduleNotificationsForGoals() {
+    for (var goal in _goalBox.values) {
+      _showNotification(goal.deadline, goal.contributionType, goal.title);
+    }
   }
 
   double calculateTotalGoalsAmount() {
@@ -185,7 +224,6 @@ class _SavingPageState extends State<SavingPage> {
                         children: buildGoalList(),
                       ),
                     ],
-
                   ),
                 ),
               ],

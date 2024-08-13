@@ -5,6 +5,7 @@ import 'package:expence_manager/widgets/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:expence_manager/widgets/app_bar.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 class AddGoals extends StatefulWidget {
   const AddGoals({Key? key}) : super(key: key);
@@ -16,15 +17,15 @@ class AddGoals extends StatefulWidget {
 class _AddGoalsState extends State<AddGoals> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
-  final TextEditingController _contributionController = TextEditingController();
-  final TextEditingController _deadlineController = TextEditingController();
+  final TextEditingController contributionController = TextEditingController();
+  final TextEditingController deadlineController = TextEditingController();
   List<String> _contributions = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
   String _selectedContribution = '';
 
   @override
   void initState() {
     super.initState();
-    _contributionController.text = _selectedContribution;
+    contributionController.text = _selectedContribution;
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -36,7 +37,7 @@ class _AddGoalsState extends State<AddGoals> {
     );
     if (picked != null) {
       setState(() {
-        _deadlineController.text = "${picked.toLocal()}".split(' ')[0];
+        deadlineController.text = DateFormat('yyyy-MM-dd').format(picked);
       });
     }
   }
@@ -44,11 +45,13 @@ class _AddGoalsState extends State<AddGoals> {
   void _handleAddGoal() async {
     final String title = _titleController.text;
     final double amount = double.tryParse(_amountController.text) ?? 0;
-    final String contributionType = _contributionController.text;
-    final DateTime deadline = DateTime.parse(_deadlineController.text);
+    final String contributionType = contributionController.text;
+    final String deadline = deadlineController.text;
+    final String currentTime = "${DateTime.now().hour}:${DateTime.now().minute}";
 
     // Calculate save amount based on contribution type and deadline
-    final int minutesUntilDeadline = deadline.difference(DateTime.now()).inMinutes;
+    final DateTime deadlineDate = DateTime.parse(deadline);
+    final int minutesUntilDeadline = deadlineDate.difference(DateTime.now()).inMinutes;
     double saveAmount = 0;
     double dividedAmount = 0;
 
@@ -70,11 +73,22 @@ class _AddGoalsState extends State<AddGoals> {
       title: title,
       amount: amount,
       contributionType: contributionType,
-      deadline: deadline,
+      deadline:DateTime(deadlineDate.year,deadlineDate.month,deadlineDate.day),
       saveAmount: 0, // Initial save amount
       lastContributionDate: DateTime.now(), // Initialize with the current date
-      dividedAmount: dividedAmount, // Set divided amount
+      dividedAmount: dividedAmount,
+      time: currentTime, // Set current time
     );
+
+    // Print all the parameters
+    print('Title: ${goal.title}');
+    print('Amount: ${goal.amount}');
+    print('Contribution Type: ${goal.contributionType}');
+    print('Deadline: ${goal.deadline}');
+    print('Save Amount: ${goal.saveAmount}');
+    print('Last Contribution Date: ${goal.lastContributionDate}');
+    print('Divided Amount: ${goal.dividedAmount}');
+    print('Time: ${goal.time}');
 
     final box = Hive.box<Goal>('goals');
     await box.add(goal);
@@ -170,7 +184,7 @@ class _AddGoalsState extends State<AddGoals> {
                 child: Container(
                   height: 40,
                   child: TextField(
-                    controller: _contributionController,
+                    controller: contributionController,
                     readOnly: true,
                     decoration: InputDecoration(
                       hintText: '',
@@ -192,7 +206,7 @@ class _AddGoalsState extends State<AddGoals> {
                       if (selectedContribution != null) {
                         setState(() {
                           _selectedContribution = selectedContribution;
-                          _contributionController.text = selectedContribution;
+                          contributionController.text = selectedContribution;
                         });
                       }
                     },
@@ -214,7 +228,7 @@ class _AddGoalsState extends State<AddGoals> {
                 child: Container(
                   height: 40,
                   child: TextField(
-                    controller: _deadlineController,
+                    controller: deadlineController,
                     readOnly: true,
                     decoration: InputDecoration(
                       hintText: '',

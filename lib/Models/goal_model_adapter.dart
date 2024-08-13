@@ -13,7 +13,8 @@ class GoalAdapter extends TypeAdapter<Goal> {
     final deadline = DateTime.fromMillisecondsSinceEpoch(reader.readInt());
     final saveAmount = reader.readDouble();
     final lastContributionDate = DateTime.fromMillisecondsSinceEpoch(reader.readInt());
-    final dividedAmount = reader.readDouble(); // Read dividedAmount
+    final dividedAmount = reader.readDouble();
+    final time = reader.readString(); // Read time
 
     return Goal(
       title: title,
@@ -22,7 +23,8 @@ class GoalAdapter extends TypeAdapter<Goal> {
       deadline: deadline,
       saveAmount: saveAmount,
       lastContributionDate: lastContributionDate,
-      dividedAmount: dividedAmount, // Set dividedAmount
+      dividedAmount: dividedAmount,
+      time: time, // Set time
     );
   }
 
@@ -34,6 +36,7 @@ class GoalAdapter extends TypeAdapter<Goal> {
     writer.writeInt(obj.deadline.millisecondsSinceEpoch);
     writer.writeDouble(obj.saveAmount);
     writer.writeInt(obj.lastContributionDate.millisecondsSinceEpoch);
-    writer.writeDouble(obj.dividedAmount); // Write dividedAmount
+    writer.writeDouble(obj.dividedAmount);
+    writer.writeString(obj.time); // Write time
   }
 }

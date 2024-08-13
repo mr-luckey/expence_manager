@@ -21,7 +21,10 @@ class Goal extends HiveObject {
   late DateTime lastContributionDate;
 
   @HiveField(6)
-  late double dividedAmount; // New field
+  late double dividedAmount;
+
+  @HiveField(7)
+  late String time; // New field
 
   Goal({
     required this.title,
@@ -30,6 +33,7 @@ class Goal extends HiveObject {
     required this.deadline,
     required this.saveAmount,
     required this.lastContributionDate,
-    required this.dividedAmount, // Initialize new field
+    required this.dividedAmount,
+    required this.time, // Initialize new field
   });
 }
